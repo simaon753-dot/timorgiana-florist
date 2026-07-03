@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<!-- =========================================================================
+     TIMORGIANA — FLORIST  ·  Página inicial (Home)
+     -------------------------------------------------------------------------
+     O cabeçalho, o rodapé e o botão de WhatsApp são inseridos automaticamente
+     por JavaScript (js/componentes.js). Não é preciso copiá-los para cada
+     página — basta definir data-pagina e data-base no <body>.
+     ========================================================================= -->
+<html lang="pt">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Timorgiana Florist — Flores que expressam sentimentos · Díli, Timor-Leste</title>
+  <meta name="description" content="Timorgiana Florist — arte floral em Díli, Timor-Leste. Ramos, casamentos, eventos e cerimónias com flores naturais frescas. Encomende pelo WhatsApp.">
+  <meta name="theme-color" content="#F9AC80">
+
+  <!-- Partilha (Open Graph) -->
+  <meta property="og:title" content="Timorgiana Florist — Arte floral em Díli">
+  <meta property="og:description" content="Flores que expressam sentimentos, momentos que ficam na memória.">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="assets/logo-original.jpg">
+
+  <link rel="icon" type="image/png" href="assets/favicon.png">
+
+  <!-- Tipografia: serifa elegante (Cormorant), sans limpa (Mulish), script (Pinyon) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Mulish:wght@300;400;500;600;700;800&family=Pinyon+Script&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="css/estilos.css">
+
+  <!-- Pré-carregamento da fotografia principal do hero (melhora o LCP) -->
+  <link rel="preload" as="image" href="assets/galeria/casamentos/cas-06.jpg">
+</head>
+
+<body data-pagina="inicio" data-base="">
+
+  <main id="conteudo">
+
+    <!-- =====================================================================
+         HERO — gradiente coral · fotografia em arco · selo giratório da marca
+         ===================================================================== -->
+    <section class="hero hero--elite">
+
+      <div class="container hero__grelha">
+        <div class="hero__interior">
+          <span class="eyebrow eyebrow--duplo" data-i18n="hero_eyebrow">Arte floral · Díli, Timor-Leste</span>
+          <h1 data-i18n-html="hero_titulo">Flores que <em>expressam</em> sentimentos</h1>
+          <p class="hero__tagline" data-i18n="hero_tagline">momentos que ficam na memória</p>
+          <p class="hero__lead" data-i18n="hero_lead">Criamos arranjos e decorações com flores frescas para os momentos mais importantes da sua vida.</p>
+          <div class="grupo-botoes">
+            <a class="btn btn--claro btn--grande" href="paginas/encomendar.html" data-i18n="btn_encomendar_ag">Encomendar agora</a>
+            <a class="btn btn--fantasma btn--grande" href="paginas/produtos.html" data-i18n="btn_ver_produtos">Ver produtos</a>
+          </div>
+        </div>
+
+        <!-- Fotografia em arco + selo giratório + nota flutuante -->
+        <div class="hero__media">
+          <div class="hero__arco">
+            <img src="assets/galeria/casamentos/cas-06.jpg" alt="Bouquet de rosas brancas — Timorgiana Florist" fetchpriority="high">
+          </div>
+          <svg class="hero__selo" viewBox="0 0 120 120" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+            <defs><path id="selo-circ" d="M60,60 m-45,0 a45,45 0 1,1 90,0 a45,45 0 1,1 -90,0"/></defs>
+            <circle cx="60" cy="60" r="58" fill="#FFF4D1"/>
+            <text font-size="8.5" letter-spacing="1.8" fill="#C4633A" font-family="Mulish, sans-serif" font-weight="700">
+              <textPath xlink:href="#selo-circ" href="#selo-circ">TIMORGIANA FLORIST · DÍLI · TIMOR-LESTE ·</textPath>
+            </text>
+            <g transform="translate(60 60)" fill="#C4633A">
+              <circle r="4.5"/>
+              <g opacity=".9">
+                <ellipse rx="4" ry="9" cy="-11"/>
+                <ellipse rx="4" ry="9" cy="-11" transform="rotate(60)"/>
+                <ellipse rx="4" ry="9" cy="-11" transform="rotate(120)"/>
+                <ellipse rx="4" ry="9" cy="-11" transform="rotate(180)"/>
+                <ellipse rx="4" ry="9" cy="-11" transform="rotate(240)"/>
+                <ellipse rx="4" ry="9" cy="-11" transform="rotate(300)"/>
+              </g>
+            </g>
+          </svg>
+          <div class="hero__nota">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M11 20A7 7 0 0 1 4 13c0-5 4-9 16-9 0 12-4 16-9 16Z"/><path d="M4 20c4-7 7-9 11-10"/></svg>
+            <span data-i18n="hero_nota">Flores frescas · Entrega em Díli</span>
+          </div>
+        </div>
+      </div>
+
+      <a class="hero__seta" href="#tiras" aria-label="Ver mais">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+      </a>
+    </section>
+
+    <!-- Fita deslizante com os serviços (marquee) -->
+    <div class="marquee" role="presentation">
+      <div class="marquee__faixa">
+        <div class="marquee__grupo">
+          <span class="marquee__item"><span class="marquee__flor">❀</span><span data-i18n="cat1_t">Ramos & Bouquets</span></span>
+          <span class="marquee__item"><span class="marquee__flor">❀</span><span data-i18n="cat2_t">Casamentos</span></span>
+          <span class="marquee__item"><span class="marquee__flor">❀</span><span data-i18n="cat3_t">Eventos & Instituições</span></span>
+          <span class="marquee__item"><span class="marquee__flor">❀</span><span data-i18n="cat4_t">Cerimónias fúnebres</span></span>
+          <span class="marquee__item"><span class="marquee__flor">❀</span><span data-i18n="prod5_t">Decoração de espaços</span></span>
+          <span class="marquee__item"><span class="marquee__flor">❀</span><span data-i18n="tira1_t">Flores frescas</span></span>
+        </div>
+        <div class="marquee__grupo" aria-hidden="true">
+          <span class="marquee__item"><span class="marquee__flor">❀</span><span data-i18n="cat1_t">Ramos & Bouquets</span></span>
+          <span class="marquee__item"><span class="marquee__flor">❀</span><span data-i18n="cat2_t">Casamentos</span></span>
+          <span class="marquee__item"><span class="marquee__flor">❀</span><span data-i18n="cat3_t">Eventos & Instituições</span></span>
+          <span class="marquee__item"><span class="marquee__flor">❀</span><span data-i18n="cat4_t">Cerimónias fúnebres</span></span>
+          <span class="marquee__item"><span class="marquee__flor">❀</span><span data-i18n="prod5_t">Decoração de espaços</span></span>
+          <span class="marquee__item"><span class="marquee__flor">❀</span><span data-i18n="tira1_t">Flores frescas</span></span>
+        </div>
+      </div>
+    </div>
+
+    <!-- =====================================================================
+         TIRAS (garantias)
+         ===================================================================== -->
+    <section class="seccao seccao--apertada" id="tiras">
+      <div class="container">
+        <div class="tiras">
+          <div class="tira revelar">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M11 20A7 7 0 0 1 4 13c0-5 4-9 16-9 0 12-4 16-9 16Z"/><path d="M4 20c4-7 7-9 11-10"/></svg>
+            <div class="tira__titulo" data-i18n="tira1_t">Flores frescas</div>
+            <div class="tira__texto" data-i18n="tira1_d">Selecionadas todos os dias</div>
+          </div>
+          <div class="tira revelar revelar--d1">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 9.5 9.5 2 12l7.5 2.5L12 22l2.5-7.5L22 12l-7.5-2.5z"/></svg>
+            <div class="tira__titulo" data-i18n="tira2_t">Feito à medida</div>
+            <div class="tira__texto" data-i18n="tira2_d">Cada arranjo é único</div>
+          </div>
+          <div class="tira revelar revelar--d2">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+            <div class="tira__titulo" data-i18n="tira3_t">Entrega pontual</div>
+            <div class="tira__texto" data-i18n="tira3_d">Em toda a Díli</div>
+          </div>
+          <div class="tira revelar revelar--d3">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.9c0 1.76.46 3.45 1.34 4.95L2 22l5.3-1.39c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.9C21.95 6.45 17.5 2 12.04 2Z"/></svg>
+            <div class="tira__titulo" data-i18n="tira4_t">Atendimento próximo</div>
+            <div class="tira__texto" data-i18n="tira4_d">Pelo WhatsApp, sempre</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =====================================================================
+         CATEGORIAS
+         ===================================================================== -->
+    <section class="seccao seccao--veu">
+      <div class="container">
+        <div class="cabecalho-seccao revelar">
+          <span class="eyebrow eyebrow--duplo" data-i18n="cat_eyebrow">O que fazemos</span>
+          <h2 data-i18n="cat_titulo">Flores para cada momento</h2>
+          <p data-i18n="cat_lead">Da celebração ao consolo, criamos a peça certa para o que sente.</p>
+        </div>
+
+        <div class="grelha grelha--4">
+          <a class="cartao revelar" href="paginas/produtos.html">
+            <div class="cartao__media">
+              <img src="assets/galeria/bouquet/bouquet-04.jpg" alt="Ramo de rosas vermelhas" loading="lazy">
+            </div>
+            <div class="cartao__corpo">
+              <h3 class="cartao__titulo" data-i18n="cat1_t">Ramos & Bouquets</h3>
+              <p class="cartao__texto" data-i18n="cat1_d">Flores naturais para todas as ocasiões.</p>
+              <span class="link-seta"><span data-i18n="btn_saber_mais">Saber mais</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+            </div>
+          </a>
+          <a class="cartao revelar revelar--d1" href="paginas/produtos.html">
+            <div class="cartao__media">
+              <img src="assets/galeria/casamentos/cas-01.jpg" alt="Decoração floral de casamento" loading="lazy">
+            </div>
+            <div class="cartao__corpo">
+              <h3 class="cartao__titulo" data-i18n="cat2_t">Casamentos</h3>
+              <p class="cartao__texto" data-i18n="cat2_d">Decoração floral completa para um dia inesquecível.</p>
+              <span class="link-seta"><span data-i18n="btn_saber_mais">Saber mais</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+            </div>
+          </a>
+          <a class="cartao revelar revelar--d2" href="paginas/produtos.html">
+            <div class="cartao__media">
+              <img src="assets/galeria/vaso/vaso-10.jpg" alt="Arranjo floral para eventos" loading="lazy">
+            </div>
+            <div class="cartao__corpo">
+              <h3 class="cartao__titulo" data-i18n="cat3_t">Eventos & Instituições</h3>
+              <p class="cartao__texto" data-i18n="cat3_d">Conferências, cerimónias e eventos corporativos.</p>
+              <span class="link-seta"><span data-i18n="btn_saber_mais">Saber mais</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+            </div>
+          </a>
+          <a class="cartao revelar revelar--d3" href="paginas/produtos.html">
+            <div class="cartao__media">
+              <img src="assets/galeria/funebre/fun-01.jpg" alt="Coroa fúnebre" loading="lazy">
+            </div>
+            <div class="cartao__corpo">
+              <h3 class="cartao__titulo" data-i18n="cat4_t">Cerimónias fúnebres</h3>
+              <p class="cartao__texto" data-i18n="cat4_d">Coroas e ramos compostos com respeito e delicadeza.</p>
+              <span class="link-seta"><span data-i18n="btn_saber_mais">Saber mais</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+            </div>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- =====================================================================
+         HISTÓRIA (duas colunas)
+         ===================================================================== -->
+    <section class="seccao">
+      <div class="container">
+        <div class="duas-colunas">
+          <div class="duas-colunas__texto revelar">
+            <span class="eyebrow" data-i18n="sobre_eyebrow">A nossa essência</span>
+            <h2 data-i18n="sobre_titulo">A arte de transformar flores em emoção</h2>
+            <p data-i18n="sobre_p1">A Timorgiana nasceu em 2023, em Díli, do desejo de levar a beleza natural das flores a cada celebração.</p>
+            <p data-i18n="sobre_p2">Cada arranjo é pensado ao detalhe, com flores frescas e composições desenhadas em torno da sua história.</p>
+
+            <!-- Números da casa -->
+            <div class="stats">
+              <div class="stat"><span class="stat__num">2023</span><span class="stat__lbl" data-i18n="stat_fund">Fundada em Díli</span></div>
+              <div class="stat"><span class="stat__num">100%</span><span class="stat__lbl" data-i18n="tira1_t">Flores frescas</span></div>
+              <div class="stat"><span class="stat__num">6</span><span class="stat__lbl" data-i18n="stat_serv">Serviços especializados</span></div>
+            </div>
+
+            <div class="grupo-botoes" style="margin-top:1.6rem">
+              <a class="btn btn--primario" href="paginas/sobre.html" data-i18n="btn_saber_mais">Saber mais</a>
+              <a class="btn btn--contorno" href="paginas/galeria.html" data-i18n="btn_ver_portefolio">Ver portefólio</a>
+            </div>
+          </div>
+          <div class="duas-colunas__media revelar revelar--d2">
+            <div class="moldura moldura--alta">
+              <img src="assets/galeria/bouquet/bouquet-11.jpg" alt="Ramo de flores em tons pêssego da Timorgiana" loading="lazy">
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =====================================================================
+         VALORES
+         ===================================================================== -->
+    <section class="seccao seccao--coral">
+      <div class="container">
+        <div class="cabecalho-seccao revelar">
+          <span class="eyebrow eyebrow--duplo" data-i18n="valores_eyebrow">Porquê a Timorgiana</span>
+          <h2 data-i18n="valores_titulo">Detalhe, frescura e cuidado em cada peça</h2>
+        </div>
+        <div class="grelha grelha--3">
+          <div class="valor revelar"><div class="valor__icone"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M11 20A7 7 0 0 1 4 13c0-5 4-9 16-9 0 12-4 16-9 16Z"/><path d="M4 20c4-7 7-9 11-10"/></svg></div><div><h3 data-i18n="v1_t">Qualidade e frescura</h3><p data-i18n="v1_d">Selecionamos as melhores flores.</p></div></div>
+          <div class="valor revelar revelar--d1"><div class="valor__icone"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.3 6.9.6-5.2 4.6 1.6 6.8L12 17.3 5.8 20.9l1.6-6.8L2.2 8.9l6.9-.6z"/></svg></div><div><h3 data-i18n="v2_t">Criatividade</h3><p data-i18n="v2_d">Cada composição com sentido estético.</p></div></div>
+          <div class="valor revelar revelar--d2"><div class="valor__icone"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 21s-7.5-4.6-10-9.3C.4 8.4 2 5 5.3 5c2 0 3.3 1.1 4.2 2.3l1 1 1-1C13.7 6.1 12.7 5 14.7 5 18 5 19.6 8.4 22 11.7 19.5 16.4 12 21 12 21Z"/></svg></div><div><h3 data-i18n="v3_t">Atendimento personalizado</h3><p data-i18n="v3_d">Ouvimos a sua história.</p></div></div>
+          <div class="valor revelar"><div class="valor__icone"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22a9 9 0 1 0-9-9"/><path d="M3 13c0-4 3-8 9-8M12 7v5l3 2"/></svg></div><div><h3 data-i18n="v4_t">Respeito pelo ambiente</h3><p data-i18n="v4_d">Trabalhamos com consciência ambiental.</p></div></div>
+          <div class="valor revelar revelar--d1"><div class="valor__icone"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></div><div><h3 data-i18n="v5_t">Pontualidade</h3><p data-i18n="v5_d">Cumprimos prazos com seriedade.</p></div></div>
+          <div class="valor revelar revelar--d2"><div class="valor__icone"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="8" width="18" height="4" rx="1"/><path d="M4 12v8a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-8M12 8v13"/><path d="M12 8S10 3 7.5 3 4 6 12 8Zm0 0s2-5 4.5-5S20 6 12 8Z"/></svg></div><div><h3 data-i18n="v6_t">Para todos os momentos</h3><p data-i18n="v6_d">Da alegria de uma festa ao conforto de uma despedida.</p></div></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =====================================================================
+         CITAÇÃO (a promessa da marca, em caligrafia)
+         ===================================================================== -->
+    <section class="seccao seccao--apertada">
+      <div class="container">
+        <figure class="citacao revelar">
+          <div class="citacao__orn" aria-hidden="true">❀</div>
+          <blockquote data-i18n="quote_txt">Flores que expressam sentimentos, momentos que ficam na memória.</blockquote>
+          <figcaption>Timorgiana Florist</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <!-- =====================================================================
+         INSTAGRAM
+         Para mostrar o feed real, substitua a grelha por um widget de
+         Instagram (ex.: LightWidget / Behold) — instruções no README.
+         ===================================================================== -->
+    <section class="seccao">
+      <div class="container">
+        <div class="cabecalho-seccao revelar">
+          <span class="eyebrow eyebrow--duplo" data-i18n="insta_eyebrow">@timorgiana_flores</span>
+          <h2 data-i18n="insta_titulo">Os nossos trabalhos recentes</h2>
+          <p data-i18n="insta_lead">Siga-nos no Instagram para inspiração diária e novidades.</p>
+        </div>
+        <div class="insta-grelha revelar">
+          <a class="insta-item" href="https://www.instagram.com/timorgiana_flores" target="_blank" rel="noopener"><img src="assets/galeria/bouquet/bouquet-05.jpg" alt="Ramo de rosas vermelhas" loading="lazy"><span class="insta-item__icone"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2.5" y="2.5" width="19" height="19" rx="5.5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.6" cy="6.4" r="1.1" fill="currentColor" stroke="none"/></svg></span></a>
+          <a class="insta-item" href="https://www.instagram.com/timorgiana_flores" target="_blank" rel="noopener"><img src="assets/galeria/bouquet/bouquet-17.jpg" alt="Ramo de flores amarelas" loading="lazy"><span class="insta-item__icone"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2.5" y="2.5" width="19" height="19" rx="5.5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.6" cy="6.4" r="1.1" fill="currentColor" stroke="none"/></svg></span></a>
+          <a class="insta-item" href="https://www.instagram.com/timorgiana_flores" target="_blank" rel="noopener"><img src="assets/galeria/casamentos/cas-05.jpg" alt="Ramo de noiva branco" loading="lazy"><span class="insta-item__icone"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2.5" y="2.5" width="19" height="19" rx="5.5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.6" cy="6.4" r="1.1" fill="currentColor" stroke="none"/></svg></span></a>
+          <a class="insta-item" href="https://www.instagram.com/timorgiana_flores" target="_blank" rel="noopener"><img src="assets/galeria/vaso/vaso-05.jpg" alt="Arranjo floral em vaso" loading="lazy"><span class="insta-item__icone"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2.5" y="2.5" width="19" height="19" rx="5.5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.6" cy="6.4" r="1.1" fill="currentColor" stroke="none"/></svg></span></a>
+        </div>
+        <div class="grupo-botoes" style="justify-content:center; margin-top:2rem">
+          <a class="btn btn--primario btn--pequeno" href="https://www.instagram.com/timorgiana_flores" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2.5" y="2.5" width="19" height="19" rx="5.5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.6" cy="6.4" r="1.1" fill="currentColor" stroke="none"/></svg>
+            <span>Instagram</span>
+          </a>
+          <a class="btn btn--contorno btn--pequeno" href="https://www.facebook.com/people/Timorgiana-Flores/" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M22 12.06C22 6.5 17.52 2 12 2S2 6.5 2 12.06c0 5 3.66 9.15 8.44 9.94v-7.03H7.9v-2.9h2.54V9.85c0-2.5 1.49-3.89 3.78-3.89 1.09 0 2.24.2 2.24.2v2.46h-1.26c-1.24 0-1.63.77-1.63 1.56v1.88h2.78l-.44 2.9h-2.34V22c4.78-.79 8.43-4.94 8.43-9.94Z"/></svg>
+            <span>Facebook</span>
+          </a>
+          <a class="btn btn--contorno btn--pequeno" href="https://www.tiktok.com/@timorgiana_flores" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M16.5 3c.3 2.1 1.5 3.6 3.5 3.9v2.5c-1.2.1-2.4-.2-3.5-.8v5.9c0 3.4-2.5 5.5-5.4 5.5-3 0-5.1-2.4-5.1-5.1 0-3 2.4-5.1 5.4-5.1.3 0 .6 0 .9.1v2.7c-.3-.1-.6-.2-.9-.2-1.4 0-2.5 1-2.5 2.4 0 1.5 1.1 2.5 2.4 2.5 1.4 0 2.5-1 2.5-2.7V3h2.7Z"/></svg>
+            <span>TikTok</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- =====================================================================
+         CTA FINAL
+         ===================================================================== -->
+    <section class="seccao seccao--veu">
+      <div class="container">
+        <div class="cta-faixa revelar">
+          <h2 data-i18n="cta_titulo">Vamos criar algo memorável?</h2>
+          <p data-i18n="cta_lead">Conte-nos a sua ocasião. Respondemos rapidamente pelo WhatsApp.</p>
+          <div class="grupo-botoes">
+            <a class="btn btn--claro btn--grande" href="paginas/encomendar.html" data-i18n="btn_encomendar_ag">Encomendar agora</a>
+            <a class="btn btn--fantasma btn--grande" href="paginas/contactos.html" data-i18n="btn_contactar">Contacte-nos</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Scripts (ordem: dicionário → componentes → inicialização) -->
+  <script src="js/i18n.js"></script>
+  <script src="js/componentes.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>

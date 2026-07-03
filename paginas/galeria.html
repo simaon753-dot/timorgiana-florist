@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<!-- TIMORGIANA — FLORIST · Portefólio / Galeria
+     -------------------------------------------------------------------------
+     Cada item da galeria usa um substituto elegante (.foto). Para colocar as
+     fotografias reais, troque <div class="foto foto--..."></div> por:
+        <img src="../assets/galeria/nome.jpg" alt="Descrição">
+     mantendo o atributo data-cat no .galeria__item para os filtros. -->
+<html lang="pt">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Portefólio · Timorgiana Florist</title>
+  <meta name="description" content="Trabalhos realizados pela Timorgiana — casamentos, eventos corporativos, ramos e arranjos florais em Díli, Timor-Leste.">
+  <meta name="theme-color" content="#F9AC80">
+  <link rel="icon" type="image/png" href="../assets/favicon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Mulish:wght@300;400;500;600;700;800&family=Pinyon+Script&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/estilos.css">
+</head>
+
+<body data-pagina="galeria" data-base="../">
+
+  <main id="conteudo">
+
+    <section class="pagina-hero">
+      <div class="container pagina-hero__interior">
+        <p class="migalhas"><a href="../index.html" data-i18n="nav_inicio">Início</a> · <span data-i18n="nav_galeria">Portefólio</span></p>
+        <h1 data-i18n="galp_titulo">Portefólio</h1>
+        <p data-i18n="galp_sub">Uma seleção de trabalhos realizados — momentos que ficaram na memória.</p>
+      </div>
+    </section>
+
+    <section class="seccao">
+      <div class="container">
+
+        <!-- Filtros -->
+        <div class="filtros revelar">
+          <button class="filtro ativo" data-filtro="todos" data-i18n="filtro_todos">Todos</button>
+          <button class="filtro" data-filtro="casamentos" data-i18n="filtro_casamentos">Casamentos</button>
+          <button class="filtro" data-filtro="vaso" data-i18n="filtro_vaso">Arranjo em vaso</button>
+          <button class="filtro" data-filtro="bouquet" data-i18n="filtro_bouquet">Bouquet</button>
+          <button class="filtro" data-filtro="funebre" data-i18n="filtro_funebre">Fúnebre</button>
+          <button class="filtro" data-filtro="outro" data-i18n="filtro_outro">Outro</button>
+        </div>
+
+        <!-- Grelha masonry — preenchida a partir de js/galeria-dados.js.
+             Nota: sem .revelar no contentor (é demasiado alto no telemóvel
+             e a transição de opacidade não completava). -->
+        <div class="galeria" id="galeria" aria-live="polite"></div>
+        <p class="galeria-vazia" id="galeria-vazia" hidden data-i18n="galeria_vazia">Em breve, novos trabalhos nesta categoria.</p>
+
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="seccao seccao--veu">
+      <div class="container">
+        <div class="cta-faixa revelar">
+          <h2 data-i18n="cta_titulo">Vamos criar algo memorável?</h2>
+          <p data-i18n="cta_lead">Conte-nos a sua ocasião. Respondemos rapidamente pelo WhatsApp.</p>
+          <div class="grupo-botoes">
+            <a class="btn btn--claro btn--grande" href="encomendar.html" data-i18n="btn_encomendar_ag">Encomendar agora</a>
+            <a class="btn btn--fantasma btn--grande" href="https://www.instagram.com/timorgiana_flores" target="_blank" rel="noopener" data-i18n="insta_btn">Seguir no Instagram</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <script src="../js/i18n.js"></script>
+  <script src="../js/componentes.js"></script>
+  <script src="../js/galeria-dados.js"></script>
+  <script src="../js/main.js"></script>
+</body>
+</html>
