@@ -257,20 +257,22 @@ p  { margin: 0 0 1.1rem; }
   box-shadow: 0 1px 0 var(--linha), 0 10px 30px rgba(168,116,84,.07);
 }
 
+/* logótipo centrado no topo, navegação centrada por baixo */
 .cabecalho__interior {
-  display: flex; align-items: center; justify-content: space-between; gap: 1.5rem;
+  display: flex; flex-direction: column; align-items: center; gap: .5rem;
+  position: relative;
 }
 
 .logo { display: inline-flex; align-items: center; gap: .8rem; flex: none; }
-.logo__marca { height: 60px; width: auto; flex: none; transition: var(--transicao); }
-.cabecalho--solido .logo__marca { height: 52px; }
+.logo__marca { height: 58px; width: auto; flex: none; transition: var(--transicao); }
+.cabecalho--solido .logo__marca { height: 48px; }
 /* no topo (hero coral) mostra-se a versão creme; ao deslizar, a terracota */
 .logo__marca--creme { display: block; }
 .logo__marca--coral { display: none; }
 .cabecalho--solido .logo__marca--creme { display: none; }
 .cabecalho--solido .logo__marca--coral { display: block; }
 
-.nav { display: flex; align-items: center; gap: 2rem; }
+.nav { display: flex; align-items: center; justify-content: center; gap: 2rem; width: 100%; }
 .nav__lista { display: flex; align-items: center; gap: 1.7rem; list-style: none; margin: 0; padding: 0; }
 .nav__link {
   position: relative; font-family: var(--sans);
@@ -534,25 +536,30 @@ body.menu-aberto .menu-toggle span:nth-child(3) { transform: translateY(-7px) ro
 .passo h3 { font-size: 1.25rem; margin-bottom: .2rem; }
 .passo p { color: var(--tinta-suave); margin: 0; font-size: .96rem; }
 
-/* — Galeria masonry — */
-.galeria { columns: 3; column-gap: 1.2rem; }
+/* — Galeria: grelha full-width (4 colunas no ecrã, 3 no telemóvel) —
+   Sem masonry: mosaico de quadrados que se estende de bordo a bordo. O
+   aspect-ratio 1/1 reserva a altura antes do carregamento, evitando o
+   bug de altura 0 em telemóvel (sem precisar de min-height). */
+.galeria {
+  display: grid; grid-template-columns: repeat(4, 1fr);
+  gap: 8px; padding-inline: 8px;
+}
 .galeria__item {
   display: block; width: 100%; padding: 0; border: none; background: none;
-  font: inherit; color: inherit; text-align: left; cursor: zoom-in;
-  break-inside: avoid; margin: 0 0 1.2rem; border-radius: var(--raio);
+  font: inherit; color: inherit; text-align: left; cursor: pointer;
+  margin: 0; border-radius: 4px;
   overflow: hidden; box-shadow: var(--sombra-sm); position: relative;
   transition: transform var(--transicao), box-shadow var(--transicao);
   -webkit-appearance: none; appearance: none;
 }
-.galeria__item:hover { transform: translateY(-5px); box-shadow: var(--sombra); }
-.galeria__item:focus-visible { outline: 2px solid var(--terracota); outline-offset: 3px; }
+.galeria__item:hover { box-shadow: var(--sombra); z-index: 2; }
+.galeria__item:focus-visible { outline: 2px solid var(--terracota); outline-offset: -2px; }
 .galeria__item img {
-  display: block; width: 100%; height: auto;
-  min-height: 240px; /* reserva espaço antes do carregamento (lazy loading em telemóvel) */
+  display: block; width: 100%; height: 100%;
+  aspect-ratio: 1 / 1; object-fit: cover;
   background: var(--coral-veu);
   transition: transform .9s ease;
 }
-.galeria__item img[data-carregada="1"] { min-height: 0; background: transparent; }
 .galeria__item:hover img { transform: scale(1.05); }
 .galeria__item .foto { min-height: 0; }
 .galeria__item .foto--p { aspect-ratio: 1/1; }
@@ -746,13 +753,12 @@ body.menu-aberto .menu-toggle span:nth-child(3) { transform: translateY(-7px) ro
    ========================================================================= */
 @media (max-width: 1024px) {
   .rodape__grelha { grid-template-columns: 1fr 1fr; gap: 2rem; }
-  .galeria { columns: 2; }
   .insta-grelha { grid-template-columns: repeat(4, 1fr); }
 }
 
 @media (max-width: 880px) {
-  /* Navegação móvel */
-  .menu-toggle { display: flex; }
+  /* Navegação móvel: logótipo centrado, botão de menu no canto direito */
+  .menu-toggle { display: flex; position: absolute; right: 0; top: 50%; transform: translateY(-50%); }
   .nav {
     position: fixed; inset: 0 0 0 auto; width: min(86vw, 380px);
     flex-direction: column; align-items: flex-start; justify-content: flex-start;
@@ -783,11 +789,10 @@ body.menu-aberto .menu-toggle span:nth-child(3) { transform: translateY(-7px) ro
 }
 
 @media (max-width: 520px) {
-  /* Portefólio: no telemóvel passa a grelha compacta de 3 colunas (estilo
-     mosaico, tipo Instagram). Em tablet/desktop mantém-se a vista atual. */
-  .galeria { columns: auto; display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; }
-  .galeria__item { margin: 0; border-radius: 8px; cursor: pointer; }
-  .galeria__item img { min-height: 0; width: 100%; height: auto; aspect-ratio: 1 / 1; object-fit: cover; }
+  /* Portefólio: no telemóvel mantém-se a grelha compacta de 3 colunas
+     (estilo mosaico, tipo Instagram). No ecrã são 4 colunas. */
+  .galeria { grid-template-columns: repeat(3, 1fr); gap: 6px; padding-inline: 6px; }
+  .galeria__item { border-radius: 6px; }
   .galeria__legenda { display: none; } /* sem hover no telemóvel */
   .tiras { grid-template-columns: 1fr; }
   .seccao { padding: 3.5rem 0; }

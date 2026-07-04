@@ -31,10 +31,10 @@
       </div>
     </section>
 
-    <section class="seccao">
-      <div class="container">
+    <section class="seccao seccao--portefolio">
 
-        <!-- Filtros -->
+      <!-- Filtros (centrados, dentro do contentor) -->
+      <div class="container">
         <div class="filtros revelar">
           <button class="filtro ativo" data-filtro="todos" data-i18n="filtro_todos">Todos</button>
           <button class="filtro" data-filtro="casamentos" data-i18n="filtro_casamentos">Casamentos</button>
@@ -43,14 +43,16 @@
           <button class="filtro" data-filtro="funebre" data-i18n="filtro_funebre">Fúnebre</button>
           <button class="filtro" data-filtro="outro" data-i18n="filtro_outro">Outro</button>
         </div>
-
-        <!-- Grelha masonry — preenchida a partir de js/galeria-dados.js.
-             Nota: sem .revelar no contentor (é demasiado alto no telemóvel
-             e a transição de opacidade não completava). -->
-        <div class="galeria" id="galeria" aria-live="polite"></div>
-        <p class="galeria-vazia" id="galeria-vazia" hidden data-i18n="galeria_vazia">Em breve, novos trabalhos nesta categoria.</p>
-
       </div>
+
+      <!-- Grelha full-width (bordo a bordo) — preenchida por js/galeria-dados.js.
+           4 colunas no ecrã, 3 no telemóvel. -->
+      <div class="galeria" id="galeria" aria-live="polite"></div>
+
+      <div class="container">
+        <p class="galeria-vazia" id="galeria-vazia" hidden data-i18n="galeria_vazia">Em breve, novos trabalhos nesta categoria.</p>
+      </div>
+
     </section>
 
     <!-- CTA -->
