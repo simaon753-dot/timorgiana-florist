@@ -24,8 +24,8 @@ App.FACEBOOK = "https://www.facebook.com/people/Timorgiana-Flores/";
 App.TIKTOK   = "https://www.tiktok.com/@timorgiana_flores";
 
 /* URL pública do site — usada para incluir o link da foto escolhida
-   na mensagem de encomenda pelo WhatsApp */
-App.SITE     = "https://timorgiana-florist.netlify.app";
+   na mensagem de encomenda pelo WhatsApp (GitHub Pages) */
+App.SITE     = "https://simaon753-dot.github.io/timorgiana-florist";
 
 /* Referência legível de uma foto da galeria:
    "assets/galeria/bouquet/bouquet-04.jpg" → "BOUQUET-04" */
