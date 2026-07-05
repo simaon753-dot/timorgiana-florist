@@ -7,6 +7,15 @@
   <title>Como encomendar · Timorgiana Florist</title>
   <meta name="description" content="Encomende flores e serviços florais da Timorgiana. Preencha o formulário e confirme pelo WhatsApp — simples, próximo e pessoal.">
   <meta name="theme-color" content="#F9AC80">
+  <link rel="canonical" href="https://simaon753-dot.github.io/timorgiana-florist/paginas/encomendar.html">
+  <meta property="og:site_name" content="Timorgiana Florist">
+  <meta property="og:title" content="Como encomendar · Timorgiana Florist">
+  <meta property="og:description" content="Encomende flores e serviços florais da Timorgiana. Preencha o formulário e confirme pelo WhatsApp — simples, próximo e pessoal.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://simaon753-dot.github.io/timorgiana-florist/paginas/encomendar.html">
+  <meta property="og:image" content="https://simaon753-dot.github.io/timorgiana-florist/assets/galeria/bouquet/bouquet-12.jpg">
+  <meta property="og:locale" content="pt_PT">
+  <meta name="twitter:card" content="summary_large_image">
   <link rel="icon" type="image/png" href="../assets/favicon.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -62,11 +71,11 @@
                 <div class="form__linha">
                   <div class="campo">
                     <label for="nome"><span data-i18n="f_nome">Nome</span> <span class="obrig">*</span></label>
-                    <input type="text" id="nome" name="nome" data-i18n-ph="f_nome_ph" placeholder="O seu nome" required>
+                    <input type="text" id="nome" name="nome" autocomplete="name" data-i18n-ph="f_nome_ph" placeholder="O seu nome" required>
                   </div>
                   <div class="campo">
                     <label for="contacto" data-i18n="f_contacto">Telefone / contacto</label>
-                    <input type="text" id="contacto" name="contacto" data-i18n-ph="f_contacto_ph" placeholder="+670 …">
+                    <input type="text" id="contacto" name="contacto" inputmode="tel" autocomplete="tel" data-i18n-ph="f_contacto_ph" placeholder="+670 …">
                   </div>
                 </div>
 
@@ -97,7 +106,7 @@
 
                 <div class="campo">
                   <label for="morada" data-i18n="f_morada">Morada de entrega</label>
-                  <input type="text" id="morada" name="morada" data-i18n-ph="f_morada_ph" placeholder="Ex.: Bidau, Cristo Rei, Díli">
+                  <input type="text" id="morada" name="morada" autocomplete="street-address" data-i18n-ph="f_morada_ph" placeholder="Ex.: Bidau, Cristo Rei, Díli">
                 </div>
 
                 <div class="campo">

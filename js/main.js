@@ -163,6 +163,9 @@
       var lb = document.createElement("div");
       lb.className = "lightbox";
       lb.setAttribute("aria-hidden", "true");
+      lb.setAttribute("role", "dialog");
+      lb.setAttribute("aria-modal", "true");
+      lb.setAttribute("aria-label", "Fotografia ampliada");
       lb.innerHTML =
         '<button class="lightbox__fechar" data-i18n-aria="lb_fechar" aria-label="Fechar">&times;</button>' +
         '<button class="lightbox__nav lightbox__nav--ant" data-i18n-aria="lb_anterior" aria-label="Anterior">&#8249;</button>' +
@@ -177,6 +180,10 @@
       var lbRef = lb.querySelector(".lightbox__ref");
       var lbEnc = lb.querySelector(".lightbox__encomendar");
       var lbAberto = -1;
+      var lbFocoAnterior = null; /* devolve o foco ao fechar (acessibilidade) */
+
+      /* crossfade: a imagem entra suavemente quando termina de carregar */
+      lbImg.addEventListener("load", function () { lbImg.style.opacity = "1"; });
 
       function visiveisAtuais() {
         return itens.filter(function (it) { return it.style.display !== "none"; });
@@ -188,12 +195,16 @@
         lb.classList.add("aberto");
         lb.setAttribute("aria-hidden", "false");
         document.body.style.overflow = "hidden";
+        lbFocoAnterior = (document.activeElement && document.activeElement !== document.body)
+          ? document.activeElement : it; /* devolve ao item clicado */
+        lb.querySelector(".lightbox__fechar").focus();
       }
       function mostrarLb() {
         var lista = visiveisAtuais();
         if (lbAberto < 0 || lbAberto >= lista.length) return;
         var it = lista[lbAberto];
-        lbImg.src = it.querySelector("img").src;
+        var novoSrc = it.querySelector("img").src;
+        if (lbImg.src !== novoSrc) { lbImg.style.opacity = "0"; lbImg.src = novoSrc; }
         /* referência do modelo (ex.: "Bouquet · Ref. BOUQUET-04") e ligação
            para o formulário de encomenda já com a foto escolhida */
         var src = it.getAttribute("data-src") || "";
@@ -210,7 +221,21 @@
         lb.classList.remove("aberto");
         lb.setAttribute("aria-hidden", "true");
         document.body.style.overflow = "";
+        if (lbFocoAnterior && lbFocoAnterior.focus) lbFocoAnterior.focus();
       }
+
+      /* gestos tácteis: deslizar para navegar, deslizar para baixo fecha */
+      var toqueX = 0, toqueY = 0;
+      lb.addEventListener("touchstart", function (e) {
+        if (e.touches.length !== 1) return;
+        toqueX = e.touches[0].clientX; toqueY = e.touches[0].clientY;
+      }, { passive: true });
+      lb.addEventListener("touchend", function (e) {
+        var dx = e.changedTouches[0].clientX - toqueX;
+        var dy = e.changedTouches[0].clientY - toqueY;
+        if (Math.abs(dx) > 48 && Math.abs(dx) > Math.abs(dy)) navegar(dx < 0 ? 1 : -1);
+        else if (dy > 80 && Math.abs(dy) > Math.abs(dx)) fechar();
+      }, { passive: true });
 
       itens.forEach(function (it) {
         it.addEventListener("click", function () { abrir(it); });
@@ -319,6 +344,89 @@
         }
       });
     }
+
+    /* 9 — Experiência premium: movimento e micro-interações ------------
+       Tudo com transform/opacity (60 fps) e desligado quando o utilizador
+       prefere movimento reduzido. */
+    var reduzMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    /* 9a — Cabeçalho recolhe ao descer e reaparece ao subir */
+    var ultimoY = window.scrollY;
+    window.addEventListener("scroll", function () {
+      var y = window.scrollY;
+      if (!document.body.classList.contains("menu-aberto")) {
+        if (y > 340 && y > ultimoY + 8) cabecalho.classList.add("cabecalho--oculto");
+        else if (y < ultimoY - 4 || y <= 340) cabecalho.classList.remove("cabecalho--oculto");
+      }
+      ultimoY = y;
+    }, { passive: true });
+
+    /* 9b — Paralaxe subtil na fotografia do hero (só desktop) */
+    var arcoImg = document.querySelector(".hero__arco img");
+    var mqDesk = window.matchMedia("(min-width: 881px)");
+    if (arcoImg && !reduzMotion) {
+      var alvoPar = 0, atualPar = 0, parAtivo = false;
+      var quadroPar = function () {
+        atualPar += (alvoPar - atualPar) * .09;
+        arcoImg.style.transform = "translate3d(0," + atualPar.toFixed(2) + "px,0) scale(1.12)";
+        if (Math.abs(alvoPar - atualPar) > .15) requestAnimationFrame(quadroPar);
+        else parAtivo = false;
+      };
+      window.addEventListener("scroll", function () {
+        if (!mqDesk.matches) return;
+        alvoPar = Math.min(30, window.scrollY * .07);
+        if (!parAtivo) { parAtivo = true; requestAnimationFrame(quadroPar); }
+      }, { passive: true });
+      window.addEventListener("resize", function () {
+        if (!mqDesk.matches) arcoImg.style.transform = "";
+      });
+    }
+
+    /* 9c — Números da casa contam ao entrar no ecrã */
+    var nums = document.querySelectorAll(".stat__num");
+    if (nums.length && !reduzMotion && "IntersectionObserver" in window) {
+      var ioNum = new IntersectionObserver(function (ents) {
+        ents.forEach(function (ent) {
+          if (!ent.isIntersecting) return;
+          ioNum.unobserve(ent.target);
+          var el = ent.target;
+          var m = (el.textContent || "").trim().match(/^(\d+)(.*)$/);
+          if (!m) return;
+          var fim = parseInt(m[1], 10), suf = m[2] || "", t0 = null, dur = 1300;
+          var passo = function (t) {
+            if (!t0) t0 = t;
+            var p = Math.min(1, (t - t0) / dur);
+            var eOut = 1 - Math.pow(1 - p, 4); /* easeOutQuart */
+            el.textContent = Math.round(fim * eOut) + suf;
+            if (p < 1) requestAnimationFrame(passo);
+          };
+          requestAnimationFrame(passo);
+        });
+      }, { threshold: .6 });
+      nums.forEach(function (n) { ioNum.observe(n); });
+    }
+
+    /* 9d — Transição suave entre páginas (fade de saída) */
+    if (!reduzMotion) {
+      document.addEventListener("click", function (e) {
+        if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button !== 0) return;
+        var a = e.target && e.target.closest ? e.target.closest("a[href]") : null;
+        if (!a || a.target === "_blank" || a.hasAttribute("download")) return;
+        var href = a.getAttribute("href");
+        if (!href || !/\.html(\?|#|$)/.test(href)) return; /* só navegação interna */
+        e.preventDefault();
+        document.body.classList.add("pagina-sai");
+        setTimeout(function () { window.location.href = href; }, 190);
+      });
+      /* bfcache (botão voltar): garante que a página reaparece */
+      window.addEventListener("pageshow", function () {
+        document.body.classList.remove("pagina-sai");
+      });
+    }
+
+    /* 9e — Formulário: a data de entrega nunca pode ser no passado */
+    var campoData = document.getElementById("data");
+    if (campoData) campoData.min = new Date().toISOString().split("T")[0];
 
     function atualizarFormulario() {
       /* re-traduz as <option> que tenham data-i18n */

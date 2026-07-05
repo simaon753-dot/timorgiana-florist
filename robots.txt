@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://simaon753-dot.github.io/timorgiana-florist/sitemap.xml
