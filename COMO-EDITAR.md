@@ -14,6 +14,25 @@ O endereço do site é: **https://simaon753-dot.github.io/timorgiana-florist/**
 
 ---
 
+## 💲 Mudar os preços da loja
+
+Todos os preços (que agora são **valores de exemplo**) estão no ficheiro **`js/products.js`**.
+Cada linha é um produto. Para mudar o preço, altere só o número a seguir a `preco:`:
+
+```js
+{ slug:"bouquet-01", cat:"bouquet", tipo:"normal", preco:20, nome:{...}, img:"..." },
+```
+
+- `preco:20` → mude para o valor que quiser (ex.: `preco:35`). É em dólares ($).
+- **Hastes** (tipo `unidade`) = preço por haste. Ex.: rosa `1.25`, lírio `5`.
+- **Casamentos, fúnebre e personalizados** (tipo `quote`) não têm preço — mostram
+  "Sob consulta" e o botão "Pedir orçamento". Para tornar um produto "sob consulta",
+  troque `tipo:"normal"` por `tipo:"quote"` e apague o `preco:`.
+
+⚠️ Mantenha as vírgulas e as aspas. Depois: **Commit → Push**.
+
+---
+
 ## 🌷 Adicionar fotos novas à galeria
 
 São 2 passos, dentro da pasta `site/`.

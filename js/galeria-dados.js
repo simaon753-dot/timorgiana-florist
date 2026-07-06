@@ -1,22 +1,9 @@
-/* =========================================================================
-   GALERIA-DADOS.JS — Lista de fotografias do portefólio
-   -------------------------------------------------------------------------
-   Gerado a partir das fotografias reais da Timorgiana.
-   Cada item: { src: caminho, cat: categoria }
-   Categorias: casamentos · vaso · bouquet · funebre · outro
-   Para recategorizar uma foto, mude o 'cat'. Para a esconder, apague a
-   linha. Para adicionar fotos, coloque a imagem na pasta da categoria em
-   assets/galeria/<categoria>/ e acrescente uma linha aqui.
-   ========================================================================= */
+/* GALERIA-DADOS.JS — portefólio (gerado das fotos novas). Categorias: casamentos·bouquet·vaso·funebre·outro. */
 window.App = window.App || {};
 App.GALERIA = [
   { src: "assets/galeria/casamentos/cas-01.jpg", cat: "casamentos" },
   { src: "assets/galeria/casamentos/cas-02.jpg", cat: "casamentos" },
   { src: "assets/galeria/casamentos/cas-03.jpg", cat: "casamentos" },
-  { src: "assets/galeria/casamentos/cas-04.jpg", cat: "casamentos" },
-  { src: "assets/galeria/casamentos/cas-05.jpg", cat: "casamentos" },
-  { src: "assets/galeria/casamentos/cas-06.jpg", cat: "casamentos" },
-  { src: "assets/galeria/casamentos/cas-07.jpg", cat: "casamentos" },
   { src: "assets/galeria/bouquet/bouquet-01.jpg", cat: "bouquet" },
   { src: "assets/galeria/bouquet/bouquet-02.jpg", cat: "bouquet" },
   { src: "assets/galeria/bouquet/bouquet-03.jpg", cat: "bouquet" },
@@ -37,14 +24,6 @@ App.GALERIA = [
   { src: "assets/galeria/bouquet/bouquet-18.jpg", cat: "bouquet" },
   { src: "assets/galeria/bouquet/bouquet-19.jpg", cat: "bouquet" },
   { src: "assets/galeria/bouquet/bouquet-20.jpg", cat: "bouquet" },
-  { src: "assets/galeria/bouquet/bouquet-21.jpg", cat: "bouquet" },
-  { src: "assets/galeria/bouquet/bouquet-22.jpg", cat: "bouquet" },
-  { src: "assets/galeria/bouquet/bouquet-23.jpg", cat: "bouquet" },
-  { src: "assets/galeria/bouquet/bouquet-24.jpg", cat: "bouquet" },
-  { src: "assets/galeria/funebre/fun-01.jpg", cat: "funebre" },
-  { src: "assets/galeria/outro/outro-01.jpg", cat: "outro" },
-  { src: "assets/galeria/outro/outro-02.jpg", cat: "outro" },
-  { src: "assets/galeria/outro/outro-03.jpg", cat: "outro" },
   { src: "assets/galeria/vaso/vaso-01.jpg", cat: "vaso" },
   { src: "assets/galeria/vaso/vaso-02.jpg", cat: "vaso" },
   { src: "assets/galeria/vaso/vaso-03.jpg", cat: "vaso" },
@@ -83,18 +62,6 @@ App.GALERIA = [
   { src: "assets/galeria/vaso/vaso-36.jpg", cat: "vaso" },
   { src: "assets/galeria/vaso/vaso-37.jpg", cat: "vaso" },
   { src: "assets/galeria/vaso/vaso-38.jpg", cat: "vaso" },
-  { src: "assets/galeria/vaso/vaso-39.jpg", cat: "vaso" },
-  { src: "assets/galeria/vaso/vaso-40.jpg", cat: "vaso" },
-  { src: "assets/galeria/vaso/vaso-41.jpg", cat: "vaso" },
-  { src: "assets/galeria/vaso/vaso-42.jpg", cat: "vaso" },
-  { src: "assets/galeria/vaso/vaso-43.jpg", cat: "vaso" },
-  { src: "assets/galeria/vaso/vaso-44.jpg", cat: "vaso" },
-  { src: "assets/galeria/vaso/vaso-51.jpg", cat: "vaso" },
-  { src: "assets/galeria/vaso/vaso-59.jpg", cat: "vaso" },
-  { src: "assets/galeria/vaso/vaso-60.jpg", cat: "vaso" },
-  { src: "assets/galeria/vaso/vaso-61.jpg", cat: "vaso" },
-  { src: "assets/galeria/vaso/vaso-62.jpg", cat: "vaso" },
-  { src: "assets/galeria/vaso/vaso-63.jpg", cat: "vaso" },
-  { src: "assets/galeria/vaso/vaso-64.jpg", cat: "vaso" },
-  { src: "assets/galeria/vaso/vaso-65.jpg", cat: "vaso" },
+  { src: "assets/galeria/funebre/fun-01.jpg", cat: "funebre" },
+  { src: "assets/galeria/outro/outro-01.jpg", cat: "outro" },
 ];

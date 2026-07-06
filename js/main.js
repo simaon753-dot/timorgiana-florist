@@ -18,8 +18,11 @@
     /* 1 — Componentes partilhados ------------------------------------- */
     App.construirCabecalho();
     App.construirRodape();
+    if (App.construirGaveta) App.construirGaveta();
     App.construirWhatsApp();
     App.aplicarIdioma();
+    if (App.Cesto) App.Cesto.atualizar();
+    if (App.Loja && typeof App.Loja.iniciar === "function") App.Loja.iniciar();
 
     var cabecalho = document.getElementById("cabecalho");
 

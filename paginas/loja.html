@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<!-- TIMORGIANA — FLORIST · Loja (coleção) -->
+<html lang="pt">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Loja · Timorgiana Florist</title>
+  <meta name="description" content="Loja da Timorgiana Florist — ramos, arranjos em vaso, hastes avulsas e serviços florais em Díli. Encomende pelo WhatsApp.">
+  <meta name="theme-color" content="#F9AC80">
+  <link rel="canonical" href="https://simaon753-dot.github.io/timorgiana-florist/paginas/loja.html">
+  <meta property="og:site_name" content="Timorgiana Florist">
+  <meta property="og:title" content="Loja · Timorgiana Florist">
+  <meta property="og:description" content="Ramos, arranjos, hastes avulsas e serviços florais em Díli.">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="https://simaon753-dot.github.io/timorgiana-florist/assets/hero-arco.webp">
+  <meta property="og:locale" content="pt_PT">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" type="image/png" href="../assets/favicon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Mulish:wght@300;400;500;600;700;800&family=Pinyon+Script&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/estilos.css">
+</head>
+
+<body data-pagina="loja" data-base="../">
+
+  <main id="conteudo">
+
+    <section class="pagina-hero">
+      <div class="container pagina-hero__interior">
+        <p class="migalhas"><a href="../index.html" data-i18n="nav_inicio">Início</a> · <span data-i18n="nav_loja">Loja</span></p>
+        <h1 data-i18n="lojap_titulo">Loja</h1>
+        <p data-i18n="lojap_sub">Flores frescas, ramos, hastes avulsas e serviços — tudo num só lugar.</p>
+      </div>
+    </section>
+
+    <section class="seccao">
+      <div class="container">
+        <!-- Chips de filtro (preenchidos por loja.js) -->
+        <div class="filtros" id="loja-filtros"></div>
+
+        <!-- Barra: contagem + ordenar -->
+        <div class="colecao-barra">
+          <span class="colecao-barra__conta"><b id="loja-conta-num">0</b> <span data-i18n="loja_conta">produtos</span></span>
+          <span class="colecao-ordenar">
+            <label for="loja-ordenar" data-i18n="loja_ordenar">Ordenar</label>
+            <select id="loja-ordenar" aria-label="Ordenar a loja">
+              <option value="destaque" data-i18n="sort_destaque_l">Em destaque</option>
+              <option value="preco-asc" data-i18n="sort_preco_asc">Preço ↑</option>
+              <option value="preco-desc" data-i18n="sort_preco_desc">Preço ↓</option>
+              <option value="az" data-i18n="sort_az_l">A–Z</option>
+            </select>
+          </span>
+        </div>
+
+        <!-- Grelha de produtos (preenchida por loja.js) -->
+        <div class="produtos-grelha produtos-grelha--4" id="loja-grelha" aria-live="polite"></div>
+
+        <div class="loja-vermais-cx">
+          <button class="btn btn--contorno" id="loja-vermais" hidden data-i18n="ver_mais">Ver mais</button>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <script src="../js/i18n.js"></script>
+  <script src="../js/products.js"></script>
+  <script src="../js/componentes.js"></script>
+  <script src="../js/cart.js"></script>
+  <script src="../js/loja.js"></script>
+  <script src="../js/main.js"></script>
+</body>
+</html>

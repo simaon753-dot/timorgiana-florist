@@ -27,6 +27,7 @@ App.T = {
   nav_sobre:     { pt:"Sobre",             tet:"Kona-ba ami",     en:"About" },
   nav_produtos:  { pt:"Produtos & Serviços", tet:"Produtu & Servisu", en:"Products & Services" },
   nav_galeria:   { pt:"Portefólio",        tet:"Portefóliu",      en:"Portfolio" },
+  nav_loja:      { pt:"Loja",              tet:"Loja",            en:"Shop" },
   nav_encomendar:{ pt:"Encomendar",        tet:"Enkomenda",       en:"Order" },
   nav_contactos: { pt:"Contactos",         tet:"Kontaktu",        en:"Contact" },
 
@@ -40,6 +41,65 @@ App.T = {
   btn_contactar:     { pt:"Contacte-nos",        tet:"Kontaktu ami",       en:"Contact us" },
   btn_explorar:      { pt:"Explorar",            tet:"Esplora",            en:"Explore" },
   wa_balao:          { pt:"Fale connosco",       tet:"Koalia ho ami",      en:"Message us" },
+
+  /* —— LOJA: cesto / gaveta —— */
+  cesto_abrir:   { pt:"Abrir o cesto", tet:"Loke karrinhu", en:"Open cart" },
+  cesto_titulo:  { pt:"O seu cesto", tet:"Ita-nia karrinhu", en:"Your cart" },
+  cesto_vazio:   { pt:"O seu cesto está vazio.", tet:"Ita-nia karrinhu mamuk.", en:"Your cart is empty." },
+  cesto_subtotal:{ pt:"Subtotal", tet:"Subtotál", en:"Subtotal" },
+  cesto_entrega: { pt:"Entrega", tet:"Entrega", en:"Delivery" },
+  cesto_entrega_val: { pt:"A combinar", tet:"Atu kombina", en:"To arrange" },
+  cesto_total:   { pt:"Total", tet:"Totál", en:"Total" },
+  cesto_entrega_nota: { pt:"A entrega é combinada no WhatsApp.", tet:"Entrega kombina iha WhatsApp.", en:"Delivery is arranged on WhatsApp." },
+  cesto_ver:     { pt:"Ver cesto & finalizar", tet:"Haree karrinhu & finaliza", en:"View cart & checkout" },
+  cesto_finalizar: { pt:"Finalizar por WhatsApp", tet:"Finaliza liu WhatsApp", en:"Checkout on WhatsApp" },
+  cesto_continuar: { pt:"Continuar a comprar", tet:"Kontinua sosa", en:"Continue shopping" },
+  por_unidade:   { pt:"/ unidade", tet:"/ unidade", en:"/ each" },
+  add_cesto:     { pt:"Adicionar ao cesto", tet:"Tau iha karrinhu", en:"Add to cart" },
+  add_feito:     { pt:"Adicionado ao cesto", tet:"Tau ona iha karrinhu", en:"Added to cart" },
+  remover:       { pt:"Remover", tet:"Hasai", en:"Remove" },
+  fechar:        { pt:"Fechar", tet:"Taka", en:"Close" },
+  pedir_orcamento:{ pt:"Pedir orçamento", tet:"Husu orsamentu", en:"Request a quote" },
+  sob_consulta:  { pt:"Sob consulta", tet:"Tuir konsulta", en:"On request" },
+
+  /* —— LOJA: coleção —— */
+  lojap_titulo:  { pt:"Loja", tet:"Loja", en:"Shop" },
+  lojap_sub:     { pt:"Flores frescas, ramos, hastes avulsas e serviços — tudo num só lugar.", tet:"Flores fresku, ramu, haste no servisu — hotu iha fatin ida.", en:"Fresh flowers, bouquets, single stems and services — all in one place." },
+  filtro_hastes: { pt:"Hastes avulsas", tet:"Haste", en:"Single stems" },
+  loja_conta:    { pt:"produtos", tet:"produtu", en:"products" },
+  loja_ordenar:  { pt:"Ordenar", tet:"Ordena", en:"Sort" },
+  sort_destaque_l:{ pt:"Em destaque", tet:"Destake", en:"Featured" },
+  sort_preco_asc:{ pt:"Preço ↑", tet:"Presu ↑", en:"Price ↑" },
+  sort_preco_desc:{ pt:"Preço ↓", tet:"Presu ↓", en:"Price ↓" },
+  sort_az_l:     { pt:"A–Z", tet:"A–Z", en:"A–Z" },
+  ver_mais:      { pt:"Ver mais", tet:"Haree tan", en:"Load more" },
+  loja_vazia:    { pt:"Sem produtos nesta categoria.", tet:"La iha produtu iha kategoria ne'e.", en:"No products in this category." },
+
+  /* —— LOJA: produto —— */
+  prodpg_qty:    { pt:"Quantidade", tet:"Kuantidade", en:"Quantity" },
+  prodpg_unid_nota:{ pt:"Compre 1 haste ou a quantidade que quiser.", tet:"Sosa haste 1 ka kuantidade ne'ebé ita hakarak.", en:"Buy one stem or as many as you like." },
+  prodpg_desc:   { pt:"Descrição", tet:"Deskrisaun", en:"Description" },
+  prodpg_entrega:{ pt:"Entrega", tet:"Entrega", en:"Delivery" },
+  prodpg_inclui: { pt:"O que inclui", tet:"Inklui saida", en:"What's included" },
+  prodpg_cuidados:{ pt:"Cuidados", tet:"Kuidadu", en:"Care" },
+  prodpg_rel:    { pt:"Também poderá gostar", tet:"Karik gosta mós", en:"You may also like" },
+  prodpg_voltar: { pt:"Voltar à loja", tet:"Fila ba loja", en:"Back to shop" },
+  /* descrições genéricas por categoria (usadas na página de produto) */
+  desc_bouquet:  { pt:"Ramo de flores frescas, composto à mão pela nossa equipa. Cada peça é única — as flores podem variar conforme a disponibilidade da estação.", tet:"Ramu flores fresku, halo ho liman husi ami-nia ekipa. Peça ida-idak úniku — flores bele muda tuir estasaun.", en:"A hand-tied bouquet of fresh flowers. Each piece is unique — blooms may vary with seasonal availability." },
+  desc_vaso:     { pt:"Arranjo floral em vaso, pronto a decorar qualquer espaço. Composição desenhada à mão com flores frescas.", tet:"Aranju floral iha vazu, prontu atu dekora fatin. Kompozisaun ho liman ho flores fresku.", en:"A vase arrangement ready to grace any space, hand-designed with fresh flowers." },
+  desc_hastes:   { pt:"Haste avulsa de flor fresca. Escolha a quantidade que precisa — perfeita para criar o seu próprio ramo.", tet:"Haste flores fresku. Hili kuantidade — perfeitu atu kria ita-nia ramu rasik.", en:"A single fresh stem. Choose the quantity you need — perfect to build your own bouquet." },
+  desc_quote:    { pt:"Serviço personalizado. Fale connosco para desenharmos a proposta à medida da sua ocasião e orçamento.", tet:"Servisu personalizadu. Koalia ho ami atu dezeña proposta tuir okaziaun.", en:"A bespoke service. Talk to us and we'll design a proposal for your occasion and budget." },
+  inclui_txt:    { pt:"Flores frescas, embrulho e cartão de mensagem. Entrega em toda a Díli (combinada por WhatsApp).", tet:"Flores fresku, embrulho no kartaun mensajen. Entrega iha Dili tomak (kombina liu WhatsApp).", en:"Fresh flowers, wrapping and a message card. Delivery across Dili (arranged on WhatsApp)." },
+  cuidados_txt:  { pt:"Mantenha em água limpa, longe do sol direto. Corte as hastes a cada 2 dias para durarem mais.", tet:"Rai iha bee moos, dook husi loro-matan. Korta haste kada loron 2 atu tahan naruk.", en:"Keep in clean water, away from direct sun. Trim the stems every 2 days to last longer." },
+  entrega_txt:   { pt:"Entregamos em toda a Díli. Combine a data e a morada connosco no WhatsApp ao finalizar.", tet:"Ami entrega iha Dili tomak. Kombina data no morada iha WhatsApp.", en:"We deliver across Dili. Confirm the date and address with us on WhatsApp at checkout." },
+
+  /* —— CESTO (página) —— */
+  cestop_titulo: { pt:"O seu cesto", tet:"Ita-nia karrinhu", en:"Your cart" },
+  cestop_vazio_cta: { pt:"Explorar a loja", tet:"Esplora loja", en:"Explore the shop" },
+  checkout_nome: { pt:"Nome", tet:"Naran", en:"Name" },
+  checkout_data: { pt:"Data de entrega", tet:"Data entrega", en:"Delivery date" },
+  checkout_morada:{ pt:"Morada de entrega", tet:"Morada entrega", en:"Delivery address" },
+  checkout_nota: { pt:"Mensagem (opcional)", tet:"Mensajen (opsionál)", en:"Message (optional)" },
 
   /* —— Hero (Home) —— */
   hero_eyebrow:  { pt:"Arte floral · Díli, Timor-Leste", tet:"Arte floral · Dili, Timor-Leste", en:"Floral artistry · Dili, Timor-Leste" },

@@ -61,6 +61,7 @@ App.ICON = {
   clock:     '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>',
   arrow:     '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>',
   chevron:   '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>',
+  cesto:     '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>',
   check:     '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>',
   heart:     '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 21s-7.5-4.6-10-9.3C.4 8.4 2 5 5.3 5c2 0 3.3 1.1 4.2 2.3l.5.7.5-.7C11.4 6.1 12.7 5 14.7 5 18 5 19.6 8.4 22 11.7 19.5 16.4 12 21 12 21Z"/></svg>',
   /* ícones decorativos / valores */
@@ -86,14 +87,15 @@ App.construirCabecalho = function () {
   var b = App.base, atual = App.pagina;
   var links = [
     ["inicio",     b + "index.html",            "nav_inicio"],
-    ["sobre",      b + "paginas/sobre.html",     "nav_sobre"],
-    ["produtos",   b + "paginas/produtos.html",  "nav_produtos"],
+    ["loja",       b + "paginas/loja.html",      "nav_loja"],
     ["galeria",    b + "paginas/galeria.html",   "nav_galeria"],
-    ["encomendar", b + "paginas/encomendar.html","nav_encomendar"],
+    ["sobre",      b + "paginas/sobre.html",     "nav_sobre"],
     ["contactos",  b + "paginas/contactos.html", "nav_contactos"]
   ];
+  /* a "Loja" fica ativa também nas páginas de produto e cesto */
+  var grupoLoja = { loja: 1, produto: 1, cesto: 1 };
   var itens = links.map(function (l) {
-    var ativo = (l[0] === atual) ? " ativo" : "";
+    var ativo = (l[0] === atual || (l[0] === "loja" && grupoLoja[atual])) ? " ativo" : "";
     var aria  = ativo ? ' aria-current="page"' : "";
     return '<li><a class="nav__link' + ativo + '"' + aria + ' href="' + l[1] + '" data-i18n="' + l[2] + '">' + App.t(l[2]) + '</a></li>';
   }).join("");
@@ -110,14 +112,20 @@ App.construirCabecalho = function () {
         '<img class="logo__marca logo__marca--creme" src="' + b + 'assets/logo-creme.png" alt="Timorgiana Florist">' +
         '<img class="logo__marca logo__marca--coral" src="' + b + 'assets/logo-coral.png" alt="Timorgiana Florist">' +
       '</a>' +
-      '<button class="menu-toggle" aria-label="Abrir menu" aria-expanded="false" aria-controls="nav-principal" type="button">' +
-        '<span></span><span></span><span></span>' +
-      '</button>' +
+      '<div class="cabecalho__acoes">' +
+        '<button class="cabecalho__cesto" type="button" data-abrir-cesto aria-label="' + App.t("cesto_abrir") + '">' +
+          App.ICON.cesto +
+          '<span class="cabecalho__cesto-conta" hidden>0</span>' +
+        '</button>' +
+        '<button class="menu-toggle" aria-label="Abrir menu" aria-expanded="false" aria-controls="nav-principal" type="button">' +
+          '<span></span><span></span><span></span>' +
+        '</button>' +
+      '</div>' +
       '<nav class="nav" id="nav-principal" aria-label="Navegação principal">' +
         '<ul class="nav__lista">' + itens + '</ul>' +
         '<div class="nav__cta">' +
           '<div class="idiomas" role="group" aria-label="Idioma">' + idiomas + '</div>' +
-          '<a class="btn btn--primario btn--pequeno" href="' + b + 'paginas/encomendar.html" data-i18n="btn_encomendar">' + App.t("btn_encomendar") + '</a>' +
+          '<a class="btn btn--primario btn--pequeno" href="' + b + 'paginas/loja.html" data-i18n="nav_loja">' + App.t("nav_loja") + '</a>' +
         '</div>' +
       '</nav>' +
     '</div>' +
@@ -184,6 +192,30 @@ App.construirRodape = function () {
     '</div>' +
   '</footer>';
 
+  var wrap = document.createElement("div");
+  wrap.innerHTML = html;
+  while (wrap.firstChild) document.body.appendChild(wrap.firstChild);
+};
+
+/* -------------------------------------------------------------------------
+   GAVETA LATERAL DO CESTO (em todas as páginas)
+   ------------------------------------------------------------------------- */
+App.construirGaveta = function () {
+  var b = App.base;
+  var html =
+  '<div class="gaveta-overlay" data-fechar-cesto></div>' +
+  '<aside class="gaveta" id="gaveta-cesto" aria-hidden="true" aria-label="' + App.t("cesto_titulo") + '">' +
+    '<div class="gaveta__topo">' +
+      '<span class="gaveta__titulo" data-i18n="cesto_titulo">' + App.t("cesto_titulo") + '</span>' +
+      '<button class="gaveta__fechar" type="button" data-fechar-cesto aria-label="' + App.t("fechar") + '">&times;</button>' +
+    '</div>' +
+    '<div class="gaveta__corpo" id="gaveta-corpo"></div>' +
+    '<div class="gaveta__rodape" id="gaveta-rodape" hidden>' +
+      '<div class="gaveta-subtotal"><span data-i18n="cesto_subtotal">Subtotal</span><span class="gaveta-subtotal__val">$0.00</span></div>' +
+      '<p class="gaveta-nota" data-i18n="cesto_entrega_nota">Entrega combinada no WhatsApp.</p>' +
+      '<a class="btn btn--primario" style="width:100%" href="' + b + 'paginas/cesto.html" data-i18n="cesto_ver">Ver cesto &amp; finalizar</a>' +
+    '</div>' +
+  '</aside>';
   var wrap = document.createElement("div");
   wrap.innerHTML = html;
   while (wrap.firstChild) document.body.appendChild(wrap.firstChild);
