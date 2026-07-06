@@ -437,6 +437,27 @@
     var campoData = document.getElementById("data");
     if (campoData) campoData.min = new Date().toISOString().split("T")[0];
 
+    /* 9f — Coleção de produtos: ordenar (Em destaque / Nome A–Z) */
+    var selOrdenar = document.getElementById("ordenar");
+    var grelhaProd = document.getElementById("produtos-grelha");
+    if (selOrdenar && grelhaProd) {
+      selOrdenar.addEventListener("change", function () {
+        var tiles = [].slice.call(grelhaProd.querySelectorAll(".produto"));
+        if (selOrdenar.value === "nome") {
+          tiles.sort(function (a, b) {
+            var na = (a.querySelector(".produto__nome").textContent || "").trim();
+            var nb = (b.querySelector(".produto__nome").textContent || "").trim();
+            return na.localeCompare(nb, App.idioma === "en" ? "en" : "pt");
+          });
+        } else { /* em destaque = ordem original (data-ordem) */
+          tiles.sort(function (a, b) {
+            return (+a.getAttribute("data-ordem") || 0) - (+b.getAttribute("data-ordem") || 0);
+          });
+        }
+        tiles.forEach(function (t) { grelhaProd.appendChild(t); });
+      });
+    }
+
     function atualizarFormulario() {
       /* re-traduz as <option> que tenham data-i18n */
       document.querySelectorAll("option[data-i18n]").forEach(function (op) {

@@ -35,76 +35,91 @@
       </div>
     </section>
 
-    <!-- Serviços (6 cartões) -->
+    <!-- Coleção (modelo de loja-boutique) -->
     <section class="seccao">
       <div class="container">
-        <div class="grelha grelha--3">
 
-          <article class="cartao revelar">
-            <div class="cartao__media"><span class="cartao__etiqueta" data-i18n="etiqueta_popular">Mais procurado</span>
+        <!-- Barra da coleção: contagem + ordenar -->
+        <div class="colecao-barra revelar">
+          <span class="colecao-barra__conta"><b>6</b> <span data-i18n="prod_conta">arranjos & serviços</span></span>
+          <span class="colecao-ordenar">
+            <label for="ordenar" data-i18n="prod_ordenar">Ordenar</label>
+            <select id="ordenar" aria-label="Ordenar a coleção">
+              <option value="destaque" data-i18n="sort_destaque">Em destaque</option>
+              <option value="nome" data-i18n="sort_nome">Nome (A–Z)</option>
+            </select>
+          </span>
+        </div>
+
+        <!-- Grelha de produtos-loja (cada tile é todo clicável → Encomendar) -->
+        <div class="produtos-grelha" id="produtos-grelha">
+
+          <a class="produto revelar" href="encomendar.html" data-ordem="1">
+            <div class="produto__media">
+              <span class="produto__badge" data-i18n="etiqueta_popular">Mais procurado</span>
               <img src="../assets/galeria/thumbs/bouquet-12.webp" alt="Ramo de flores em tons pêssego" width="480" height="480" loading="lazy" decoding="async">
             </div>
-            <div class="cartao__corpo">
-              <h3 class="cartao__titulo" data-i18n="prod1_t">Flores naturais & ramos</h3>
-              <p class="cartao__texto" data-i18n="prod1_d">Bouquets e ramos de flores frescas para todas as ocasiões.</p>
-              <a class="link-seta" href="encomendar.html"><span data-i18n="btn_encomendar">Encomendar</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+            <div class="produto__info">
+              <h3 class="produto__nome" data-i18n="prod1_t">Flores naturais & ramos</h3>
+              <span class="produto__meta" data-i18n="preco_consulta">Sob consulta</span>
+              <span class="produto__cta"><span data-i18n="btn_encomendar">Encomendar</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
             </div>
-          </article>
+          </a>
 
-          <article class="cartao revelar revelar--d1">
-            <div class="cartao__media">
+          <a class="produto revelar revelar--d1" href="encomendar.html" data-ordem="2">
+            <div class="produto__media">
               <img src="../assets/galeria/thumbs/cas-05.webp" alt="Ramo de noiva com rosas brancas" width="480" height="480" loading="lazy" decoding="async">
             </div>
-            <div class="cartao__corpo">
-              <h3 class="cartao__titulo" data-i18n="prod2_t">Casamentos</h3>
-              <p class="cartao__texto" data-i18n="prod2_d">Decoração floral completa: bouquet da noiva, arcos, centros de mesa e espaços.</p>
-              <a class="link-seta" href="encomendar.html"><span data-i18n="btn_encomendar">Encomendar</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+            <div class="produto__info">
+              <h3 class="produto__nome" data-i18n="prod2_t">Casamentos</h3>
+              <span class="produto__meta" data-i18n="preco_consulta">Sob consulta</span>
+              <span class="produto__cta"><span data-i18n="btn_encomendar">Encomendar</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
             </div>
-          </article>
+          </a>
 
-          <article class="cartao revelar revelar--d2">
-            <div class="cartao__media">
+          <a class="produto revelar revelar--d2" href="encomendar.html" data-ordem="3">
+            <div class="produto__media">
               <img src="../assets/galeria/thumbs/vaso-20.webp" alt="Arranjo floral para eventos" width="480" height="480" loading="lazy" decoding="async">
             </div>
-            <div class="cartao__corpo">
-              <h3 class="cartao__titulo" data-i18n="prod3_t">Eventos & cerimónias oficiais</h3>
-              <p class="cartao__texto" data-i18n="prod3_d">Conferências, cerimónias institucionais e festas corporativas.</p>
-              <a class="link-seta" href="encomendar.html"><span data-i18n="btn_encomendar">Encomendar</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+            <div class="produto__info">
+              <h3 class="produto__nome" data-i18n="prod3_t">Eventos & cerimónias oficiais</h3>
+              <span class="produto__meta" data-i18n="preco_consulta">Sob consulta</span>
+              <span class="produto__cta"><span data-i18n="btn_encomendar">Encomendar</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
             </div>
-          </article>
+          </a>
 
-          <article class="cartao revelar">
-            <div class="cartao__media">
+          <a class="produto revelar" href="encomendar.html" data-ordem="4">
+            <div class="produto__media">
               <img src="../assets/galeria/thumbs/fun-01.webp" alt="Coroa fúnebre" width="480" height="480" loading="lazy" decoding="async">
             </div>
-            <div class="cartao__corpo">
-              <h3 class="cartao__titulo" data-i18n="prod4_t">Cerimónias fúnebres</h3>
-              <p class="cartao__texto" data-i18n="prod4_d">Coroas, ramos e arranjos fúnebres compostos com respeito e delicadeza.</p>
-              <a class="link-seta" href="encomendar.html"><span data-i18n="btn_encomendar">Encomendar</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+            <div class="produto__info">
+              <h3 class="produto__nome" data-i18n="prod4_t">Cerimónias fúnebres</h3>
+              <span class="produto__meta" data-i18n="preco_consulta">Sob consulta</span>
+              <span class="produto__cta"><span data-i18n="btn_encomendar">Encomendar</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
             </div>
-          </article>
+          </a>
 
-          <article class="cartao revelar revelar--d1">
-            <div class="cartao__media">
+          <a class="produto revelar revelar--d1" href="encomendar.html" data-ordem="5">
+            <div class="produto__media">
               <img src="../assets/galeria/thumbs/vaso-30.webp" alt="Decoração floral de espaço" width="480" height="480" loading="lazy" decoding="async">
             </div>
-            <div class="cartao__corpo">
-              <h3 class="cartao__titulo" data-i18n="prod5_t">Decoração de espaços</h3>
-              <p class="cartao__texto" data-i18n="prod5_d">Festas, batizados, aniversários e celebrações privadas à medida.</p>
-              <a class="link-seta" href="encomendar.html"><span data-i18n="btn_encomendar">Encomendar</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+            <div class="produto__info">
+              <h3 class="produto__nome" data-i18n="prod5_t">Decoração de espaços</h3>
+              <span class="produto__meta" data-i18n="preco_consulta">Sob consulta</span>
+              <span class="produto__cta"><span data-i18n="btn_encomendar">Encomendar</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
             </div>
-          </article>
+          </a>
 
-          <article class="cartao revelar revelar--d2">
-            <div class="cartao__media">
+          <a class="produto revelar revelar--d2" href="encomendar.html" data-ordem="6">
+            <div class="produto__media">
               <img src="../assets/galeria/thumbs/bouquet-24.webp" alt="Arranjo floral personalizado" width="480" height="480" loading="lazy" decoding="async">
             </div>
-            <div class="cartao__corpo">
-              <h3 class="cartao__titulo" data-i18n="prod6_t">Arranjos personalizados</h3>
-              <p class="cartao__texto" data-i18n="prod6_d">Desenhamos arranjos exclusivos a partir das suas cores e inspirações.</p>
-              <a class="link-seta" href="encomendar.html"><span data-i18n="btn_encomendar">Encomendar</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+            <div class="produto__info">
+              <h3 class="produto__nome" data-i18n="prod6_t">Arranjos personalizados</h3>
+              <span class="produto__meta" data-i18n="preco_consulta">Sob consulta</span>
+              <span class="produto__cta"><span data-i18n="btn_encomendar">Encomendar</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
             </div>
-          </article>
+          </a>
 
         </div>
       </div>

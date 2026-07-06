@@ -175,6 +175,15 @@ App.T = {
   prod_como: { pt:"Como funciona", tet:"Oinsá funsiona", en:"How it works" },
   etiqueta_popular: { pt:"Mais procurado", tet:"Gosta liu", en:"Most loved" },
 
+  /* —— Coleção de produtos (modelo de loja) —— */
+  prod_colecao_eb: { pt:"A coleção", tet:"Koleksaun", en:"The collection" },
+  prod_conta:     { pt:"arranjos & serviços", tet:"aranju & servisu", en:"arrangements & services" },
+  prod_ordenar:   { pt:"Ordenar", tet:"Ordena", en:"Sort" },
+  sort_destaque:  { pt:"Em destaque", tet:"Destake", en:"Featured" },
+  sort_nome:      { pt:"Nome (A–Z)", tet:"Naran (A–Z)", en:"Name (A–Z)" },
+  preco_consulta: { pt:"Sob consulta", tet:"Tuir konsulta", en:"On request" },
+  prod_ver_galeria: { pt:"Ver exemplos", tet:"Haree ezemplu", en:"See examples" },
+
   /* —— Página GALERIA —— */
   galp_titulo: { pt:"Portefólio", tet:"Portefóliu", en:"Portfolio" },
   galp_sub:    { pt:"Uma seleção de trabalhos realizados — casamentos, eventos e arranjos que ficaram na memória.", tet:"Seleksaun servisu sira ne'ebé halo ona — kazamentu, eventu no aranju ne'ebé hela iha memória.", en:"A selection of our work — weddings, events and arrangements to remember." },

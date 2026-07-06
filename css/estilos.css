@@ -1096,3 +1096,107 @@ body.pagina-sai { opacity: 0; transition: opacity .2s ease; }
   .hero__arco img { transform: none; }
   .btn:active, .filtro:active { transform: none; }
 }
+
+/* ==========================================================================
+   15. MODELO DE LOJA-COLEÇÃO (inspirado em boutiques de flores premium)
+   --------------------------------------------------------------------------
+   Tiles de "produto" shoppable: fotografia vertical, informação centrada por
+   baixo (nome · "Sob consulta" · Encomendar) e barra de coleção com contagem
+   e ordenação. Mantém a paleta e as fontes da marca.
+   ========================================================================== */
+
+/* — Barra de coleção (contagem + ordenar) — */
+.colecao-barra {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 1rem; flex-wrap: wrap;
+  padding-bottom: 1.4rem; margin-bottom: 2.6rem;
+  border-bottom: var(--hairline);
+}
+.colecao-barra__conta {
+  font-family: var(--sans); font-size: .72rem; font-weight: 700;
+  letter-spacing: .22em; text-transform: uppercase; color: var(--tinta-tenue);
+}
+.colecao-barra__conta b { color: var(--terracota); font-weight: 800; }
+.colecao-ordenar { display: inline-flex; align-items: center; gap: .6rem; }
+.colecao-ordenar label {
+  font-family: var(--sans); font-size: .66rem; font-weight: 700;
+  letter-spacing: .2em; text-transform: uppercase; color: var(--tinta-tenue);
+}
+.colecao-ordenar select {
+  font-family: var(--sans); font-size: .78rem; font-weight: 600; color: var(--tinta);
+  border: 1px solid var(--linha); border-radius: var(--raio-sm);
+  padding: .5rem 2.2rem .5rem .8rem; background: var(--branco); cursor: pointer;
+  transition: var(--transicao);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' fill='none' stroke='%23C4633A' stroke-width='1.6' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat; background-position: right .8rem center;
+  -webkit-appearance: none; appearance: none;
+}
+.colecao-ordenar select:hover { border-color: var(--coral); }
+
+/* — Grelha de produtos-loja — */
+.produtos-grelha { display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(1.2rem, 2.4vw, 2.2rem); }
+
+/* — Tile de produto (todo clicável) — */
+.produto {
+  display: flex; flex-direction: column; position: relative;
+  color: inherit; text-decoration: none;
+}
+.produto__media {
+  position: relative; aspect-ratio: 4 / 5; overflow: hidden;
+  border-radius: var(--raio); background: var(--coral-veu);
+}
+.produto__media img { width: 100%; height: 100%; object-fit: cover; transition: transform 1s var(--easa); }
+.produto:hover .produto__media img { transform: scale(1.05); }
+.produto__media::after { /* véu quente subtil ao pousar */
+  content: ""; position: absolute; inset: 0; pointer-events: none;
+  background: linear-gradient(to top, rgba(58,48,42,.16), transparent 42%);
+  opacity: 0; transition: opacity .5s ease;
+}
+.produto:hover .produto__media::after { opacity: 1; }
+.produto__badge {
+  position: absolute; top: .8rem; left: .8rem; z-index: 2;
+  background: var(--terracota); color: #fff;
+  font-family: var(--sans); font-size: .58rem; font-weight: 800;
+  letter-spacing: .2em; text-transform: uppercase;
+  padding: .4rem .7rem; border-radius: var(--raio-sm);
+}
+
+/* — Informação por baixo da foto (centrada, estilo boutique) — */
+.produto__info { text-align: center; padding: 1.15rem .6rem 0; }
+.produto__nome {
+  font-family: var(--serif); font-size: 1.3rem; font-weight: 500;
+  color: var(--tinta); margin: 0 0 .3rem; transition: color var(--transicao);
+}
+.produto:hover .produto__nome { color: var(--terracota); }
+.produto__meta {
+  display: block; font-family: var(--sans); font-size: .64rem; font-weight: 700;
+  letter-spacing: .24em; text-transform: uppercase; color: var(--tinta-tenue);
+  margin-bottom: .85rem;
+}
+.produto__cta {
+  display: inline-flex; align-items: center; gap: .4rem;
+  font-family: var(--sans); font-size: .68rem; font-weight: 800;
+  letter-spacing: .2em; text-transform: uppercase; color: var(--terracota);
+  padding-bottom: 3px; border-bottom: 1px solid transparent; transition: border-color var(--transicao);
+}
+.produto:hover .produto__cta { border-bottom-color: var(--terracota); }
+.produto__cta svg { width: 14px; height: 14px; transition: transform .35s var(--easa); }
+.produto:hover .produto__cta svg { transform: translateX(4px); }
+
+@media (max-width: 900px) { .produtos-grelha { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 520px) {
+  .produtos-grelha { gap: 1.1rem .8rem; }
+  .produto__nome { font-size: 1.12rem; }
+  .produto__info { padding-top: .9rem; }
+  .colecao-barra { margin-bottom: 1.8rem; }
+}
+
+/* — Home: grelha de categorias no mesmo modelo de loja (4-up) — */
+.produtos-grelha--4 { grid-template-columns: repeat(4, 1fr); }
+@media (max-width: 900px) { .produtos-grelha--4 { grid-template-columns: repeat(2, 1fr); } }
+
+/* Descrição curta nos tiles da Home (frase, não preço) — preserva o texto */
+.produto__desc {
+  font-family: var(--sans); font-size: .88rem; line-height: 1.55; color: var(--tinta-suave);
+  margin: 0 auto .9rem; max-width: 30ch;
+}
