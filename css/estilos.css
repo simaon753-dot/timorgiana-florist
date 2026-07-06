@@ -1354,3 +1354,6 @@ body.gaveta-aberta .gaveta { transform: none; }
 @media (max-width: 880px) {
   .menu-toggle { position: static !important; transform: none !important; }
 }
+
+/* Total ao vivo no botão "Adicionar ao cesto" */
+.btn-total { letter-spacing: .06em; font-variant-numeric: tabular-nums; opacity: .95; }

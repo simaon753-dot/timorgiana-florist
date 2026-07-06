@@ -131,7 +131,8 @@ App.Loja = (function () {
             '<button class="qty__b" type="button" data-qty="mais" aria-label="+">+</button>' +
           '</div>' +
           '<button class="btn btn--primario btn--grande" id="btn-add">' + App.ICON.cesto +
-          ' <span data-i18n="add_cesto">' + App.t("add_cesto") + '</span></button>' +
+          ' <span data-i18n="add_cesto">' + App.t("add_cesto") + '</span>' +
+          '<span class="btn-total" id="prod-total"></span></button>' +
         '</div>' +
         (p.tipo === "unidade" ? '<p class="produto-pg__nota" data-i18n="prodpg_unid_nota">' + App.t("prodpg_unid_nota") + '</p>' : '');
     }
@@ -158,12 +159,22 @@ App.Loja = (function () {
 
     /* interações */
     var qi = document.getElementById("prod-qty");
+    /* total ao vivo no botão: quantidade × preço, atualiza sozinho */
+    function atualizarTotal() {
+      var t = document.getElementById("prod-total");
+      if (!t || typeof p.preco !== "number") return;
+      var v = Math.max(1, parseInt((qi && qi.value) || "1", 10) || 1);
+      t.textContent = " · " + App.Cesto.precoFmt(p.preco * v);
+    }
     wrap.addEventListener("click", function (e) {
       var q = e.target.closest("[data-qty]"); if (q && qi) {
         var v = parseInt(qi.value, 10) || 1;
         qi.value = Math.max(1, v + (q.getAttribute("data-qty") === "mais" ? 1 : -1));
+        atualizarTotal();
       }
     });
+    if (qi) qi.addEventListener("input", atualizarTotal);
+    atualizarTotal();
     var add = document.getElementById("btn-add");
     if (add) add.addEventListener("click", function () {
       var v = Math.max(1, parseInt((qi && qi.value) || "1", 10) || 1);
