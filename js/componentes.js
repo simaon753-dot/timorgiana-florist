@@ -88,7 +88,6 @@ App.construirCabecalho = function () {
   var links = [
     ["inicio",     b + "index.html",            "nav_inicio"],
     ["loja",       b + "paginas/loja.html",      "nav_loja"],
-    ["galeria",    b + "paginas/galeria.html",   "nav_galeria"],
     ["sobre",      b + "paginas/sobre.html",     "nav_sobre"],
     ["contactos",  b + "paginas/contactos.html", "nav_contactos"]
   ];
@@ -161,7 +160,7 @@ App.construirRodape = function () {
           '<ul class="rodape__lista">' +
             '<li><a href="' + b + 'index.html" data-i18n="nav_inicio">' + App.t("nav_inicio") + '</a></li>' +
             '<li><a href="' + b + 'paginas/sobre.html" data-i18n="nav_sobre">' + App.t("nav_sobre") + '</a></li>' +
-            '<li><a href="' + b + 'paginas/galeria.html" data-i18n="nav_galeria">' + App.t("nav_galeria") + '</a></li>' +
+            '<li><a href="' + b + 'paginas/loja.html" data-i18n="nav_loja">' + App.t("nav_loja") + '</a></li>' +
             '<li><a href="' + b + 'paginas/contactos.html" data-i18n="nav_contactos">' + App.t("nav_contactos") + '</a></li>' +
           '</ul>' +
         '</div>' +
