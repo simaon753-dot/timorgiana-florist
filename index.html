@@ -62,8 +62,8 @@
 
   <link rel="stylesheet" href="css/estilos.css">
 
-  <!-- Pré-carregamento da fotografia principal do hero (melhora o LCP) -->
-  <link rel="preload" as="image" href="assets/galeria/casamentos/cas-06.jpg">
+  <!-- Pré-carregamento da fotografia principal do hero (WebP leve, melhora o LCP) -->
+  <link rel="preload" as="image" href="assets/hero-arco.webp" type="image/webp">
 </head>
 
 <body data-pagina="inicio" data-base="">
@@ -90,7 +90,10 @@
         <!-- Fotografia em arco + selo giratório + nota flutuante -->
         <div class="hero__media">
           <div class="hero__arco">
-            <img src="assets/galeria/casamentos/cas-06.jpg" alt="Bouquet de rosas brancas — Timorgiana Florist" fetchpriority="high">
+            <picture>
+              <source srcset="assets/hero-arco.webp" type="image/webp">
+              <img src="assets/galeria/casamentos/cas-06.jpg" alt="Bouquet de rosas brancas — Timorgiana Florist" width="760" height="1007" fetchpriority="high">
+            </picture>
           </div>
           <svg class="hero__selo" viewBox="0 0 120 120" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
             <defs><path id="selo-circ" d="M60,60 m-45,0 a45,45 0 1,1 90,0 a45,45 0 1,1 -90,0"/></defs>
@@ -188,7 +191,7 @@
         <div class="grelha grelha--4">
           <a class="cartao revelar" href="paginas/produtos.html">
             <div class="cartao__media">
-              <img src="assets/galeria/bouquet/bouquet-04.jpg" alt="Ramo de rosas vermelhas" loading="lazy">
+              <img src="assets/galeria/thumbs/bouquet-04.webp" alt="Ramo de rosas vermelhas" width="480" height="480" loading="lazy" decoding="async">
             </div>
             <div class="cartao__corpo">
               <h3 class="cartao__titulo" data-i18n="cat1_t">Ramos & Bouquets</h3>
@@ -198,7 +201,7 @@
           </a>
           <a class="cartao revelar revelar--d1" href="paginas/produtos.html">
             <div class="cartao__media">
-              <img src="assets/galeria/casamentos/cas-01.jpg" alt="Decoração floral de casamento" loading="lazy">
+              <img src="assets/galeria/thumbs/cas-01.webp" alt="Decoração floral de casamento" width="480" height="480" loading="lazy" decoding="async">
             </div>
             <div class="cartao__corpo">
               <h3 class="cartao__titulo" data-i18n="cat2_t">Casamentos</h3>
@@ -208,7 +211,7 @@
           </a>
           <a class="cartao revelar revelar--d2" href="paginas/produtos.html">
             <div class="cartao__media">
-              <img src="assets/galeria/vaso/vaso-10.jpg" alt="Arranjo floral para eventos" loading="lazy">
+              <img src="assets/galeria/thumbs/vaso-10.webp" alt="Arranjo floral para eventos" width="480" height="480" loading="lazy" decoding="async">
             </div>
             <div class="cartao__corpo">
               <h3 class="cartao__titulo" data-i18n="cat3_t">Eventos & Instituições</h3>
@@ -218,7 +221,7 @@
           </a>
           <a class="cartao revelar revelar--d3" href="paginas/produtos.html">
             <div class="cartao__media">
-              <img src="assets/galeria/funebre/fun-01.jpg" alt="Coroa fúnebre" loading="lazy">
+              <img src="assets/galeria/thumbs/fun-01.webp" alt="Coroa fúnebre" width="480" height="480" loading="lazy" decoding="async">
             </div>
             <div class="cartao__corpo">
               <h3 class="cartao__titulo" data-i18n="cat4_t">Cerimónias fúnebres</h3>
@@ -256,7 +259,7 @@
           </div>
           <div class="duas-colunas__media revelar revelar--d2">
             <div class="moldura moldura--alta">
-              <img src="assets/galeria/bouquet/bouquet-11.jpg" alt="Ramo de flores em tons pêssego da Timorgiana" loading="lazy">
+              <img src="assets/galeria/thumbs/bouquet-11-media.webp" alt="Ramo de flores em tons pêssego da Timorgiana" width="720" height="900" loading="lazy" decoding="async">
             </div>
           </div>
         </div>
@@ -309,10 +312,10 @@
           <p data-i18n="insta_lead">Siga-nos no Instagram para inspiração diária e novidades.</p>
         </div>
         <div class="insta-grelha revelar">
-          <a class="insta-item" href="https://www.instagram.com/timorgiana_flores" target="_blank" rel="noopener"><img src="assets/galeria/bouquet/bouquet-05.jpg" alt="Ramo de rosas vermelhas" loading="lazy"><span class="insta-item__icone"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2.5" y="2.5" width="19" height="19" rx="5.5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.6" cy="6.4" r="1.1" fill="currentColor" stroke="none"/></svg></span></a>
-          <a class="insta-item" href="https://www.instagram.com/timorgiana_flores" target="_blank" rel="noopener"><img src="assets/galeria/bouquet/bouquet-17.jpg" alt="Ramo de flores amarelas" loading="lazy"><span class="insta-item__icone"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2.5" y="2.5" width="19" height="19" rx="5.5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.6" cy="6.4" r="1.1" fill="currentColor" stroke="none"/></svg></span></a>
-          <a class="insta-item" href="https://www.instagram.com/timorgiana_flores" target="_blank" rel="noopener"><img src="assets/galeria/casamentos/cas-05.jpg" alt="Ramo de noiva branco" loading="lazy"><span class="insta-item__icone"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2.5" y="2.5" width="19" height="19" rx="5.5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.6" cy="6.4" r="1.1" fill="currentColor" stroke="none"/></svg></span></a>
-          <a class="insta-item" href="https://www.instagram.com/timorgiana_flores" target="_blank" rel="noopener"><img src="assets/galeria/vaso/vaso-05.jpg" alt="Arranjo floral em vaso" loading="lazy"><span class="insta-item__icone"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2.5" y="2.5" width="19" height="19" rx="5.5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.6" cy="6.4" r="1.1" fill="currentColor" stroke="none"/></svg></span></a>
+          <a class="insta-item" href="https://www.instagram.com/timorgiana_flores" target="_blank" rel="noopener"><img src="assets/galeria/thumbs/bouquet-05.webp" alt="Ramo de rosas vermelhas" width="480" height="480" loading="lazy" decoding="async"><span class="insta-item__icone"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2.5" y="2.5" width="19" height="19" rx="5.5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.6" cy="6.4" r="1.1" fill="currentColor" stroke="none"/></svg></span></a>
+          <a class="insta-item" href="https://www.instagram.com/timorgiana_flores" target="_blank" rel="noopener"><img src="assets/galeria/thumbs/bouquet-17.webp" alt="Ramo de flores amarelas" width="480" height="480" loading="lazy" decoding="async"><span class="insta-item__icone"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2.5" y="2.5" width="19" height="19" rx="5.5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.6" cy="6.4" r="1.1" fill="currentColor" stroke="none"/></svg></span></a>
+          <a class="insta-item" href="https://www.instagram.com/timorgiana_flores" target="_blank" rel="noopener"><img src="assets/galeria/thumbs/cas-05.webp" alt="Ramo de noiva branco" width="480" height="480" loading="lazy" decoding="async"><span class="insta-item__icone"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2.5" y="2.5" width="19" height="19" rx="5.5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.6" cy="6.4" r="1.1" fill="currentColor" stroke="none"/></svg></span></a>
+          <a class="insta-item" href="https://www.instagram.com/timorgiana_flores" target="_blank" rel="noopener"><img src="assets/galeria/thumbs/vaso-05.webp" alt="Arranjo floral em vaso" width="480" height="480" loading="lazy" decoding="async"><span class="insta-item__icone"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2.5" y="2.5" width="19" height="19" rx="5.5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.6" cy="6.4" r="1.1" fill="currentColor" stroke="none"/></svg></span></a>
         </div>
         <div class="grupo-botoes" style="justify-content:center; margin-top:2rem">
           <a class="btn btn--primario btn--pequeno" href="https://www.instagram.com/timorgiana_flores" target="_blank" rel="noopener">

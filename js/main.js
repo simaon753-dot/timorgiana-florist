@@ -109,8 +109,13 @@
         fig.setAttribute("data-idx", i);
         fig.setAttribute("data-src", item.src);
         var loading = i < 6 ? "eager" : "lazy"; /* primeiros 6 imediatos */
+        /* a grelha usa a miniatura WebP (~30KB); se faltar, recua para o
+           original JPEG (o lightbox usa sempre o original em data-src) */
         fig.innerHTML =
-          '<img src="' + App.base + item.src + '" alt="' + App.t(legKey) + '" loading="' + loading + '" decoding="async" onload="this.dataset.carregada=1">' +
+          '<img src="' + App.base + App.thumbFoto(item.src) + '" alt="' + App.t(legKey) + '"' +
+          ' width="480" height="480" loading="' + loading + '" decoding="async"' +
+          ' onload="this.dataset.carregada=1"' +
+          ' onerror="this.onerror=null;this.src=\'' + App.base + item.src + '\'">' +
           '<span class="galeria__legenda" data-i18n="' + legKey + '">' + App.t(legKey) + '</span>';
         galeria.appendChild(fig);
       });
@@ -203,11 +208,12 @@
         var lista = visiveisAtuais();
         if (lbAberto < 0 || lbAberto >= lista.length) return;
         var it = lista[lbAberto];
-        var novoSrc = it.querySelector("img").src;
-        if (lbImg.src !== novoSrc) { lbImg.style.opacity = "0"; lbImg.src = novoSrc; }
+        var src = it.getAttribute("data-src") || "";
+        /* o lightbox mostra sempre o ORIGINAL (1200px), não a miniatura */
+        var novoSrc = App.base + src;
+        if (!lbImg.src || lbImg.src.indexOf(src) === -1) { lbImg.style.opacity = "0"; lbImg.src = novoSrc; }
         /* referência do modelo (ex.: "Bouquet · Ref. BOUQUET-04") e ligação
            para o formulário de encomenda já com a foto escolhida */
-        var src = it.getAttribute("data-src") || "";
         var legKey = LEGENDA[it.getAttribute("data-cat")] || "leg_outro";
         lbRef.textContent = App.t(legKey) + " · Ref. " + App.refFoto(src);
         lbEnc.href = App.base + "paginas/encomendar.html?foto=" + encodeURIComponent(src);
@@ -275,7 +281,10 @@
       if (painelSel && /^assets\/galeria\/[a-z0-9_-]+\/[a-z0-9_-]+\.(jpe?g|png|webp)$/i.test(paramFoto)) {
         fotoEscolhida = paramFoto;
         painelSel.hidden = false;
-        document.getElementById("selecao-img").src = App.base + fotoEscolhida;
+        /* miniatura leve no painel (88px); recua para o original se faltar */
+        var selImg = document.getElementById("selecao-img");
+        selImg.onerror = function () { selImg.onerror = null; selImg.src = App.base + fotoEscolhida; };
+        selImg.src = App.base + App.thumbFoto(fotoEscolhida);
         legendaSelecao();
 
         /* pré-seleciona o tipo de serviço conforme a categoria da foto */

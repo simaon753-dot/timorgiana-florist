@@ -33,6 +33,14 @@ App.refFoto = function (src) {
   return (src || "").split("/").pop().replace(/\.[a-z0-9]+$/i, "").toUpperCase();
 };
 
+/* Miniatura WebP leve (480px, ~30KB) de uma foto da galeria — para grelhas
+   e cartões em redes fracas. O original (1200px) fica só para o lightbox.
+   "assets/galeria/bouquet/bouquet-04.jpg" → "assets/galeria/thumbs/bouquet-04.webp" */
+App.thumbFoto = function (src) {
+  var nome = (src || "").split("/").pop().replace(/\.[a-z0-9]+$/i, "");
+  return "assets/galeria/thumbs/" + nome + ".webp";
+};
+
 /* Mensagem-base para o WhatsApp */
 App.linkWhatsApp = function (texto) {
   var t = texto || "Olá Timorgiana! Gostaria de saber mais sobre as vossas flores e serviços.";

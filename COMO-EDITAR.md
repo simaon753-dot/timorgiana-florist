@@ -57,7 +57,14 @@ Reduza para cerca de **1200px de largura** antes de as usar:
 
 - **No Mac:** abra a foto no **Pré-visualização** → menu **Ferramentas → Ajustar tamanho** → ponha `1200` na largura → **OK** → **Ficheiro → Exportar** como JPEG.
 
-*(Se preferir não fazer isto, veja a secção "A forma mais fácil" em baixo.)*
+### 📶 Nota sobre as miniaturas (rede fraca)
+
+O site usa **miniaturas leves** (pasta `assets/galeria/thumbs/`, ficheiros `.webp` de ~30 KB)
+na grelha do portefólio, para abrir rápido mesmo com internet fraca. Se adicionar uma foto
+**sem** miniatura, o site continua a funcionar (usa o original, só fica mais pesado).
+Para gerar a miniatura certa, o mais fácil é **pedir ao Claude**: *"otimiza as fotos novas da galeria"*.
+
+*(Se preferir não fazer nada disto à mão, veja a secção "A forma mais fácil" em baixo.)*
 
 ---
 
