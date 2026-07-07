@@ -64,7 +64,7 @@ App.T = {
 
   /* —— LOJA: coleção —— */
   lojap_titulo:  { pt:"Loja", tet:"Loja", en:"Shop" },
-  lojap_sub:     { pt:"Flores frescas, ramos, hastes avulsas e serviços — tudo num só lugar.", tet:"Flores fresku, ramu, haste no servisu — hotu iha fatin ida.", en:"Fresh flowers, bouquets, single stems and services — all in one place." },
+  lojap_sub:     { pt:"Flores frescas, ramos, hastes avulsas e serviços — tudo num só lugar.", tet:"Ai-funan fresku, ramu, haste no servisu — hotu iha fatin ida.", en:"Fresh flowers, bouquets, single stems and services — all in one place." },
   filtro_hastes: { pt:"Hastes avulsas", tet:"Haste", en:"Single stems" },
   loja_conta:    { pt:"produtos", tet:"produtu", en:"products" },
   loja_ordenar:  { pt:"Ordenar", tet:"Ordena", en:"Sort" },
@@ -85,11 +85,11 @@ App.T = {
   prodpg_rel:    { pt:"Também poderá gostar", tet:"Karik gosta mós", en:"You may also like" },
   prodpg_voltar: { pt:"Voltar à loja", tet:"Fila ba loja", en:"Back to shop" },
   /* descrições genéricas por categoria (usadas na página de produto) */
-  desc_bouquet:  { pt:"Ramo de flores frescas, composto à mão pela nossa equipa. Cada peça é única — as flores podem variar conforme a disponibilidade da estação.", tet:"Ramu flores fresku, halo ho liman husi ami-nia ekipa. Peça ida-idak úniku — flores bele muda tuir estasaun.", en:"A hand-tied bouquet of fresh flowers. Each piece is unique — blooms may vary with seasonal availability." },
-  desc_vaso:     { pt:"Arranjo floral em vaso, pronto a decorar qualquer espaço. Composição desenhada à mão com flores frescas.", tet:"Aranju floral iha vazu, prontu atu dekora fatin. Kompozisaun ho liman ho flores fresku.", en:"A vase arrangement ready to grace any space, hand-designed with fresh flowers." },
-  desc_hastes:   { pt:"Haste avulsa de flor fresca. Escolha a quantidade que precisa — perfeita para criar o seu próprio ramo.", tet:"Haste flores fresku. Hili kuantidade — perfeitu atu kria ita-nia ramu rasik.", en:"A single fresh stem. Choose the quantity you need — perfect to build your own bouquet." },
+  desc_bouquet:  { pt:"Ramo de flores frescas, composto à mão pela nossa equipa. Cada peça é única — as flores podem variar conforme a disponibilidade da estação.", tet:"Ramu ai-funan fresku, halo ho liman husi ami-nia ekipa. Peça ida-idak úniku — ai-funan bele muda tuir estasaun.", en:"A hand-tied bouquet of fresh flowers. Each piece is unique — blooms may vary with seasonal availability." },
+  desc_vaso:     { pt:"Arranjo floral em vaso, pronto a decorar qualquer espaço. Composição desenhada à mão com flores frescas.", tet:"Aranju floral iha vazu, prontu atu dekora fatin. Kompozisaun ho liman ho ai-funan fresku.", en:"A vase arrangement ready to grace any space, hand-designed with fresh flowers." },
+  desc_hastes:   { pt:"Haste avulsa de flor fresca. Escolha a quantidade que precisa — perfeita para criar o seu próprio ramo.", tet:"Haste ai-funan fresku. Hili kuantidade — perfeitu atu kria ita-nia ramu rasik.", en:"A single fresh stem. Choose the quantity you need — perfect to build your own bouquet." },
   desc_quote:    { pt:"Serviço personalizado. Fale connosco para desenharmos a proposta à medida da sua ocasião e orçamento.", tet:"Servisu personalizadu. Koalia ho ami atu dezeña proposta tuir okaziaun.", en:"A bespoke service. Talk to us and we'll design a proposal for your occasion and budget." },
-  inclui_txt:    { pt:"Flores frescas, embrulho e cartão de mensagem. Entrega em toda a Díli (combinada por WhatsApp).", tet:"Flores fresku, embrulho no kartaun mensajen. Entrega iha Dili tomak (kombina liu WhatsApp).", en:"Fresh flowers, wrapping and a message card. Delivery across Dili (arranged on WhatsApp)." },
+  inclui_txt:    { pt:"Flores frescas, embrulho e cartão de mensagem. Entrega em toda a Díli (combinada por WhatsApp).", tet:"Ai-funan fresku, embrulho no kartaun mensajen. Entrega iha Dili tomak (kombina liu WhatsApp).", en:"Fresh flowers, wrapping and a message card. Delivery across Dili (arranged on WhatsApp)." },
   cuidados_txt:  { pt:"Mantenha em água limpa, longe do sol direto. Corte as hastes a cada 2 dias para durarem mais.", tet:"Rai iha bee moos, dook husi loro-matan. Korta haste kada loron 2 atu tahan naruk.", en:"Keep in clean water, away from direct sun. Trim the stems every 2 days to last longer." },
   entrega_txt:   { pt:"Entregamos em toda a Díli. Combine a data e a morada connosco no WhatsApp ao finalizar.", tet:"Ami entrega iha Dili tomak. Kombina data no morada iha WhatsApp.", en:"We deliver across Dili. Confirm the date and address with us on WhatsApp at checkout." },
 
@@ -103,15 +103,15 @@ App.T = {
 
   /* —— Hero (Home) —— */
   hero_eyebrow:  { pt:"Arte floral · Díli, Timor-Leste", tet:"Arte floral · Dili, Timor-Leste", en:"Floral artistry · Dili, Timor-Leste" },
-  hero_titulo:   { pt:"Flores que <em>expressam</em> sentimentos", tet:"Flores ne'ebé <em>hatudu</em> sentimentu", en:"Flowers that <em>express</em> feelings" },
+  hero_titulo:   { pt:"Flores que <em>expressam</em> sentimentos", tet:"Ai-funan ne'ebé <em>hatudu</em> sentimentu", en:"Flowers that <em>express</em> feelings" },
   hero_tagline:  { pt:"momentos que ficam na memória", tet:"momentu ne'ebé hela iha memória", en:"moments that stay in memory" },
   hero_lead:     { pt:"Criamos arranjos e decorações com flores frescas para os momentos mais importantes da sua vida — com a delicadeza, o cuidado e a elegância que cada ocasião merece.",
-                   tet:"Ami kria aranju no dekorasaun ho flores fresku ba momentu importante sira iha ita-nia moris — ho kuidadu no elegánsia.",
+                   tet:"Ami kria aranju no dekorasaun ho ai-funan fresku ba momentu importante sira iha ita-nia moris — ho kuidadu no elegánsia.",
                    en:"We craft arrangements and decorations with fresh flowers for life's most important moments — with the care and elegance every occasion deserves." },
-  hero_nota:     { pt:"Flores frescas · Entrega em Díli", tet:"Flores fresku · Entrega iha Dili", en:"Fresh flowers · Delivery in Dili" },
+  hero_nota:     { pt:"Flores frescas · Entrega em Díli", tet:"Ai-funan fresku · Entrega iha Dili", en:"Fresh flowers · Delivery in Dili" },
 
   /* —— Tiras de garantias —— */
-  tira1_t: { pt:"Flores frescas",        tet:"Flores fresku",       en:"Fresh flowers" },
+  tira1_t: { pt:"Flores frescas",        tet:"Ai-funan fresku",       en:"Fresh flowers" },
   tira1_d: { pt:"Selecionadas todos os dias", tet:"Hili loron-loron", en:"Hand-picked daily" },
   tira2_t: { pt:"Feito à medida",        tet:"Halo tuir ita",       en:"Made to measure" },
   tira2_d: { pt:"Cada arranjo é único",  tet:"Aranju ida-idak úniku", en:"Every arrangement is unique" },
@@ -122,11 +122,11 @@ App.T = {
 
   /* —— Secção: categorias na Home —— */
   cat_eyebrow: { pt:"O que fazemos",       tet:"Saida mak ami halo", en:"What we do" },
-  cat_titulo:  { pt:"Flores para cada momento", tet:"Flores ba momentu hotu", en:"Flowers for every moment" },
+  cat_titulo:  { pt:"Flores para cada momento", tet:"Ai-funan ba momentu hotu", en:"Flowers for every moment" },
   cat_lead:    { pt:"Da celebração ao consolo, criamos a peça certa para o que sente.", tet:"Husi selebrasaun to'o konsolu, ami kria peça ne'ebé loos.", en:"From celebration to comfort, we create the right piece for what you feel." },
 
   cat1_t: { pt:"Ramos & Bouquets",   tet:"Ramu & Bouquet",   en:"Bouquets" },
-  cat1_d: { pt:"Flores naturais para todas as ocasiões — aniversários, declarações, agradecimentos.", tet:"Flores naturál ba okaziaun hotu.", en:"Fresh flowers for every occasion — birthdays, declarations, thanks." },
+  cat1_d: { pt:"Flores naturais para todas as ocasiões — aniversários, declarações, agradecimentos.", tet:"Ai-funan naturál ba okaziaun hotu.", en:"Fresh flowers for every occasion — birthdays, declarations, thanks." },
   cat2_t: { pt:"Casamentos",         tet:"Kazamentu",        en:"Weddings" },
   cat2_d: { pt:"Decoração floral completa para um dia inesquecível, do altar à mesa.", tet:"Dekorasaun floral kompletu ba loron espesiál.", en:"Complete floral decoration for an unforgettable day." },
   cat3_t: { pt:"Eventos & Instituições", tet:"Eventu & Instituisaun", en:"Events & Institutions" },
@@ -136,12 +136,12 @@ App.T = {
 
   /* —— Bloco história (Home) —— */
   sobre_eyebrow: { pt:"A nossa essência",  tet:"Ami-nia esénsia",   en:"Our essence" },
-  sobre_titulo:  { pt:"A arte de transformar flores em emoção", tet:"Arte atu transforma flores ba emosaun", en:"The art of turning flowers into emotion" },
+  sobre_titulo:  { pt:"A arte de transformar flores em emoção", tet:"Arte atu transforma ai-funan ba emosaun", en:"The art of turning flowers into emotion" },
   sobre_p1:      { pt:"A Timorgiana nasceu em 2023, em Díli, do desejo de levar a beleza natural das flores a cada celebração e a cada gesto de afeto. Somos uma casa floral timorense que une criatividade, frescura e um atendimento verdadeiramente pessoal.",
-                   tet:"Timorgiana moris iha 2023, iha Dili, husi hakarak atu lori beleza naturál husi flores ba selebrasaun ida-idak no ba jestu domin nian ida-idak. Ami mak kaza floral timorense ida ne'ebé kombina kriatividade, freskura no atendimentu ne'ebé loloos pesoál.",
+                   tet:"Timorgiana moris iha 2023, iha Dili, husi hakarak atu lori beleza naturál husi ai-funan ba selebrasaun ida-idak no ba jestu domin nian ida-idak. Ami mak kaza floral timorense ida ne'ebé kombina kriatividade, freskura no atendimentu ne'ebé loloos pesoál.",
                    en:"Timorgiana was born in 2023 in Dili, from the desire to bring the natural beauty of flowers to every celebration and gesture of affection." },
   sobre_p2:      { pt:"Cada arranjo é pensado ao detalhe, com flores frescas e composições desenhadas em torno da sua história. Acreditamos que uma flor bem escolhida diz o que as palavras nem sempre conseguem.",
-                   tet:"Aranju ida-idak ami hanoin ho detalle, ho flores fresku no komposisaun ne'ebé dezeña tuir ita-boot nia istória. Ami fiar katak flor ida ne'ebé hili di'ak bele hatete buat ne'ebé liafuan la sempre konsege hatete.",
+                   tet:"Aranju ida-idak ami hanoin ho detalle, ho ai-funan fresku no komposisaun ne'ebé dezeña tuir ita-boot nia istória. Ami fiar katak ai-funan ida ne'ebé hili di'ak bele hatete buat ne'ebé liafuan la sempre konsege hatete.",
                    en:"Every arrangement is designed in detail, with fresh flowers composed around your story." },
 
   /* —— Estatísticas (Home) —— */
@@ -150,14 +150,14 @@ App.T = {
 
   /* —— Citação (Home) —— */
   quote_txt: { pt:"Flores que expressam sentimentos, momentos que ficam na memória.",
-               tet:"Flores ne'ebé hatudu sentimentu, momentu ne'ebé hela iha memória.",
+               tet:"Ai-funan ne'ebé hatudu sentimentu, momentu ne'ebé hela iha memória.",
                en:"Flowers that express feelings, moments that stay in memory." },
 
   /* —— Valores —— */
   valores_eyebrow: { pt:"Porquê a Timorgiana", tet:"Tanba sá Timorgiana", en:"Why Timorgiana" },
   valores_titulo:  { pt:"Detalhe, frescura e cuidado em cada peça", tet:"Detalle, fresku no kuidadu", en:"Detail, freshness and care in every piece" },
   v1_t: { pt:"Qualidade e frescura", tet:"Kualidade no fresku", en:"Quality & freshness" },
-  v1_d: { pt:"Selecionamos as melhores flores, garantindo durabilidade e beleza.", tet:"Ami hili flores di'ak liu hotu.", en:"We select the finest flowers for lasting beauty." },
+  v1_d: { pt:"Selecionamos as melhores flores, garantindo durabilidade e beleza.", tet:"Ami hili ai-funan di'ak liu hotu.", en:"We select the finest flowers for lasting beauty." },
   v2_t: { pt:"Criatividade", tet:"Kriatividade", en:"Creativity" },
   v2_d: { pt:"Cada composição é desenhada com atenção ao detalhe e sentido estético.", tet:"Komposisaun ida-idak dezeñu ho atensaun.", en:"Each composition is designed with an eye for detail." },
   v3_t: { pt:"Atendimento personalizado", tet:"Atendimentu personalizadu", en:"Personal service" },
@@ -183,21 +183,21 @@ App.T = {
   sobrep_titulo: { pt:"Sobre a Timorgiana", tet:"Kona-ba Timorgiana", en:"About Timorgiana" },
   sobrep_sub:    { pt:"Uma casa floral timorense dedicada à beleza, ao detalhe e à emoção.", tet:"Kaza floral timorense ida ne'ebé dedika ba beleza, detalle no emosaun.", en:"A Timorese floral house devoted to beauty, detail and emotion." },
   hist_eyebrow:  { pt:"A nossa história", tet:"Ami-nia istória", en:"Our story" },
-  hist_titulo:   { pt:"Nascida do amor pelas flores", tet:"Moris husi domin ba flores", en:"Born from a love of flowers" },
+  hist_titulo:   { pt:"Nascida do amor pelas flores", tet:"Moris husi domin ba ai-funan", en:"Born from a love of flowers" },
   hist_p1:       { pt:"Fundada a 30 de outubro de 2023, a Timorgiana é uma sociedade comercial timorense dedicada à arte floral, à venda de flores naturais e ao fornecimento de serviços especializados em arranjos e decorações com flores frescas.",
-                   tet:"Estabelese iha loron 30 Outubru 2023, Timorgiana mak sosiedade komersiál timorense ida ne'ebé dedika ba arte floral, ba faan flores naturál no ba fornese servisu espesializadu iha aranju no dekorasaun ho flores fresku.",
+                   tet:"Estabelese iha loron 30 Outubru 2023, Timorgiana mak sosiedade komersiál timorense ida ne'ebé dedika ba arte floral, ba faan ai-funan naturál no ba fornese servisu espesializadu iha aranju no dekorasaun ho ai-funan fresku.",
                    en:"Founded on 30 October 2023, Timorgiana is a Timorese company devoted to floral artistry and fresh-flower decoration." },
   hist_p2:       { pt:"Desde então, temos vindo a afirmar-nos no mercado local pela excelência, pela criatividade e pelo compromisso com a satisfação dos nossos clientes — tanto no setor particular como institucional.",
                    tet:"Husi tempu ne'e, ami hahú sai referénsia iha merkadu lokál ho eseléensia, kriatividade no kompromisu atu satisfás ami-nia kliente sira — iha setór partikulár no mós institusionál.",
                    en:"Since then, we have established ourselves locally through excellence, creativity and commitment to our clients." },
   hist_p3:       { pt:"Com sede na Avenida Bidau Toko Baru, em Cristo Rei, Díli, levamos a delicadeza das flores naturais a celebrações, cerimónias e espaços por todo o território.",
-                   tet:"Ho sede iha Avenida Bidau Toko Baru, Cristo Rei, Dili, ami lori delikadeza husi flores naturál ba selebrasaun, serimónia no fatin sira iha teritóriu tomak.",
+                   tet:"Ho sede iha Avenida Bidau Toko Baru, Cristo Rei, Dili, ami lori delikadeza husi ai-funan naturál ba selebrasaun, serimónia no fatin sira iha teritóriu tomak.",
                    en:"Based on Avenida Bidau Toko Baru, Cristo Rei, Dili, we bring fresh flowers to celebrations across the territory." },
 
   missao_eyebrow: { pt:"O que nos move", tet:"Saida mak book ami", en:"What drives us" },
   missao_t: { pt:"Missão", tet:"Misaun", en:"Mission" },
   missao_d: { pt:"Prestar serviços florais de qualidade superior, promovendo a beleza natural das flores como forma de expressão de sentimentos, contribuindo para momentos memoráveis e ambientes harmoniosos.",
-              tet:"Fornese servisu floral ho kualidade superiór, promove beleza naturál husi flores nu'udar dalan atu hatudu sentimentu, no kontribui ba momentu memorável no ambiente harmoniozu.",
+              tet:"Fornese servisu floral ho kualidade superiór, promove beleza naturál husi ai-funan nu'udar dalan atu hatudu sentimentu, no kontribui ba momentu memorável no ambiente harmoniozu.",
               en:"To provide superior floral services, promoting the natural beauty of flowers as a way to express feelings and create memorable moments." },
   visao_t: { pt:"Visão", tet:"Vizaun", en:"Vision" },
   visao_d: { pt:"Oferecer experiências únicas através da inovação, do respeito pelo ambiente e da excelência no serviço, promovendo beleza, cuidado e qualidade em cada detalhe do nosso trabalho.",
@@ -207,10 +207,10 @@ App.T = {
 
   /* —— Página PRODUTOS —— */
   prodp_titulo: { pt:"Produtos & Serviços", tet:"Produtu & Servisu", en:"Products & Services" },
-  prodp_sub:    { pt:"Da flor solta ao grande evento — criamos a peça certa para cada ocasião.", tet:"Husi flor ida mesak to'o eventu boot — ami kria peça ne'ebé loos ba okaziaun ida-idak.", en:"From a single stem to a grand event — the right piece for every occasion." },
-  prod1_t: { pt:"Flores naturais & ramos", tet:"Flores naturál & ramu", en:"Fresh flowers & bouquets" },
+  prodp_sub:    { pt:"Da flor solta ao grande evento — criamos a peça certa para cada ocasião.", tet:"Husi ai-funan ida mesak to'o eventu boot — ami kria peça ne'ebé loos ba okaziaun ida-idak.", en:"From a single stem to a grand event — the right piece for every occasion." },
+  prod1_t: { pt:"Flores naturais & ramos", tet:"Ai-funan naturál & ramu", en:"Fresh flowers & bouquets" },
   prod1_d: { pt:"Bouquets e ramos de flores frescas para aniversários, declarações de amor, agradecimentos, boas-vindas e todas as ocasiões do dia a dia. Compostos à mão, com as flores da estação.",
-             tet:"Bouquet no ramu flores fresku ba loron-moris, deklarasaun domin, agradesimentu, simu-malu no okaziaun hotu iha loron-loron. Halo ho liman, ho flores tuir estasaun.",
+             tet:"Bouquet no ramu ai-funan fresku ba loron-moris, deklarasaun domin, agradesimentu, simu-malu no okaziaun hotu iha loron-loron. Halo ho liman, ho ai-funan tuir estasaun.",
              en:"Hand-tied bouquets of fresh seasonal flowers for birthdays, declarations and everyday occasions." },
   prod2_t: { pt:"Casamentos", tet:"Kazamentu", en:"Weddings" },
   prod2_d: { pt:"Decoração floral completa: bouquet da noiva, arcos e altares, centros de mesa, decoração de cadeiras e espaços. Desenhamos um conceito coerente para o seu grande dia.",
@@ -230,7 +230,7 @@ App.T = {
              en:"Floral styling for parties, baptisms and private celebrations, tailored to your space." },
   prod6_t: { pt:"Arranjos personalizados", tet:"Aranju personalizadu", en:"Bespoke arrangements" },
   prod6_d: { pt:"Tem uma ideia especial? Desenhamos arranjos exclusivos a partir das suas cores, flores e inspirações preferidas.",
-             tet:"Iha ideia espesiál ida ka lae? Ami dezeña aranju esklusivu tuir ita-boot nia kór, flores no inspirasaun ne'ebé gosta liu.",
+             tet:"Iha ideia espesiál ida ka lae? Ami dezeña aranju esklusivu tuir ita-boot nia kór, ai-funan no inspirasaun ne'ebé gosta liu.",
              en:"Have a special idea? We design exclusive arrangements from your favourite colours and flowers." },
   prod_como: { pt:"Como funciona", tet:"Oinsá funsiona", en:"How it works" },
   etiqueta_popular: { pt:"Mais procurado", tet:"Gosta liu", en:"Most loved" },
@@ -277,7 +277,7 @@ App.T = {
   passo2_d: { pt:"Diga-nos a ocasião, a data de entrega e como falar consigo. Leva menos de um minuto.", tet:"Hatete ami okaziaun no data.", en:"Tell us the occasion, delivery date and how to reach you." },
   passo3_t: { pt:"Confirmamos no WhatsApp", tet:"Konfirma iha WhatsApp", en:"We confirm on WhatsApp" },
   passo3_d: { pt:"Ao enviar, é levado para o WhatsApp com a mensagem pronta. Combinamos detalhes, orçamento e entrega.", tet:"Bainhira haruka, bá WhatsApp.", en:"On submit you're taken to WhatsApp with a ready message to finalise details." },
-  passo4_t: { pt:"Recebe as suas flores", tet:"Simu ita-nia flores", en:"Receive your flowers" },
+  passo4_t: { pt:"Recebe as suas flores", tet:"Simu ita-nia ai-funan", en:"Receive your flowers" },
   passo4_d: { pt:"Preparamos tudo com cuidado e entregamos pontualmente, em toda a Díli.", tet:"Ami prepara ho kuidadu no entrega.", en:"We prepare everything with care and deliver on time across Dili." },
 
   form_titulo: { pt:"Pedido de encomenda", tet:"Pedidu enkomenda", en:"Order request" },
