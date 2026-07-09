@@ -61,6 +61,12 @@ Depois **Commit → Push**. A partir daí, cada encomenda aparece na folha. ✅
 // no fim do URL do painel. Deixe "" para não usar.
 var SEGREDO = "";
 
+// Abrir o URL no browser mostra esta mensagem = está publicado e acessível ✓
+function doGet() {
+  return ContentService.createTextOutput("Painel Timorgiana ativo ✓")
+    .setMimeType(ContentService.MimeType.TEXT);
+}
+
 function doPost(e) {
   try {
     if (SEGREDO && (!e.parameter || e.parameter.k !== SEGREDO)) {
