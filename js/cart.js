@@ -141,9 +141,47 @@ App.Cesto = (function () {
     linhas.push("", "Obrigada! 🌷");
     return linhas.join("\n");
   }
+  /* Dados estruturados da encomenda (para o painel de gestão) */
+  function pedidoPayload(dados) {
+    dados = dados || {};
+    return {
+      id: "TG-" + Date.now(),
+      data_hora: new Date().toISOString(),
+      moeda: App.MOEDA || "$",
+      itens: itens().map(function (l) {
+        var p = l.produto, temP = typeof p.preco === "number";
+        return {
+          slug: p.slug, nome: App.t2(p.nome), categoria: p.cat, tipo: p.tipo,
+          preco: temP ? p.preco : null, quantidade: l.qty,
+          subtotal: temP ? +(p.preco * l.qty).toFixed(2) : null
+        };
+      }),
+      total_itens: contagem(),
+      subtotal: +subtotal().toFixed(2),
+      cliente: {
+        nome: dados.nome || "", data_entrega: dados.data || "",
+        morada: dados.morada || "", nota: dados.nota || ""
+      },
+      idioma: App.idioma
+    };
+  }
+
+  /* Envio "dispara e esquece" para o painel de gestão (se App.PAINEL_URL definido).
+     sendBeacon é ideal: não bloqueia, sobrevive à navegação e evita preflight CORS. */
+  function enviarPainel(payload) {
+    if (!App.PAINEL_URL) return;
+    var corpo = JSON.stringify(payload);
+    try {
+      if (navigator.sendBeacon) { navigator.sendBeacon(App.PAINEL_URL, corpo); return; }
+      fetch(App.PAINEL_URL, { method: "POST", mode: "no-cors",
+        headers: { "Content-Type": "text/plain;charset=utf-8" }, body: corpo });
+    } catch (e) { /* nunca deixar o registo falhar bloquear o WhatsApp */ }
+  }
+
   function checkout(dados) {
     if (!itens().length) return;
-    window.open(App.linkWhatsApp(mensagemCheckout(dados)), "_blank", "noopener");
+    enviarPainel(pedidoPayload(dados));                                    /* 1) painel de gestão */
+    window.open(App.linkWhatsApp(mensagemCheckout(dados)), "_blank", "noopener"); /* 2) WhatsApp */
   }
 
   /* ---- Ligações de eventos (delegação) ---- */

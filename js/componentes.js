@@ -27,6 +27,12 @@ App.TIKTOK   = "https://www.tiktok.com/@timorgiana_flores";
    na mensagem de encomenda pelo WhatsApp (GitHub Pages) */
 App.SITE     = "https://simaon753-dot.github.io/timorgiana-florist";
 
+/* PAINEL DE GESTÃO — endereço que RECEBE cada encomenda (POST com JSON).
+   Deixe "" para desativar. Cole aqui o URL do backend (ex.: Google Apps
+   Script Web App) e cada encomenda passa a ser registada automaticamente,
+   além da mensagem de WhatsApp. Ver COMO-EDITAR.md. */
+App.PAINEL_URL = "";
+
 /* Referência legível de uma foto da galeria:
    "assets/galeria/bouquet/bouquet-04.jpg" → "BOUQUET-04" */
 App.refFoto = function (src) {
