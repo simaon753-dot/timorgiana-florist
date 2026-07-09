@@ -81,13 +81,13 @@ function doPost(e) {
     var itens = pedido.itens || [];
     var resumo = itens.map(function (i) { return i.quantidade + "× " + i.nome; }).join("; ");
 
-    enc.appendRow([quando, pedido.id || "", c.nome || "", c.data_entrega || "", c.morada || "",
-      c.nota || "", pedido.total_itens || 0, pedido.subtotal || 0, pedido.moeda || "$",
-      pedido.idioma || "", resumo]);
+    enc.appendRow([quando, limpo(pedido.id), limpo(c.nome), limpo(c.data_entrega), limpo(c.morada),
+      limpo(c.nota), Number(pedido.total_itens) || 0, Number(pedido.subtotal) || 0,
+      limpo(pedido.moeda || "$"), limpo(pedido.idioma), limpo(resumo)]);
 
     itens.forEach(function (i) {
-      itn.appendRow([quando, pedido.id || "", i.nome, i.slug, i.categoria, i.tipo,
-        i.preco, i.quantidade, i.subtotal]);
+      itn.appendRow([quando, limpo(pedido.id), limpo(i.nome), limpo(i.slug), limpo(i.categoria),
+        limpo(i.tipo), Number(i.preco) || 0, Number(i.quantidade) || 0, Number(i.subtotal) || 0]);
       abaterStock(stk, i);
     });
 
@@ -107,9 +107,17 @@ function abaterStock(stk, item) {
       return;
     }
   }
-  stk.appendRow([item.slug, item.nome, "", Number(item.quantidade) || 0, ""]);
+  stk.appendRow([limpo(item.slug), limpo(item.nome), "", Number(item.quantidade) || 0, ""]);
   var last = stk.getLastRow();
   stk.getRange(last, 5).setFormula("=C" + last + "-D" + last); // Disponível = inicial − vendido
+}
+
+// Segurança: neutraliza texto que comece por = + - @ (evita "injeção de fórmula").
+function limpo(v) {
+  if (v == null) return "";
+  var s = String(v);
+  if (/^[=+\-@]/.test(s)) s = "'" + s;
+  return s;
 }
 
 function folha(ss, nome, cabecalho) {
@@ -167,6 +175,24 @@ Quer gráficos num "website" em vez de tabelas? Ligue a folha ao **Looker Studio
 escolha esta folha. Arrasta os campos e tem um painel visual de receitas/vendas, partilhável por link.
 
 ---
+
+## É seguro para a minha conta Google?
+
+Sim, com margem de segurança. Pontos-chave:
+- **Permissões limitadas:** ao autorizar, a Google só pede acesso a *Folhas de cálculo* —
+  **não** ao Gmail, Drive, contactos nem à conta inteira. O script só sabe mexer em folhas.
+- **Só escreve:** o recetor apenas *acrescenta linhas*. Não lê nem partilha nada, e ninguém
+  consegue ver a sua folha através dele.
+- **Risco real (pequeno):** como o endereço fica no código público do site, alguém poderia
+  enviar encomendas falsas (spam) para a folha. Não danifica a conta — no pior caso apaga as
+  linhas de lixo; as quotas diárias da Google travam qualquer abuso.
+
+**Como reduzir ainda mais:**
+1. **Código já protegido** — neutraliza texto malicioso (injeção de fórmulas). ✔ (incluído acima)
+2. **Senha partilhada (opcional):** ponha um valor em `var SEGREDO = "algo";` e acrescente
+   `?k=algo` ao fim do URL em `App.PAINEL_URL`. Trava envios casuais.
+3. **Conta dedicada (recomendado para paz de espírito):** use a conta Gmail **do negócio**
+   (não a pessoal) para criar a folha. Assim, mesmo no pior cenário, fica isolada da sua vida pessoal.
 
 ## Testar
 Depois de ligar o URL: faça uma encomenda de teste no site (adicione ao cesto → Finalizar).
