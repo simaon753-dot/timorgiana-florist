@@ -2,6 +2,9 @@
 
 Guia simples para manter o site sozinha. Não é preciso ser técnico — basta seguir os passos.
 
+> 📊 **Painel de gestão (receitas, vendas, stock):** ver o guia [PAINEL.md](PAINEL.md).
+> Cada encomenda é registada numa Folha Google automaticamente.
+
 ---
 
 ## 🔑 A regra de ouro
