@@ -1,90 +1,153 @@
-# 📊 Painel de gestão (Google Sheets) — Timorgiana Florist
+# 📊 Painel de gestão — Timorgiana Florist
 
-Cada encomenda feita na loja passa a ser registada **automaticamente** numa Folha
-Google, além da mensagem de WhatsApp. A folha calcula sozinha as **receitas**, as
-**flores/produtos vendidos** e o **stock disponível**.
+Cada encomenda feita na loja é registada **automaticamente** numa Folha Google (além da
+mensagem de WhatsApp). Depois, um **dashboard elegante** ([painel.html](painel.html)) lê esses
+dados e mostra **receitas, vendas por categoria e stock** com a imagem da marca.
 
-É **grátis** e não precisa de servidor. São ~10 minutos de configuração, uma única vez.
+```
+Cliente finaliza no site ─▶ 1) WhatsApp   2) grava na Folha Google (Apps Script)
+                                              │
+Folha Google  ◀──────── lê ──────────────────┘
+   Encomendas · Itens · Stock
+        │
+        └─▶ painel.html  (dashboard privado, protegido por código)
+```
+
+Tudo **grátis** e sem servidor.
 
 ---
 
-## Como funciona (visão geral)
+## Parte A — Registo das encomendas (já feito ✅)
 
-```
-Cliente finaliza no site  ─▶  1) abre o WhatsApp (como já era)
-                          └▶  2) envia os dados da encomenda ──▶  Google Apps Script ──▶  Folha Google
-                                                                                          (Encomendas · Itens · Stock · Painel)
-```
+Já está a funcionar: a folha tem os separadores **Encomendas**, **Itens** e **Stock**, e as
+encomendas aparecem lá. (Pode apagar as linhas de *TESTE*.) O separador **Folha1** é um modelo
+que a Google criou sozinha — pode apagá-lo.
 
 ---
 
-## Passo 1 — Criar a folha
-1. Vá a **sheets.new** (abre uma folha Google nova) e dê-lhe o nome **"Painel Timorgiana"**.
+## Parte B — Ligar o dashboard elegante
 
-## Passo 2 — Colar o código
-1. Na folha: menu **Extensões → Apps Script**.
-2. Apague o que estiver em `Code.gs` e **cole o código** da secção "Código" (mais abaixo).
-3. Clique no ícone **Guardar** (💾).
+O dashboard precisa de **ler** os dados. Para isso, é preciso **atualizar o código** do Apps
+Script (a versão nova inclui a leitura) e **republicar**.
 
-## Passo 3 — Publicar como aplicação web
-1. Em cima, clique em **Implementar → Nova implementação** (*Deploy → New deployment*).
-2. No engrenagem ⚙️, escolha **Aplicação Web** (*Web app*).
-3. Defina:
-   - **Executar como:** *Eu* (a sua conta)
-   - **Quem tem acesso:** **Qualquer pessoa** (*Anyone*) ← importante
-4. **Implementar** → autorize (permita o acesso à sua conta quando pedir).
-5. **Copie o URL da aplicação web** (termina em `/exec`).
+### Passo 1 — Atualizar o código
+1. Na folha: **Extensões → Apps Script**.
+2. Apague tudo e **cole o código novo** (secção "Código completo" mais abaixo).
+3. **Importante:** na linha `var CHAVE_PAINEL = "flores";` troque `flores` por um **código só seu**
+   (ex.: `timor2026`). É a senha para abrir o dashboard.
+4. Guarde (💾).
 
-## Passo 4 — Ligar ao site
-Envie-me esse URL e eu colo-o no site (no `App.PAINEL_URL`) e faço o resto — ou faça você:
-abra `js/componentes.js` e ponha o URL entre as aspas:
-```js
-App.PAINEL_URL = "https://script.google.com/macros/s/AKfy..../exec";
+### Passo 2 — Republicar (manter o mesmo URL)
+1. **Implementar → Gerir implementações**
+2. Na sua implementação, **lápis ✏️ (Editar)**
+3. Em **Versão**, escolha **Nova versão** → **Implementar**
+   *(assim o URL mantém-se — não precisa de me enviar nada de novo)*
+
+### Passo 3 — Abrir o dashboard
+Abra no browser (guarde nos favoritos):
 ```
-Depois **Commit → Push**. A partir daí, cada encomenda aparece na folha. ✅
+https://simaon753-dot.github.io/timorgiana-florist/painel.html
+```
+Escreva o **código** que definiu no Passo 1 → e vê o painel. ✨
+*(O código fica guardado nesse aparelho; use "Sair" para o esquecer.)*
 
-> **Atualizar o código mais tarde:** *Implementar → Gerir implementações → editar (lápis) →
-> Versão: Nova versão → Implementar*. Assim o URL **mantém-se**.
+> ⏳ Só funciona depois de **publicar o site** (Push origin) e **republicar o script** (Passo 2).
 
 ---
 
-## Código (colar no Apps Script)
+## Código completo (colar no Apps Script)
 
 ```javascript
 /**
  * Painel de gestão — Timorgiana Florist
- * Recebe cada encomenda do site e regista na Folha Google.
- * Cria/usa 3 separadores: Encomendas, Itens, Stock.
+ * • doPost: recebe cada encomenda do site e regista (Encomendas/Itens/Stock).
+ * • doGet : serve os dados agregados ao dashboard (painel.html), protegido por CHAVE_PAINEL.
  */
 
-// (Opcional) Segredo partilhado. Se puser um valor, o site tem de enviar ?k=ESSE_VALOR
-// no fim do URL do painel. Deixe "" para não usar.
-var SEGREDO = "";
+var SEGREDO = "";              // (opcional) senha para o registo de encomendas (POST)
+var CHAVE_PAINEL = "flores";   // ⬅ MUDE para um código só seu (senha do dashboard)
 
-// Abrir o URL no browser mostra esta mensagem = está publicado e acessível ✓
-function doGet() {
-  return ContentService.createTextOutput("Painel Timorgiana ativo ✓")
-    .setMimeType(ContentService.MimeType.TEXT);
+/* ---------- DASHBOARD (leitura) ---------- */
+function doGet(e) {
+  var cb = e && e.parameter ? e.parameter.callback : null;
+  if (!cb) {
+    return ContentService.createTextOutput("Painel Timorgiana ativo ✓")
+      .setMimeType(ContentService.MimeType.TEXT);
+  }
+  var out = (!e.parameter || e.parameter.k !== CHAVE_PAINEL)
+    ? { ok: false, erro: "chave" }
+    : { ok: true, dados: painelDados() };
+  return ContentService.createTextOutput(cb + "(" + JSON.stringify(out) + ")")
+    .setMimeType(ContentService.MimeType.JAVASCRIPT);
 }
 
+function painelDados() {
+  var ss = SpreadsheetApp.getActiveSpreadsheet();
+  var enc = valores(ss, "Encomendas"), itn = valores(ss, "Itens"), stk = valores(ss, "Stock");
+  var tz = Session.getScriptTimeZone(), agora = new Date();
+  var receitaTotal = 0, receitaMes = 0, porDia = {};
+
+  enc.forEach(function (r) {
+    var sub = Number(r[7]) || 0; receitaTotal += sub;
+    var d = r[0] instanceof Date ? r[0] : new Date(r[0]);
+    if (d.getMonth() === agora.getMonth() && d.getFullYear() === agora.getFullYear()) receitaMes += sub;
+    var k = Utilities.formatDate(d, tz, "yyyy-MM-dd");
+    porDia[k] = (porDia[k] || 0) + sub;
+  });
+
+  var unidades = 0, porCat = {};
+  itn.forEach(function (r) {
+    var q = Number(r[7]) || 0, sub = Number(r[8]) || 0, cat = r[4] || "outro";
+    unidades += q;
+    if (!porCat[cat]) porCat[cat] = { categoria: cat, unidades: 0, receita: 0 };
+    porCat[cat].unidades += q; porCat[cat].receita += sub;
+  });
+
+  var dias = [];
+  for (var i = 13; i >= 0; i--) {
+    var d = new Date(agora); d.setDate(agora.getDate() - i);
+    var k = Utilities.formatDate(d, tz, "yyyy-MM-dd");
+    dias.push({ dia: k, receita: +((porDia[k] || 0)).toFixed(2) });
+  }
+
+  return {
+    moeda: "$",
+    receita_total: +receitaTotal.toFixed(2),
+    receita_mes: +receitaMes.toFixed(2),
+    n_encomendas: enc.length,
+    unidades: unidades,
+    por_categoria: Object.keys(porCat).map(function (k) { return porCat[k]; }),
+    por_dia: dias,
+    recentes: enc.slice(-8).reverse().map(function (r) {
+      return { data: fmt(r[0], tz), id: r[1], cliente: r[2], subtotal: Number(r[7]) || 0, resumo: r[10] };
+    }),
+    stock: stk.map(function (r) {
+      return { produto: r[1], vendido: Number(r[3]) || 0, disponivel: r[4] };
+    })
+  };
+}
+
+function valores(ss, nome) {
+  var sh = ss.getSheetByName(nome);
+  if (!sh || sh.getLastRow() < 2) return [];
+  return sh.getRange(2, 1, sh.getLastRow() - 1, sh.getLastColumn()).getValues();
+}
+function fmt(d, tz) {
+  try { return Utilities.formatDate(d instanceof Date ? d : new Date(d), tz, "dd/MM HH:mm"); }
+  catch (e) { return String(d); }
+}
+
+/* ---------- REGISTO (escrita) ---------- */
 function doPost(e) {
   try {
-    if (SEGREDO && (!e.parameter || e.parameter.k !== SEGREDO)) {
-      return resposta({ ok: false, erro: "segredo invalido" });
-    }
+    if (SEGREDO && (!e.parameter || e.parameter.k !== SEGREDO)) return resposta({ ok: false, erro: "segredo" });
     var pedido = JSON.parse(e.postData.contents);
     var ss = SpreadsheetApp.getActiveSpreadsheet();
-
-    var enc = folha(ss, "Encomendas",
-      ["Data/Hora","ID","Cliente","Data entrega","Morada","Nota","Nº itens","Subtotal","Moeda","Idioma","Resumo"]);
-    var itn = folha(ss, "Itens",
-      ["Data/Hora","ID encomenda","Produto","Slug","Categoria","Tipo","Preço","Quantidade","Subtotal"]);
-    var stk = folha(ss, "Stock",
-      ["Slug","Produto","Stock inicial","Vendido","Disponível"]);
-
+    var enc = folha(ss, "Encomendas", ["Data/Hora","ID","Cliente","Data entrega","Morada","Nota","Nº itens","Subtotal","Moeda","Idioma","Resumo"]);
+    var itn = folha(ss, "Itens", ["Data/Hora","ID encomenda","Produto","Slug","Categoria","Tipo","Preço","Quantidade","Subtotal"]);
+    var stk = folha(ss, "Stock", ["Slug","Produto","Stock inicial","Vendido","Disponível"]);
     var quando = new Date(pedido.data_hora || Date.now());
-    var c = pedido.cliente || {};
-    var itens = pedido.itens || [];
+    var c = pedido.cliente || {}, itens = pedido.itens || [];
     var resumo = itens.map(function (i) { return i.quantidade + "× " + i.nome; }).join("; ");
 
     enc.appendRow([quando, limpo(pedido.id), limpo(c.nome), limpo(c.data_entrega), limpo(c.morada),
@@ -96,34 +159,23 @@ function doPost(e) {
         limpo(i.tipo), Number(i.preco) || 0, Number(i.quantidade) || 0, Number(i.subtotal) || 0]);
       abaterStock(stk, i);
     });
-
     return resposta({ ok: true, id: pedido.id });
   } catch (err) {
     return resposta({ ok: false, erro: String(err) });
   }
 }
 
-// Soma a quantidade vendida à linha do produto (por slug). Cria a linha se não existir.
 function abaterStock(stk, item) {
   var dados = stk.getDataRange().getValues();
   for (var r = 1; r < dados.length; r++) {
     if (String(dados[r][0]) === String(item.slug)) {
-      var atual = Number(dados[r][3]) || 0;
-      stk.getRange(r + 1, 4).setValue(atual + (Number(item.quantidade) || 0)); // coluna D "Vendido"
+      stk.getRange(r + 1, 4).setValue((Number(dados[r][3]) || 0) + (Number(item.quantidade) || 0));
       return;
     }
   }
   stk.appendRow([limpo(item.slug), limpo(item.nome), "", Number(item.quantidade) || 0, ""]);
   var last = stk.getLastRow();
-  stk.getRange(last, 5).setFormula("=C" + last + "-D" + last); // Disponível = inicial − vendido
-}
-
-// Segurança: neutraliza texto que comece por = + - @ (evita "injeção de fórmula").
-function limpo(v) {
-  if (v == null) return "";
-  var s = String(v);
-  if (/^[=+\-@]/.test(s)) s = "'" + s;
-  return s;
+  stk.getRange(last, 5).setFormula("=C" + last + "-D" + last);
 }
 
 function folha(ss, nome, cabecalho) {
@@ -136,73 +188,31 @@ function folha(ss, nome, cabecalho) {
   }
   return sh;
 }
-
-function resposta(obj) {
-  return ContentService.createTextOutput(JSON.stringify(obj))
-    .setMimeType(ContentService.MimeType.JSON);
-}
+function limpo(v) { if (v == null) return ""; var s = String(v); if (/^[=+\-@]/.test(s)) s = "'" + s; return s; }
+function resposta(obj) { return ContentService.createTextOutput(JSON.stringify(obj)).setMimeType(ContentService.MimeType.JSON); }
 ```
 
 ---
 
-## O painel (separador "Painel")
+## O dashboard mostra
+- **Receita total** e **receita do mês**, **nº de encomendas**, **unidades vendidas**
+- **Gráfico** da receita dos últimos 14 dias
+- **Vendas por categoria** (barras)
+- **Encomendas recentes** e **Stock** (com aviso quando ≤ 5)
 
-Crie um separador chamado **Painel** e cole estas fórmulas nas células indicadas.
-Elas atualizam-se sozinhas a cada nova encomenda:
-
-| Célula | Fórmula | Mostra |
-|--------|---------|--------|
-| A1 | `Receita total` | rótulo |
-| B1 | `=SUM(Encomendas!H2:H)` | **receita total** ($) |
-| A2 | `Nº de encomendas` | rótulo |
-| B2 | `=COUNTA(Encomendas!B2:B)` | nº de encomendas |
-| A3 | `Produtos/flores vendidos` | rótulo |
-| B3 | `=SUM(Itens!H2:H)` | total de unidades vendidas |
-| A4 | `Receita este mês` | rótulo |
-| B4 | `=SUMIFS(Encomendas!H2:H;Encomendas!A2:A;">="&EOMONTH(TODAY();-1)+1)` | receita do mês |
-
-**Vendas por categoria** (cole em A6):
-```
-=QUERY(Itens!A:I; "select E, sum(H), sum(I) where E is not null group by E label sum(H) 'Unidades', sum(I) 'Receita'"; 1)
-```
-
-**Stock disponível:** no separador **Stock**, preencha a coluna **C ("Stock inicial")** com as
-quantidades que tem de cada flor (as linhas dos produtos aparecem sozinhas à medida que vendem, ou
-pode adicioná-las já pelo `slug`). A coluna **E ("Disponível")** = inicial − vendido, calcula-se sozinha.
-
-> 💡 **"Flores em curso"**: se quiser separar encomendas *entregues* das *pendentes*, adicione uma
-> coluna **"Estado"** na folha Encomendas e escreva "entregue" quando entregar. Depois é fácil filtrar.
-
----
-
-## (Opcional) Um painel visual bonito
-Quer gráficos num "website" em vez de tabelas? Ligue a folha ao **Looker Studio**
-(gratuito, da Google): lookerstudio.google.com → *Criar → Relatório → Google Sheets* →
-escolha esta folha. Arrasta os campos e tem um painel visual de receitas/vendas, partilhável por link.
+Para o **Stock disponível** aparecer, preencha na folha (separador *Stock*) a coluna
+**"Stock inicial"** de cada flor. O "Disponível" abate-se sozinho a cada venda.
 
 ---
 
 ## É seguro para a minha conta Google?
-
-Sim, com margem de segurança. Pontos-chave:
-- **Permissões limitadas:** ao autorizar, a Google só pede acesso a *Folhas de cálculo* —
-  **não** ao Gmail, Drive, contactos nem à conta inteira. O script só sabe mexer em folhas.
-- **Só escreve:** o recetor apenas *acrescenta linhas*. Não lê nem partilha nada, e ninguém
-  consegue ver a sua folha através dele.
-- **Risco real (pequeno):** como o endereço fica no código público do site, alguém poderia
-  enviar encomendas falsas (spam) para a folha. Não danifica a conta — no pior caso apaga as
-  linhas de lixo; as quotas diárias da Google travam qualquer abuso.
-
-**Como reduzir ainda mais:**
-1. **Código já protegido** — neutraliza texto malicioso (injeção de fórmulas). ✔ (incluído acima)
-2. **Senha partilhada (opcional):** ponha um valor em `var SEGREDO = "algo";` e acrescente
-   `?k=algo` ao fim do URL em `App.PAINEL_URL`. Trava envios casuais.
-3. **Conta dedicada (recomendado para paz de espírito):** use a conta Gmail **do negócio**
-   (não a pessoal) para criar a folha. Assim, mesmo no pior cenário, fica isolada da sua vida pessoal.
+Sim. Permissões limitadas (só *Folhas de cálculo*), o registo só **escreve**, e o dashboard só
+**lê com o código certo** (`CHAVE_PAINEL`). O risco real é apenas spam de encomendas falsas na
+folha (o código já neutraliza texto malicioso). Para paz de espírito, use a conta **do negócio**.
 
 ## Testar
-Depois de ligar o URL: faça uma encomenda de teste no site (adicione ao cesto → Finalizar).
-Deve aparecer **uma linha nova** no separador *Encomendas* e as linhas dos produtos em *Itens*.
-Se não aparecer, confirme que em *Quem tem acesso* escolheu **"Qualquer pessoa"**.
+1. Publique o site (Push origin) e republique o script (Parte B, Passo 2).
+2. Abra `…/painel.html`, escreva o código → deve ver as vendas.
+3. Faça uma encomenda de teste na loja → volte ao painel → **↻ Atualizar** → aparece.
 
 *Guia criado para a Timorgiana, Lda. — floricultura em Díli, Timor-Leste.*

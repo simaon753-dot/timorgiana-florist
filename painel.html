@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<!-- TIMORGIANA — FLORIST · Painel de gestão (dashboard privado)
+     Lê os dados da Folha Google via Apps Script (JSONP). Protegido por chave.
+     Não indexado. Abra em: .../timorgiana-florist/painel.html -->
+<html lang="pt">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Painel de Gestão · Timorgiana Florist</title>
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="theme-color" content="#3A302A">
+  <link rel="icon" type="image/png" href="assets/favicon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Mulish:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --coral:#F9AC80; --coral-veu:#FBEFE6; --terracota:#C4633A; --terracota-esc:#A24E2C;
+      --creme:#FFF4D1; --marfim:#FFFBF3; --marfim-q:#FDF6EC; --branco:#fff;
+      --dourado:#C9A86A; --sage:#8A9A7B; --sage-esc:#5F6E50; --vermelho:#C0492F;
+      --tinta:#3A302A; --tinta-suave:#6E6058; --tinta-tenue:#9A8C82; --linha:#EEE2D4;
+      --serif:"Cormorant Garamond",Georgia,serif; --sans:"Mulish",-apple-system,"Segoe UI",Roboto,sans-serif;
+      --raio:14px; --raio-sm:8px; --sombra:0 18px 44px rgba(150,95,60,.10);
+      --hair:1px solid rgba(196,99,58,.14);
+    }
+    *{box-sizing:border-box}
+    [hidden]{display:none !important}   /* garante que 'hidden' esconde mesmo (.gate usa display:grid) */
+    body{margin:0;font-family:var(--sans);color:var(--tinta);background:var(--marfim-q);line-height:1.5;-webkit-font-smoothing:antialiased}
+    h1,h2,h3{font-family:var(--serif);font-weight:600;margin:0;letter-spacing:-.01em}
+    a{color:var(--terracota)}
+    .container{width:min(100% - 2.4rem,1180px);margin-inline:auto}
+
+    /* Cabeçalho */
+    .topo{background:linear-gradient(120deg,#3A302A,#2A221D);color:#fff;padding:1.2rem 0}
+    .topo__in{display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap}
+    .marca{display:flex;align-items:center;gap:.8rem}
+    .marca img{height:40px;width:auto}
+    .marca__t{font-family:var(--serif);font-size:1.35rem;color:var(--creme);line-height:1}
+    .marca__s{font-family:var(--sans);font-size:.62rem;letter-spacing:.28em;text-transform:uppercase;color:var(--coral)}
+    .topo__acoes{display:flex;gap:.5rem;align-items:center}
+    .btnp{font-family:var(--sans);font-size:.72rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;
+      border:1px solid rgba(255,255,255,.3);background:rgba(255,255,255,.08);color:#fff;border-radius:100px;
+      padding:.55rem 1.1rem;cursor:pointer;transition:.25s}
+    .btnp:hover{background:var(--coral);border-color:var(--coral);color:var(--tinta)}
+    .btnp--primario{background:var(--coral);border-color:var(--coral);color:var(--tinta)}
+
+    main{padding:clamp(1.5rem,4vw,3rem) 0}
+    .eyebrow{font-size:.66rem;font-weight:800;letter-spacing:.28em;text-transform:uppercase;color:var(--terracota);margin:0 0 .9rem}
+
+    /* KPIs */
+    .kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:clamp(.7rem,1.6vw,1.2rem);margin-bottom:1.4rem}
+    .kpi{background:var(--branco);border:var(--hair);border-radius:var(--raio);padding:1.3rem 1.4rem;box-shadow:var(--sombra)}
+    .kpi__lbl{font-size:.64rem;font-weight:800;letter-spacing:.16em;text-transform:uppercase;color:var(--tinta-tenue)}
+    .kpi__val{font-family:var(--serif);font-size:clamp(1.9rem,3.4vw,2.7rem);color:var(--terracota);line-height:1.05;margin-top:.35rem;font-variant-numeric:tabular-nums}
+    .kpi--escuro{background:linear-gradient(150deg,var(--coral-veu),#fff)}
+
+    .grelha2{display:grid;grid-template-columns:1.4fr 1fr;gap:clamp(.9rem,2vw,1.4rem);margin-bottom:1.4rem}
+    .cartao{background:var(--branco);border:var(--hair);border-radius:var(--raio);padding:1.4rem 1.5rem;box-shadow:var(--sombra)}
+    .cartao h2{font-size:1.4rem;margin-bottom:1rem}
+
+    /* Gráfico de barras (14 dias) */
+    .barras{display:flex;align-items:flex-end;gap:.4rem;height:170px;padding-top:.5rem}
+    .barra{flex:1;display:flex;flex-direction:column;align-items:center;gap:.4rem;height:100%;justify-content:flex-end;min-width:0}
+    .barra__b{width:100%;max-width:26px;background:linear-gradient(var(--coral),var(--terracota));border-radius:4px 4px 0 0;transition:height .5s ease;min-height:2px}
+    .barra__d{font-size:.56rem;color:var(--tinta-tenue);white-space:nowrap}
+    .barra__v{font-size:.56rem;color:var(--terracota);font-weight:700}
+
+    /* Barras por categoria */
+    .catlinha{display:grid;grid-template-columns:1fr auto;gap:.3rem;margin-bottom:.9rem}
+    .catlinha__top{display:flex;justify-content:space-between;font-size:.82rem}
+    .catlinha__nome{font-weight:700;color:var(--tinta)}
+    .catlinha__val{color:var(--terracota);font-weight:700;font-variant-numeric:tabular-nums}
+    .catbar{grid-column:1/-1;height:8px;background:var(--coral-veu);border-radius:100px;overflow:hidden}
+    .catbar__f{height:100%;background:linear-gradient(90deg,var(--coral),var(--terracota));border-radius:100px}
+
+    /* Tabelas */
+    table{width:100%;border-collapse:collapse;font-size:.86rem}
+    th{text-align:left;font-size:.6rem;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--tinta-tenue);
+       padding:.5rem .6rem;border-bottom:2px solid var(--linha)}
+    td{padding:.7rem .6rem;border-bottom:1px solid var(--linha);vertical-align:top}
+    td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}
+    .pill{display:inline-block;font-size:.6rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase;
+      padding:.2rem .55rem;border-radius:100px}
+    .pill--ok{background:#E7F0E4;color:var(--sage-esc)}
+    .pill--baixo{background:#FBE4DC;color:var(--vermelho)}
+    .vazio{color:var(--tinta-tenue);font-style:italic;padding:1.2rem 0;text-align:center}
+
+    /* Login gate */
+    .gate{position:fixed;inset:0;display:grid;place-items:center;background:var(--marfim-q);padding:1.5rem;z-index:50}
+    .gate__cx{background:var(--branco);border:var(--hair);border-radius:var(--raio);box-shadow:var(--sombra);
+      padding:clamp(1.8rem,4vw,2.6rem);max-width:380px;width:100%;text-align:center}
+    .gate__cx img{height:52px;margin-bottom:1rem}
+    .gate h1{font-size:1.7rem;color:var(--tinta)}
+    .gate p{color:var(--tinta-suave);font-size:.9rem;margin:.4rem 0 1.3rem}
+    .gate input{width:100%;font-family:var(--sans);font-size:1rem;text-align:center;letter-spacing:.1em;
+      padding:.85rem 1rem;border:1px solid var(--linha);border-radius:var(--raio-sm);margin-bottom:.8rem}
+    .gate input:focus{outline:none;border-color:var(--terracota);box-shadow:0 0 0 3px rgba(196,99,58,.12)}
+    .gate button{width:100%;font-family:var(--sans);font-weight:800;letter-spacing:.14em;text-transform:uppercase;font-size:.8rem;
+      background:var(--terracota);color:#fff;border:none;border-radius:var(--raio-sm);padding:.95rem;cursor:pointer;transition:.25s}
+    .gate button:hover{background:var(--terracota-esc)}
+    .gate__erro{color:var(--vermelho);font-size:.82rem;min-height:1.2em;margin-bottom:.6rem}
+    .estado{color:var(--tinta-tenue);font-size:.8rem;text-align:center;padding:2rem 0}
+
+    @media(max-width:820px){.kpis{grid-template-columns:1fr 1fr}.grelha2{grid-template-columns:1fr}}
+    @media(max-width:480px){.barra__d{display:none}}
+  </style>
+</head>
+<body>
+
+  <!-- Porta de entrada (chave) -->
+  <div class="gate" id="gate" hidden>
+    <div class="gate__cx">
+      <img src="assets/logo-coral.png" alt="Timorgiana Florist">
+      <h1>Painel de Gestão</h1>
+      <p>Introduza o código de acesso para ver as vendas.</p>
+      <div class="gate__erro" id="gate-erro"></div>
+      <input type="password" id="gate-chave" placeholder="Código de acesso" autocomplete="current-password" inputmode="text">
+      <button id="gate-btn">Entrar</button>
+    </div>
+  </div>
+
+  <!-- Painel -->
+  <div id="painel" hidden>
+    <header class="topo">
+      <div class="container topo__in">
+        <div class="marca">
+          <img src="assets/logo-creme.png" alt="">
+          <div><div class="marca__t">Timorgiana</div><div class="marca__s">Painel de Gestão</div></div>
+        </div>
+        <div class="topo__acoes">
+          <button class="btnp" id="btn-atualizar">↻ Atualizar</button>
+          <button class="btnp" id="btn-sair">Sair</button>
+        </div>
+      </div>
+    </header>
+
+    <main class="container">
+      <div id="estado" class="estado">A carregar…</div>
+
+      <div id="conteudo" hidden>
+        <p class="eyebrow" id="atualizado">—</p>
+
+        <section class="kpis" id="kpis"></section>
+
+        <div class="grelha2">
+          <div class="cartao">
+            <h2>Receita — últimos 14 dias</h2>
+            <div class="barras" id="grafico"></div>
+          </div>
+          <div class="cartao">
+            <h2>Vendas por categoria</h2>
+            <div id="categorias"></div>
+          </div>
+        </div>
+
+        <div class="grelha2">
+          <div class="cartao">
+            <h2>Encomendas recentes</h2>
+            <div style="overflow-x:auto"><table id="recentes"></table></div>
+          </div>
+          <div class="cartao">
+            <h2>Stock</h2>
+            <div style="overflow-x:auto"><table id="stock"></table></div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script>
+    /* ==== CONFIG ==== */
+    var PAINEL_URL = "https://script.google.com/macros/s/AKfycbxuf67JQzWauS4_1GoL7rpr6hZHXNnU7_4Tw_zSR2FdHcs0juts6LPD_Jmpoa5sM7alkw/exec";
+    var CHAVE_STORE = "tg_painel_chave";
+
+    var CAT_NOME = { bouquet:"Ramos & Bouquets", vaso:"Arranjos em vaso", hastes:"Hastes avulsas",
+      casamentos:"Casamentos", funebre:"Fúnebre", outro:"Outro" };
+    var $ = function(id){ return document.getElementById(id); };
+    var moeda = "$";
+    var fmt = function(n){ return moeda + (Number(n)||0).toFixed(2); };
+    var esc = function(s){ return String(s==null?"":s).replace(/[&<>"]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c];}); };
+
+    /* ==== JSONP ==== */
+    var jsonpN = 0, jsonpTimer = null;
+    function pedir(chave, ok, erro){
+      var cbNome = "__tgcb" + (++jsonpN);
+      var s = document.createElement("script");
+      jsonpTimer = setTimeout(function(){ limpar(); erro("timeout"); }, 12000);
+      function limpar(){ clearTimeout(jsonpTimer); delete window[cbNome]; if(s.parentNode) s.parentNode.removeChild(s); }
+      window[cbNome] = function(res){ limpar(); ok(res); };
+      s.onerror = function(){ limpar(); erro("rede"); };
+      s.src = PAINEL_URL + "?callback=" + cbNome + "&k=" + encodeURIComponent(chave) + "&t=" + Date.now();
+      document.body.appendChild(s);
+    }
+
+    /* ==== Fluxo ==== */
+    function iniciar(){
+      var chave = localStorage.getItem(CHAVE_STORE);
+      if(!chave){ mostrarGate(); return; }
+      mostrarPainel(); carregar(chave);
+    }
+    function mostrarGate(msg){
+      $("painel").hidden = true; $("gate").hidden = false;
+      $("gate-erro").textContent = msg || "";
+      $("gate-chave").focus();
+    }
+    function mostrarPainel(){ $("gate").hidden = true; $("painel").hidden = false; }
+
+    function carregar(chave){
+      $("estado").hidden = false; $("estado").textContent = "A carregar…"; $("conteudo").hidden = true;
+      pedir(chave, function(res){
+        if(!res || !res.ok){
+          localStorage.removeItem(CHAVE_STORE);
+          mostrarGate("Código incorreto. Tente novamente.");
+          return;
+        }
+        localStorage.setItem(CHAVE_STORE, chave);
+        render(res.dados);
+      }, function(tipo){
+        $("estado").hidden = false;
+        $("estado").textContent = tipo === "timeout"
+          ? "Sem resposta do painel. Confirme que publicou a versão nova do script."
+          : "Não foi possível ligar. Verifique a ligação à internet.";
+      });
+    }
+
+    function render(d){
+      moeda = d.moeda || "$";
+      $("estado").hidden = true; $("conteudo").hidden = false;
+      $("atualizado").textContent = "Atualizado agora · " + new Date().toLocaleString("pt-PT");
+
+      /* KPIs */
+      $("kpis").innerHTML = [
+        card("Receita total", fmt(d.receita_total), true),
+        card("Receita este mês", fmt(d.receita_mes)),
+        card("Encomendas", d.n_encomendas),
+        card("Unidades vendidas", d.unidades)
+      ].join("");
+
+      /* Gráfico 14 dias */
+      var dias = d.por_dia || [];
+      var max = Math.max.apply(null, dias.map(function(x){return x.receita;}).concat([1]));
+      $("grafico").innerHTML = dias.map(function(x){
+        var h = Math.round((x.receita/max)*100);
+        var dd = x.dia.slice(8) + "/" + x.dia.slice(5,7);
+        return '<div class="barra" title="'+dd+': '+fmt(x.receita)+'">'
+          + '<span class="barra__v">'+(x.receita?Math.round(x.receita):"")+'</span>'
+          + '<div class="barra__b" style="height:'+Math.max(h,x.receita?4:0)+'%"></div>'
+          + '<span class="barra__d">'+dd+'</span></div>';
+      }).join("");
+
+      /* Categorias */
+      var cats = (d.por_categoria||[]).slice().sort(function(a,b){return b.receita-a.receita;});
+      var maxc = Math.max.apply(null, cats.map(function(c){return c.receita;}).concat([1]));
+      $("categorias").innerHTML = cats.length ? cats.map(function(c){
+        return '<div class="catlinha"><div class="catlinha__top">'
+          + '<span class="catlinha__nome">'+esc(CAT_NOME[c.categoria]||c.categoria)+'</span>'
+          + '<span class="catlinha__val">'+fmt(c.receita)+' · '+c.unidades+' un.</span></div>'
+          + '<div class="catbar"><div class="catbar__f" style="width:'+Math.round((c.receita/maxc)*100)+'%"></div></div></div>';
+      }).join("") : '<p class="vazio">Sem vendas ainda.</p>';
+
+      /* Recentes */
+      var rec = d.recentes||[];
+      $("recentes").innerHTML = '<tr><th>Data</th><th>Cliente</th><th>Itens</th><th class="num">Total</th></tr>'
+        + (rec.length ? rec.map(function(r){
+            return '<tr><td>'+esc(r.data)+'</td><td>'+esc(r.cliente||"—")+'</td><td>'+esc(r.resumo||"")+'</td><td class="num">'+fmt(r.subtotal)+'</td></tr>';
+          }).join("") : '<tr><td colspan="4" class="vazio">Sem encomendas ainda.</td></tr>');
+
+      /* Stock */
+      var st = d.stock||[];
+      $("stock").innerHTML = '<tr><th>Produto</th><th class="num">Vendido</th><th class="num">Disponível</th></tr>'
+        + (st.length ? st.map(function(s){
+            var disp = s.disponivel, baixo = (disp !== "" && Number(disp) <= 5);
+            var pill = disp==="" ? '' : '<span class="pill '+(baixo?"pill--baixo":"pill--ok")+'">'+disp+'</span>';
+            return '<tr><td>'+esc(s.produto)+'</td><td class="num">'+(s.vendido||0)+'</td><td class="num">'+(pill||"—")+'</td></tr>';
+          }).join("") : '<tr><td colspan="3" class="vazio">Defina o stock inicial na folha.</td></tr>');
+    }
+    function card(lbl,val,destaque){
+      return '<div class="kpi'+(destaque?" kpi--escuro":"")+'"><div class="kpi__lbl">'+lbl+'</div><div class="kpi__val">'+val+'</div></div>';
+    }
+
+    /* Eventos */
+    $("gate-btn").addEventListener("click", function(){
+      var v = $("gate-chave").value.trim(); if(!v) return;
+      localStorage.setItem(CHAVE_STORE, v); mostrarPainel(); carregar(v);
+    });
+    $("gate-chave").addEventListener("keydown", function(e){ if(e.key==="Enter") $("gate-btn").click(); });
+    $("btn-atualizar").addEventListener("click", function(){ carregar(localStorage.getItem(CHAVE_STORE)); });
+    $("btn-sair").addEventListener("click", function(){ localStorage.removeItem(CHAVE_STORE); mostrarGate(); });
+
+    iniciar();
+  </script>
+</body>
+</html>
