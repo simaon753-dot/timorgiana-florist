@@ -31,7 +31,7 @@ App.SITE     = "https://simaon753-dot.github.io/timorgiana-florist";
    Deixe "" para desativar. Cole aqui o URL do backend (ex.: Google Apps
    Script Web App) e cada encomenda passa a ser registada automaticamente,
    além da mensagem de WhatsApp. Ver COMO-EDITAR.md. */
-App.PAINEL_URL = "";
+App.PAINEL_URL = "https://script.google.com/macros/s/AKfycbxuf67JQzWauS4_1GoL7rpr6hZHXNnU7_4Tw_zSR2FdHcs0juts6LPD_Jmpoa5sM7alkw/exec";
 
 /* Referência legível de uma foto da galeria:
    "assets/galeria/bouquet/bouquet-04.jpg" → "BOUQUET-04" */
