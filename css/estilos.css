@@ -1432,3 +1432,58 @@ body.recibo-aberto{ overflow:hidden; }
   .recibo__doc{ padding:0 !important; }
   .recibo-tab th:nth-child(3), .recibo-tab td:nth-child(3){ display:table-cell !important; }
 }
+
+/* ==========================================================================
+   18. ENCOMENDA PERSONALIZADA (configurador)
+   ========================================================================== */
+.pers-grelha{ display:grid; grid-template-columns:1.55fr 1fr; gap:clamp(1.5rem,4vw,3rem); align-items:start; }
+.pers-grupo{ margin-bottom:1.9rem; }
+.pers-grupo__t{ display:block; font-family:var(--sans); font-size:.72rem; font-weight:800;
+  letter-spacing:.18em; text-transform:uppercase; color:var(--tinta); margin:0 0 .8rem; }
+.pers-grupo__nota{ font-weight:600; letter-spacing:.04em; text-transform:none; color:var(--tinta-tenue); font-size:.72rem; }
+
+.pers-chips{ display:flex; flex-wrap:wrap; gap:.55rem; }
+.pers-chip{ font-family:var(--sans); font-size:.82rem; font-weight:600; color:var(--tinta-suave);
+  background:var(--branco); border:1px solid var(--linha); border-radius:100px; padding:.55rem 1.1rem;
+  cursor:pointer; transition:var(--transicao); }
+.pers-chip:hover{ border-color:var(--coral); color:var(--terracota); }
+.pers-chip.ativo{ background:var(--terracota); border-color:var(--terracota); color:#fff; }
+
+.pers-textarea, .pers-input{ font-family:var(--sans); font-size:1rem; color:var(--tinta);
+  padding:.85rem 1.05rem; border:1px solid var(--linha); border-radius:var(--raio-sm);
+  background:var(--branco); width:100%; transition:var(--transicao); }
+.pers-textarea{ resize:vertical; min-height:70px; }
+.pers-textarea:focus, .pers-input:focus{ outline:none; border-color:var(--terracota); box-shadow:0 0 0 3px rgba(196,99,58,.12); }
+.pers-linha2{ display:grid; grid-template-columns:1fr 1fr; gap:1.2rem; }
+
+.pers-fotos{ display:inline-flex; align-items:center; gap:.9rem; cursor:pointer; flex-wrap:wrap; }
+.pers-fotos__btn{ font-family:var(--sans); font-size:.74rem; font-weight:800; letter-spacing:.14em; text-transform:uppercase;
+  color:var(--terracota); border:1px dashed rgba(196,99,58,.5); border-radius:var(--raio-sm); padding:.7rem 1.2rem; transition:var(--transicao); }
+.pers-fotos:hover .pers-fotos__btn{ background:var(--coral-veu); }
+.pers-fotos__conta{ font-size:.85rem; color:var(--sage-esc); font-weight:700; }
+.pers-fotos__nota{ font-size:.8rem; color:var(--tinta-suave); margin:.7rem 0 0; }
+
+/* Resumo ao vivo */
+.pers-resumo{ background:var(--marfim-quente); border:var(--hairline); border-radius:var(--raio);
+  padding:clamp(1.5rem,3vw,2.1rem); position:sticky; top:150px; }
+.pers-resumo h2{ font-size:1.5rem; margin-bottom:1.1rem; }
+.pers-resumo__l{ display:grid; grid-template-columns:auto 1fr; gap:.2rem .9rem; padding:.6rem 0; border-bottom:1px solid var(--linha); }
+.pers-resumo__l span{ font-size:.62rem; font-weight:800; letter-spacing:.12em; text-transform:uppercase; color:var(--tinta-tenue); align-self:center; }
+.pers-resumo__l b{ font-family:var(--serif); font-size:1.05rem; color:var(--tinta); font-weight:500; line-height:1.25; }
+.pers-resumo__vazio{ color:var(--tinta-tenue); font-family:var(--serif); font-style:italic; padding:1rem 0; margin:0; }
+.pers-resumo__preco{ font-size:.82rem; color:var(--tinta-suave); margin:1rem 0; text-align:center; }
+
+/* Cartão "Encomenda Personalizada" na loja */
+.pers-banner{ display:grid; grid-template-columns:1fr auto; gap:1.2rem; align-items:center;
+  background:linear-gradient(150deg,var(--coral-veu),var(--coral-suave)); border:var(--hairline-ouro);
+  border-radius:var(--raio); padding:clamp(1.3rem,3vw,2rem) clamp(1.4rem,3.5vw,2.4rem); margin-bottom:2.4rem; }
+.pers-banner__t{ font-size:clamp(1.5rem,3vw,2rem); margin:0 0 .3rem; }
+.pers-banner__s{ color:var(--tinta-suave); font-size:.95rem; margin:0; max-width:52ch; }
+.pers-banner .btn{ white-space:nowrap; }
+@media (max-width:640px){ .pers-banner{ grid-template-columns:1fr; } .pers-banner .btn{ width:100%; } }
+
+@media (max-width:900px){
+  .pers-grelha{ grid-template-columns:1fr; }
+  .pers-resumo{ position:static; }
+}
+@media (max-width:520px){ .pers-linha2{ grid-template-columns:1fr; } }

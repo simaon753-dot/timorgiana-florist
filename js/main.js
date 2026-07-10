@@ -23,6 +23,7 @@
     App.aplicarIdioma();
     if (App.Cesto) App.Cesto.atualizar();
     if (App.Loja && typeof App.Loja.iniciar === "function") App.Loja.iniciar();
+    if (App.Personalizar && typeof App.Personalizar.iniciar === "function") App.Personalizar.iniciar();
 
     var cabecalho = document.getElementById("cabecalho");
 
