@@ -143,7 +143,7 @@ function doPost(e) {
     if (SEGREDO && (!e.parameter || e.parameter.k !== SEGREDO)) return resposta({ ok: false, erro: "segredo" });
     var pedido = JSON.parse(e.postData.contents);
     var ss = SpreadsheetApp.getActiveSpreadsheet();
-    var enc = folha(ss, "Encomendas", ["Data/Hora","ID","Cliente","Data entrega","Morada","Nota","Nº itens","Subtotal","Moeda","Idioma","Resumo"]);
+    var enc = folha(ss, "Encomendas", ["Data/Hora","ID","Cliente","Data entrega","Morada","Nota","Nº itens","Subtotal","Moeda","Idioma","Resumo","WhatsApp"]);
     var itn = folha(ss, "Itens", ["Data/Hora","ID encomenda","Produto","Slug","Categoria","Tipo","Preço","Quantidade","Subtotal"]);
     var stk = folha(ss, "Stock", ["Slug","Produto","Stock inicial","Vendido","Disponível"]);
     var quando = new Date(pedido.data_hora || Date.now());
@@ -152,7 +152,7 @@ function doPost(e) {
 
     enc.appendRow([quando, limpo(pedido.id), limpo(c.nome), limpo(c.data_entrega), limpo(c.morada),
       limpo(c.nota), Number(pedido.total_itens) || 0, Number(pedido.subtotal) || 0,
-      limpo(pedido.moeda || "$"), limpo(pedido.idioma), limpo(resumo)]);
+      limpo(pedido.moeda || "$"), limpo(pedido.idioma), limpo(resumo), limpo(c.whatsapp)]);
 
     itens.forEach(function (i) {
       itn.appendRow([quando, limpo(pedido.id), limpo(i.nome), limpo(i.slug), limpo(i.categoria),

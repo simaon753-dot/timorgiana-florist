@@ -235,12 +235,17 @@ App.Loja = (function () {
           '<div class="cesto-resumo__linha"><span data-i18n="cesto_subtotal">Subtotal</span><b>' + App.Cesto.precoFmt(App.Cesto.subtotal()) + '</b></div>' +
           '<div class="cesto-resumo__linha"><span data-i18n="cesto_entrega">Entrega</span><span data-i18n="cesto_entrega_val">A combinar</span></div>' +
           '<form class="cesto-form" id="cesto-form" novalidate>' +
-            '<label data-i18n="checkout_nome">Nome</label><input name="nome" type="text" autocomplete="name">' +
+            '<div class="cesto-erro" id="cesto-erro" role="alert" hidden></div>' +
+            '<label><span data-i18n="checkout_nome">Nome</span> <span class="obrig">*</span></label>' +
+            '<input name="nome" type="text" autocomplete="name" required>' +
+            '<label><span data-i18n="checkout_whatsapp">WhatsApp (telemóvel)</span> <span class="obrig">*</span></label>' +
+            '<input name="whatsapp" type="tel" inputmode="tel" autocomplete="tel" data-i18n-ph="checkout_whatsapp_ph" placeholder="+670 …" required>' +
             '<label data-i18n="checkout_data">Data de entrega</label><input name="data" type="date" id="cesto-data">' +
             '<label data-i18n="checkout_morada">Morada de entrega</label><input name="morada" type="text" autocomplete="street-address">' +
             '<label data-i18n="checkout_nota">Mensagem (opcional)</label><textarea name="nota" rows="2"></textarea>' +
             '<button class="btn btn--whatsapp btn--grande" type="submit" style="width:100%;margin-top:.6rem">' + App.ICON.whatsapp +
               ' <span data-i18n="cesto_rever">Rever e finalizar</span></button>' +
+            '<p class="cesto-form__nota"><span data-i18n="checkout_guardado">Os seus dados ficam guardados neste aparelho.</span> <a href="#" id="cesto-limpar" data-i18n="checkout_limpar">Limpar</a></p>' +
           '</form>' +
           '<a class="cesto-continuar" href="' + b() + 'paginas/loja.html" data-i18n="cesto_continuar">Continuar a comprar</a>' +
         '</aside>' +
@@ -249,15 +254,43 @@ App.Loja = (function () {
     var dt = document.getElementById("cesto-data");
     if (dt) dt.min = new Date().toISOString().split("T")[0];
     var form = document.getElementById("cesto-form");
+
+    /* pré-preencher com os dados guardados neste aparelho ("lembrar cliente") */
+    var CHAVE_CLI = "tg_cliente";
+    var cli = {};
+    try { cli = JSON.parse(localStorage.getItem(CHAVE_CLI)) || {}; } catch (e) {}
+    if (form) {
+      if (cli.nome) form.nome.value = cli.nome;
+      if (cli.whatsapp) form.whatsapp.value = cli.whatsapp;
+      if (cli.morada) form.morada.value = cli.morada;
+    }
+    var linkLimpar = document.getElementById("cesto-limpar");
+    if (linkLimpar) linkLimpar.addEventListener("click", function (e) {
+      e.preventDefault();
+      try { localStorage.removeItem(CHAVE_CLI); } catch (er) {}
+      if (form) { form.nome.value = ""; form.whatsapp.value = ""; form.morada.value = ""; form.nome.focus(); }
+    });
+
     if (form) form.addEventListener("submit", function (ev) {
       ev.preventDefault();
       var d = new FormData(form);
       var dados = {
         nome: (d.get("nome") || "").toString().trim(),
+        whatsapp: (d.get("whatsapp") || "").toString().trim(),
         data: (d.get("data") || "").toString().trim(),
         morada: (d.get("morada") || "").toString().trim(),
         nota: (d.get("nota") || "").toString().trim()
       };
+      /* Nome + WhatsApp obrigatórios (protege contra enganos) */
+      var erro = document.getElementById("cesto-erro");
+      if (!dados.nome || !dados.whatsapp) {
+        if (erro) { erro.hidden = false; erro.textContent = App.t("checkout_erro"); }
+        (!dados.nome ? form.nome : form.whatsapp).focus();
+        return;
+      }
+      if (erro) erro.hidden = true;
+      /* lembrar os dados neste aparelho para a próxima */
+      try { localStorage.setItem(CHAVE_CLI, JSON.stringify({ nome: dados.nome, whatsapp: dados.whatsapp, morada: dados.morada })); } catch (e) {}
       /* mostra o recibo primeiro; o envio p/ WhatsApp acontece a partir do recibo */
       if (App.Recibo) App.Recibo.mostrar(dados);
       else App.Cesto.checkout(dados);

@@ -169,9 +169,10 @@ App.Recibo = (function () {
     tot("Total", App.Cesto.precoFmt(atual.subtotal), true);
     y += 4;
 
-    if (d.nome || d.data || d.morada || d.nota) {
+    if (d.nome || d.whatsapp || d.data || d.morada || d.nota) {
       doc.setDrawColor.apply(doc, linha); doc.line(M, y, W - M, y); y += 7;
       y = cliLinha(doc, "Nome", d.nome, tenue, tinta, M, W, y);
+      y = cliLinha(doc, "WhatsApp", d.whatsapp, tenue, tinta, M, W, y);
       y = cliLinha(doc, "Data de entrega", d.data, tenue, tinta, M, W, y);
       y = cliLinha(doc, "Morada", d.morada, tenue, tinta, M, W, y);
       y = cliLinha(doc, "Mensagem", d.nota, tenue, tinta, M, W, y);
@@ -213,8 +214,9 @@ App.Recibo = (function () {
     var dataStr = new Date().toLocaleDateString(App.idioma === "en" ? "en-GB" : "pt-PT");
     atual = { dados: dados, itens: itens, numero: dados.numero, subtotal: App.Cesto.subtotal(), dataStr: dataStr };
 
-    var cliente = linhaCliente("checkout_nome", dados.nome) + linhaCliente("checkout_data", dados.data) +
-      linhaCliente("checkout_morada", dados.morada) + linhaCliente("checkout_nota", dados.nota);
+    var cliente = linhaCliente("checkout_nome", dados.nome) + linhaCliente("checkout_whatsapp", dados.whatsapp) +
+      linhaCliente("checkout_data", dados.data) + linhaCliente("checkout_morada", dados.morada) +
+      linhaCliente("checkout_nota", dados.nota);
 
     document.getElementById("recibo-doc").innerHTML = '' +
       '<div class="recibo-topo">' +

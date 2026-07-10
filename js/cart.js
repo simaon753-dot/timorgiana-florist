@@ -136,7 +136,8 @@ App.Cesto = (function () {
     });
     linhas.push("", "Subtotal: " + precoFmt(subtotal()));
     linhas.push("Entrega: a combinar");
-    if (dados.nome)   linhas.push("", "Nome: " + dados.nome);
+    if (dados.nome)     linhas.push("", "Nome: " + dados.nome);
+    if (dados.whatsapp) linhas.push("WhatsApp: " + dados.whatsapp);
     if (dados.data)   linhas.push("Data de entrega: " + dados.data);
     if (dados.morada) linhas.push("Morada: " + dados.morada);
     if (dados.nota)   linhas.push("Nota: " + dados.nota);
@@ -161,7 +162,7 @@ App.Cesto = (function () {
       total_itens: contagem(),
       subtotal: +subtotal().toFixed(2),
       cliente: {
-        nome: dados.nome || "", data_entrega: dados.data || "",
+        nome: dados.nome || "", whatsapp: dados.whatsapp || "", data_entrega: dados.data || "",
         morada: dados.morada || "", nota: dados.nota || ""
       },
       idioma: App.idioma

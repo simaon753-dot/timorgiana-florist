@@ -100,6 +100,11 @@ App.T = {
   checkout_data: { pt:"Data de entrega", tet:"Data entrega", en:"Delivery date" },
   checkout_morada:{ pt:"Morada de entrega", tet:"Morada entrega", en:"Delivery address" },
   checkout_nota: { pt:"Mensagem (opcional)", tet:"Mensajen (opsionál)", en:"Message (optional)" },
+  checkout_whatsapp: { pt:"WhatsApp (telemóvel)", tet:"WhatsApp (telemóvel)", en:"WhatsApp (phone)" },
+  checkout_whatsapp_ph: { pt:"+670 …", tet:"+670 …", en:"+670 …" },
+  checkout_erro: { pt:"Indique o seu nome e o número de WhatsApp para encomendar.", tet:"Hatama ita-nia naran no WhatsApp atu enkomenda.", en:"Please enter your name and WhatsApp number to order." },
+  checkout_guardado: { pt:"Os seus dados ficam guardados neste aparelho para a próxima.", tet:"Ita-nia dadus rai iha aparelho ne'e ba oin.", en:"Your details are saved on this device for next time." },
+  checkout_limpar: { pt:"Limpar", tet:"Hamoos", en:"Clear" },
 
   /* —— RECIBO / fatura —— */
   cesto_rever:    { pt:"Rever e finalizar", tet:"Haree no finaliza", en:"Review & checkout" },
