@@ -75,10 +75,16 @@ App.Recibo = (function () {
       var img = new Image();
       img.onload = function () {
         try {
+          var isLogo = it.key === "logo";
           var c = document.createElement("canvas");
           c.width = img.naturalWidth; c.height = img.naturalHeight;
-          c.getContext("2d").drawImage(img, 0, 0);
-          mapa[it.key] = { data: c.toDataURL("image/jpeg", 0.82), w: img.naturalWidth, h: img.naturalHeight };
+          var ctx = c.getContext("2d");
+          /* logótipo: manter transparente (PNG) e nítido; fotos: fundo branco + JPEG (leve) */
+          if (!isLogo) { ctx.fillStyle = "#ffffff"; ctx.fillRect(0, 0, c.width, c.height); }
+          ctx.drawImage(img, 0, 0);
+          mapa[it.key] = isLogo
+            ? { data: c.toDataURL("image/png"), w: img.naturalWidth, h: img.naturalHeight, fmt: "PNG" }
+            : { data: c.toDataURL("image/jpeg", 0.82), w: img.naturalWidth, h: img.naturalHeight, fmt: "JPEG" };
         } catch (e) { mapa[it.key] = null; }
         if (--pend === 0) cb(mapa);
       };
@@ -121,7 +127,7 @@ App.Recibo = (function () {
 
     if (mapa.logo && mapa.logo.data) {
       var lw = 38, lh = lw * (mapa.logo.h / mapa.logo.w);
-      doc.addImage(mapa.logo.data, "JPEG", M, y, lw, lh);
+      doc.addImage(mapa.logo.data, mapa.logo.fmt || "PNG", M, y, lw, lh);
     }
     doc.setFont("times", "normal"); doc.setFontSize(18); doc.setTextColor.apply(doc, tinta);
     doc.text("Recibo de encomenda", W - M, y + 5, { align: "right" });
@@ -139,7 +145,7 @@ App.Recibo = (function () {
 
     atual.itens.forEach(function (l) {
       var p = l.produto, th = mapa[p.slug];
-      if (th && th.data) doc.addImage(th.data, "JPEG", M, y - 4.5, 11, 11);
+      if (th && th.data) doc.addImage(th.data, th.fmt || "JPEG", M, y - 4.5, 11, 11);
       doc.setFont("times", "normal"); doc.setFontSize(12); doc.setTextColor.apply(doc, tinta);
       doc.text(App.t2(p.nome), M + 14, y + 2);
       doc.setFont("helvetica", "normal"); doc.setFontSize(10); doc.setTextColor.apply(doc, tenue);
