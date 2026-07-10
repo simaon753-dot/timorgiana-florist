@@ -12,6 +12,7 @@ window.App = window.App || {};
 App.Recibo = (function () {
   "use strict";
   var criado = false;
+  var atual = null; /* snapshot do recibo mostrado (para gerar o PDF) */
 
   function numero() {
     var d = new Date(), p = function (n) { return (n < 10 ? "0" : "") + n; };
@@ -50,7 +51,133 @@ App.Recibo = (function () {
     document.addEventListener("keydown", function (e) {
       if (e.key === "Escape" && !document.getElementById("recibo").hidden) fechar();
     });
-    document.getElementById("recibo-pdf").addEventListener("click", function () { window.print(); });
+    document.getElementById("recibo-pdf").addEventListener("click", function () { gerarPDF(); });
+  }
+
+  /* ---- Geração de PDF (download direto, sem diálogo de impressão) ---- */
+  var jspdfCarregando = false;
+  function carregarJsPDF(cb) {
+    if (window.jspdf && window.jspdf.jsPDF) { cb(); return; }
+    if (jspdfCarregando) { setTimeout(function () { carregarJsPDF(cb); }, 200); return; }
+    jspdfCarregando = true;
+    var s = document.createElement("script");
+    s.src = App.base + "js/vendor/jspdf.umd.min.js";
+    s.onload = function () { jspdfCarregando = false; cb(); };
+    s.onerror = function () { jspdfCarregando = false; App.toast("Não foi possível carregar o gerador de PDF."); };
+    document.head.appendChild(s);
+  }
+
+  /* carrega imagens (mesma origem) e converte para dataURL JPEG p/ o PDF */
+  function carregarImagens(lista, cb) {
+    var mapa = {}, pend = lista.length;
+    if (!pend) return cb(mapa);
+    lista.forEach(function (it) {
+      var img = new Image();
+      img.onload = function () {
+        try {
+          var c = document.createElement("canvas");
+          c.width = img.naturalWidth; c.height = img.naturalHeight;
+          c.getContext("2d").drawImage(img, 0, 0);
+          mapa[it.key] = { data: c.toDataURL("image/jpeg", 0.82), w: img.naturalWidth, h: img.naturalHeight };
+        } catch (e) { mapa[it.key] = null; }
+        if (--pend === 0) cb(mapa);
+      };
+      img.onerror = function () { mapa[it.key] = null; if (--pend === 0) cb(mapa); };
+      img.src = it.src;
+    });
+  }
+
+  function gerarPDF() {
+    if (!atual) return;
+    var btn = document.getElementById("recibo-pdf");
+    var txt = btn.querySelector("span"), orig = txt ? txt.textContent : "";
+    if (txt) txt.textContent = "A gerar…";
+    carregarJsPDF(function () {
+      var b = App.base;
+      var lista = [{ key: "logo", src: b + "assets/logo-coral.png" }].concat(
+        atual.itens.map(function (l) { return { key: l.produto.slug, src: b + (l.produto.thumb || l.produto.img) }; }));
+      carregarImagens(lista, function (mapa) {
+        try { construirPDF(mapa); } catch (e) { App.toast("Erro ao gerar o PDF."); }
+        if (txt) txt.textContent = orig;
+      });
+    });
+  }
+
+  function cliLinha(doc, lbl, val, tenue, tinta, M, W, y) {
+    if (!val) return y;
+    doc.setFont("helvetica", "bold"); doc.setFontSize(7.5); doc.setTextColor.apply(doc, tenue);
+    doc.text(lbl.toUpperCase(), M, y);
+    doc.setFont("helvetica", "normal"); doc.setFontSize(10); doc.setTextColor.apply(doc, tinta);
+    var linhas = doc.splitTextToSize(String(val), W - M - M - 42);
+    doc.text(linhas, M + 42, y);
+    return y + Math.max(6, linhas.length * 5);
+  }
+
+  function construirPDF(mapa) {
+    var jsPDF = window.jspdf.jsPDF, doc = new jsPDF({ unit: "mm", format: "a4" });
+    var M = 16, W = 210;
+    var terr = [196, 99, 58], tinta = [58, 48, 42], tenue = [154, 140, 130], linha = [230, 220, 210];
+    var d = atual.dados, y = 16;
+
+    if (mapa.logo && mapa.logo.data) {
+      var lw = 38, lh = lw * (mapa.logo.h / mapa.logo.w);
+      doc.addImage(mapa.logo.data, "JPEG", M, y, lw, lh);
+    }
+    doc.setFont("times", "normal"); doc.setFontSize(18); doc.setTextColor.apply(doc, tinta);
+    doc.text("Recibo de encomenda", W - M, y + 5, { align: "right" });
+    doc.setFont("helvetica", "bold"); doc.setFontSize(11); doc.setTextColor.apply(doc, terr);
+    doc.text(String(atual.numero), W - M, y + 12, { align: "right" });
+    doc.setFont("helvetica", "normal"); doc.setFontSize(9); doc.setTextColor.apply(doc, tenue);
+    doc.text(atual.dataStr, W - M, y + 17, { align: "right" });
+    y += 27;
+    doc.setDrawColor.apply(doc, [201, 168, 106]); doc.line(M, y, W - M, y); y += 8;
+
+    doc.setFont("helvetica", "bold"); doc.setFontSize(8); doc.setTextColor.apply(doc, tenue);
+    doc.text("PRODUTO", M + 14, y); doc.text("QT.", 132, y, { align: "right" });
+    doc.text("PREÇO", 162, y, { align: "right" }); doc.text("TOTAL", W - M, y, { align: "right" });
+    y += 3; doc.setDrawColor.apply(doc, linha); doc.line(M, y, W - M, y); y += 7;
+
+    atual.itens.forEach(function (l) {
+      var p = l.produto, th = mapa[p.slug];
+      if (th && th.data) doc.addImage(th.data, "JPEG", M, y - 4.5, 11, 11);
+      doc.setFont("times", "normal"); doc.setFontSize(12); doc.setTextColor.apply(doc, tinta);
+      doc.text(App.t2(p.nome), M + 14, y + 2);
+      doc.setFont("helvetica", "normal"); doc.setFontSize(10); doc.setTextColor.apply(doc, tenue);
+      doc.text(String(l.qty), 132, y + 2, { align: "right" });
+      doc.text(App.Cesto.precoFmt(p.preco) + (p.tipo === "unidade" ? "/un" : ""), 162, y + 2, { align: "right" });
+      doc.setTextColor.apply(doc, tinta);
+      doc.text(App.Cesto.precoFmt(p.preco * l.qty), W - M, y + 2, { align: "right" });
+      y += 13; doc.setDrawColor(240, 235, 228); doc.line(M, y - 4, W - M, y - 4);
+    });
+    y += 4;
+
+    function tot(lbl, val, big) {
+      doc.setFont(big ? "times" : "helvetica", "normal"); doc.setFontSize(big ? 15 : 10);
+      doc.setTextColor.apply(doc, big ? tinta : tenue); doc.text(lbl, 130, y);
+      doc.setTextColor.apply(doc, big ? terr : tinta); doc.text(val, W - M, y, { align: "right" });
+      y += big ? 10 : 6;
+    }
+    tot("Subtotal", App.Cesto.precoFmt(atual.subtotal));
+    tot("Entrega", "A combinar");
+    doc.setDrawColor.apply(doc, linha); doc.line(120, y - 2, W - M, y - 2); y += 3;
+    tot("Total", App.Cesto.precoFmt(atual.subtotal), true);
+    y += 4;
+
+    if (d.nome || d.data || d.morada || d.nota) {
+      doc.setDrawColor.apply(doc, linha); doc.line(M, y, W - M, y); y += 7;
+      y = cliLinha(doc, "Nome", d.nome, tenue, tinta, M, W, y);
+      y = cliLinha(doc, "Data de entrega", d.data, tenue, tinta, M, W, y);
+      y = cliLinha(doc, "Morada", d.morada, tenue, tinta, M, W, y);
+      y = cliLinha(doc, "Mensagem", d.nota, tenue, tinta, M, W, y);
+    }
+    y += 8;
+    doc.setFont("helvetica", "normal"); doc.setFontSize(8); doc.setTextColor.apply(doc, tenue);
+    doc.text(App.MORADA, W / 2, y, { align: "center" }); y += 4;
+    doc.text("WhatsApp " + App.TELEFONE + "  ·  " + App.EMAIL, W / 2, y, { align: "center" }); y += 8;
+    doc.setFont("times", "italic"); doc.setFontSize(12); doc.setTextColor.apply(doc, terr);
+    doc.text("Obrigada pela sua preferência", W / 2, y, { align: "center" });
+
+    doc.save("Recibo-" + atual.numero + ".pdf");
   }
 
   function linhaItem(l) {
@@ -78,6 +205,7 @@ App.Recibo = (function () {
     dados.numero = numero();
     var b = App.base;
     var dataStr = new Date().toLocaleDateString(App.idioma === "en" ? "en-GB" : "pt-PT");
+    atual = { dados: dados, itens: itens, numero: dados.numero, subtotal: App.Cesto.subtotal(), dataStr: dataStr };
 
     var cliente = linhaCliente("checkout_nome", dados.nome) + linhaCliente("checkout_data", dados.data) +
       linhaCliente("checkout_morada", dados.morada) + linhaCliente("checkout_nota", dados.nota);
