@@ -1357,3 +1357,78 @@ body.gaveta-aberta .gaveta { transform: none; }
 
 /* Total ao vivo no botão "Adicionar ao cesto" */
 .btn-total { letter-spacing: .06em; font-variant-numeric: tabular-nums; opacity: .95; }
+
+/* ==========================================================================
+   17. RECIBO / FATURA (modal antes de enviar por WhatsApp) + impressão PDF
+   ========================================================================== */
+.recibo-overlay{ position:fixed; inset:0; z-index:1350; background:rgba(42,34,29,.55);
+  backdrop-filter:blur(3px); }
+body.recibo-aberto{ overflow:hidden; }
+.recibo{
+  position:fixed; z-index:1360; top:50%; left:50%; transform:translate(-50%,-50%);
+  width:min(94vw,560px); max-height:92vh; overflow-y:auto;
+  background:var(--marfim); border-radius:var(--raio); box-shadow:var(--sombra-lg);
+  animation:reciboEntra .35s var(--easa);
+}
+@keyframes reciboEntra{ from{ opacity:0; transform:translate(-50%,-46%); } to{ opacity:1; transform:translate(-50%,-50%); } }
+.recibo__x{ position:absolute; top:.6rem; right:.8rem; z-index:2; background:none; border:none;
+  font-size:1.8rem; line-height:1; color:var(--tinta-tenue); cursor:pointer; }
+.recibo__x:hover{ color:var(--terracota); }
+
+/* — Documento do recibo (o que se imprime) — */
+.recibo__doc{ background:var(--branco); padding:clamp(1.4rem,3.5vw,2.2rem); }
+.recibo-topo{ display:flex; align-items:flex-start; justify-content:space-between; gap:1rem;
+  padding-bottom:1.1rem; border-bottom:var(--hairline-ouro); }
+.recibo-logo{ height:48px; width:auto; }
+.recibo-meta{ text-align:right; }
+.recibo-meta__t{ font-family:var(--serif); font-size:1.3rem; color:var(--tinta); line-height:1.1; }
+.recibo-meta__n{ font-family:var(--sans); font-weight:800; letter-spacing:.06em; color:var(--terracota); font-size:.82rem; margin-top:.2rem; }
+.recibo-meta__d{ font-size:.76rem; color:var(--tinta-tenue); }
+
+.recibo-tab{ width:100%; border-collapse:collapse; margin:1.1rem 0; font-size:.9rem; }
+.recibo-tab th{ text-align:left; font-family:var(--sans); font-size:.6rem; font-weight:800;
+  letter-spacing:.12em; text-transform:uppercase; color:var(--tinta-tenue);
+  padding:.4rem .4rem; border-bottom:1px solid var(--linha); }
+.recibo-tab td{ padding:.55rem .4rem; border-bottom:1px solid var(--linha); vertical-align:middle; }
+.recibo-tab .num{ text-align:right; font-variant-numeric:tabular-nums; white-space:nowrap; }
+.recibo-item{ display:flex; align-items:center; gap:.7rem; }
+.recibo-item img{ width:44px; height:44px; object-fit:cover; border-radius:var(--raio-sm); flex:none; }
+.recibo-item span{ font-family:var(--serif); font-size:1.02rem; color:var(--tinta); line-height:1.15; }
+
+.recibo-totais{ margin-left:auto; max-width:280px; }
+.recibo-totais__l{ display:flex; justify-content:space-between; padding:.32rem 0; font-size:.9rem; color:var(--tinta-suave); }
+.recibo-totais__tot{ border-top:1px solid var(--linha); margin-top:.3rem; padding-top:.6rem;
+  font-family:var(--serif); font-size:1.35rem; color:var(--terracota); }
+.recibo-totais__tot span:first-child{ color:var(--tinta); }
+
+.recibo-cli{ margin-top:1.2rem; padding-top:1rem; border-top:var(--hairline); display:grid; gap:.35rem; }
+.recibo-cli__l{ display:flex; gap:.6rem; font-size:.86rem; }
+.recibo-cli__l span{ min-width:120px; font-size:.62rem; font-weight:800; letter-spacing:.1em;
+  text-transform:uppercase; color:var(--tinta-tenue); padding-top:.15rem; }
+.recibo-cli__l b{ color:var(--tinta); font-weight:600; }
+
+.recibo-rodape{ margin-top:1.3rem; padding-top:1rem; border-top:var(--hairline-ouro);
+  display:grid; gap:.2rem; text-align:center; font-size:.74rem; color:var(--tinta-tenue); }
+.recibo-rodape__obr{ font-family:var(--serif); font-style:italic; font-size:1rem; color:var(--terracota); margin-top:.4rem; }
+
+/* — Ações (não imprimem) — */
+.recibo__acoes{ padding:1.1rem clamp(1.4rem,3.5vw,2.2rem) 1.4rem; background:var(--marfim-quente); border-top:var(--hairline); }
+.recibo__dica{ font-size:.78rem; color:var(--tinta-suave); text-align:center; margin:0 0 .9rem; }
+.recibo__botoes{ display:flex; gap:.7rem; flex-wrap:wrap; }
+.recibo__botoes .btn{ flex:1; min-width:150px; }
+
+@media (max-width:520px){
+  .recibo-item span{ font-size:.92rem; }
+  .recibo-tab th:nth-child(3), .recibo-tab td:nth-child(3){ display:none; } /* esconde 'Preço unit.' */
+}
+
+/* — Impressão: só o documento do recibo — */
+@media print{
+  body > *:not(.recibo){ display:none !important; }
+  .recibo-overlay, .recibo__x, .recibo__acoes{ display:none !important; }
+  body{ background:#fff !important; }
+  .recibo{ position:static !important; transform:none !important; width:auto !important;
+    max-height:none !important; box-shadow:none !important; border-radius:0 !important; animation:none !important; }
+  .recibo__doc{ padding:0 !important; }
+  .recibo-tab th:nth-child(3), .recibo-tab td:nth-child(3){ display:table-cell !important; }
+}

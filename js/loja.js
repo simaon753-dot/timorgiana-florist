@@ -240,7 +240,7 @@ App.Loja = (function () {
             '<label data-i18n="checkout_morada">Morada de entrega</label><input name="morada" type="text" autocomplete="street-address">' +
             '<label data-i18n="checkout_nota">Mensagem (opcional)</label><textarea name="nota" rows="2"></textarea>' +
             '<button class="btn btn--whatsapp btn--grande" type="submit" style="width:100%;margin-top:.6rem">' + App.ICON.whatsapp +
-              ' <span data-i18n="cesto_finalizar">Finalizar por WhatsApp</span></button>' +
+              ' <span data-i18n="cesto_rever">Rever e finalizar</span></button>' +
           '</form>' +
           '<a class="cesto-continuar" href="' + b() + 'paginas/loja.html" data-i18n="cesto_continuar">Continuar a comprar</a>' +
         '</aside>' +
@@ -252,12 +252,15 @@ App.Loja = (function () {
     if (form) form.addEventListener("submit", function (ev) {
       ev.preventDefault();
       var d = new FormData(form);
-      App.Cesto.checkout({
+      var dados = {
         nome: (d.get("nome") || "").toString().trim(),
         data: (d.get("data") || "").toString().trim(),
         morada: (d.get("morada") || "").toString().trim(),
         nota: (d.get("nota") || "").toString().trim()
-      });
+      };
+      /* mostra o recibo primeiro; o envio p/ WhatsApp acontece a partir do recibo */
+      if (App.Recibo) App.Recibo.mostrar(dados);
+      else App.Cesto.checkout(dados);
     });
     App.aplicarIdioma();
   };

@@ -126,7 +126,9 @@ App.Cesto = (function () {
   /* ---- Checkout por WhatsApp ---- */
   function mensagemCheckout(dados) {
     dados = dados || {};
-    var linhas = ["*Encomenda — Timorgiana Florist*", ""];
+    var linhas = ["*Encomenda — Timorgiana Florist*"];
+    if (dados.numero) linhas.push("Nº " + dados.numero);
+    linhas.push("");
     itens().forEach(function (l) {
       var p = l.produto, sub = (typeof p.preco === "number") ? "  =  " + precoFmt(p.preco * l.qty) : "";
       linhas.push("• " + App.t2(p.nome) + "  ×" + l.qty +
@@ -145,7 +147,7 @@ App.Cesto = (function () {
   function pedidoPayload(dados) {
     dados = dados || {};
     return {
-      id: "TG-" + Date.now(),
+      id: dados.numero || ("TG-" + Date.now()),
       data_hora: new Date().toISOString(),
       moeda: App.MOEDA || "$",
       itens: itens().map(function (l) {

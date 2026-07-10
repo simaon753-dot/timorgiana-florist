@@ -101,6 +101,18 @@ App.T = {
   checkout_morada:{ pt:"Morada de entrega", tet:"Morada entrega", en:"Delivery address" },
   checkout_nota: { pt:"Mensagem (opcional)", tet:"Mensajen (opsionál)", en:"Message (optional)" },
 
+  /* —— RECIBO / fatura —— */
+  cesto_rever:    { pt:"Rever e finalizar", tet:"Haree no finaliza", en:"Review & checkout" },
+  recibo_titulo:  { pt:"Recibo de encomenda", tet:"Resibu enkomenda", en:"Order receipt" },
+  recibo_produto: { pt:"Produto", tet:"Produtu", en:"Product" },
+  recibo_qtd:     { pt:"Qt.", tet:"Kt.", en:"Qty" },
+  recibo_unit:    { pt:"Preço", tet:"Presu", en:"Price" },
+  recibo_total:   { pt:"Total", tet:"Totál", en:"Total" },
+  recibo_guardar: { pt:"Guardar recibo (PDF)", tet:"Rai resibu (PDF)", en:"Save receipt (PDF)" },
+  recibo_enviar:  { pt:"Enviar por WhatsApp", tet:"Haruka liu WhatsApp", en:"Send on WhatsApp" },
+  recibo_dica:    { pt:"Dica: guarde o recibo em PDF e anexe-o no WhatsApp (📎).", tet:"Dika: rai resibu PDF no tau iha WhatsApp (📎).", en:"Tip: save the receipt as PDF and attach it on WhatsApp (📎)." },
+  recibo_obrigada:{ pt:"Obrigada pela sua preferência 🌷", tet:"Obrigada ba ita-nia preferénsia 🌷", en:"Thank you for your order 🌷" },
+
   /* —— Hero (Home) —— */
   hero_eyebrow:  { pt:"Arte floral · Díli, Timor-Leste", tet:"Arte floral · Dili, Timor-Leste", en:"Floral artistry · Dili, Timor-Leste" },
   hero_titulo:   { pt:"Flores que <em>expressam</em> sentimentos", tet:"Ai-funan ne'ebé <em>hatudu</em> sentimentu", en:"Flowers that <em>express</em> feelings" },
