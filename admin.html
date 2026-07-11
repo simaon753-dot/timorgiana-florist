@@ -1,0 +1,1572 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Administração · Timorgiana Florist</title>
+<link rel="icon" type="image/png" href="assets/favicon.png">
+<link rel="apple-touch-icon" href="assets/favicon-64.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=Mulish:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+/* =========================================================================
+   ADMIN.HTML — Painel de administração de conteúdos (loja + galeria)
+   -------------------------------------------------------------------------
+   Publica alterações diretamente no repositório GitHub através da API
+   (um commit por operação). O GitHub Pages atualiza o site sozinho (~1 min).
+   Autenticação: fine-grained Personal Access Token (ver ADMIN.md).
+   ========================================================================= */
+:root{
+  --coral:#F9AC80; --coral-claro:#FCC9A8; --coral-suave:#FDE3D2; --coral-veu:#FBEFE6;
+  --terracota:#C4633A; --terracota-esc:#A24E2C;
+  --creme:#FFF4D1; --marfim:#FFFBF3; --marfim-quente:#FDF6EC; --branco:#FFFFFF;
+  --dourado:#C9A86A; --dourado-claro:#E3CFA1; --sage:#8A9A7B; --sage-esc:#5F6E50;
+  --tinta:#3A302A; --tinta-suave:#6E6058; --tinta-tenue:#9A8C82; --linha:#EEE2D4;
+  --serif:"Cormorant Garamond","EB Garamond",Georgia,serif;
+  --sans:"Mulish",-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  --sombra:0 10px 34px rgba(58,48,42,.09);
+  --raio:14px;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{font-family:var(--sans);background:var(--marfim);color:var(--tinta);font-size:15px;line-height:1.55;min-height:100vh}
+img{display:block;max-width:100%}
+button{font-family:inherit;cursor:pointer}
+input,select,textarea{font-family:inherit;font-size:1rem}
+h1,h2,h3{font-family:var(--serif);font-weight:600;line-height:1.15}
+a{color:var(--terracota)}
+[hidden]{display:none!important}
+
+/* ---------- Cabeçalho ---------- */
+.topo{position:sticky;top:0;z-index:40;background:rgba(255,251,243,.94);backdrop-filter:blur(8px);border-bottom:1px solid var(--linha)}
+.topo__in{max-width:1180px;margin:0 auto;padding:.65rem 1rem;display:flex;align-items:center;gap:.9rem}
+.topo__logo{height:44px;width:auto}
+.topo__tit{display:flex;flex-direction:column;line-height:1.1}
+.topo__tit b{font-family:var(--serif);font-size:1.18rem;font-weight:600}
+.topo__tit span{font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;color:var(--terracota);font-weight:700}
+.topo__dir{margin-left:auto;display:flex;align-items:center;gap:.55rem;flex-wrap:wrap;justify-content:flex-end}
+.topo__user{font-size:.78rem;color:var(--tinta-suave)}
+.topo__user b{color:var(--tinta)}
+
+/* ---------- Botões ---------- */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:.45rem;border:none;border-radius:999px;
+  font-weight:700;font-size:.85rem;padding:.62rem 1.25rem;transition:all .18s ease;text-decoration:none;letter-spacing:.01em}
+.btn:disabled{opacity:.5;cursor:not-allowed}
+.btn--prim{background:var(--terracota);color:#fff}
+.btn--prim:hover:not(:disabled){background:var(--terracota-esc)}
+.btn--suave{background:var(--coral-suave);color:var(--terracota-esc)}
+.btn--suave:hover:not(:disabled){background:var(--coral-claro)}
+.btn--contorno{background:transparent;color:var(--tinta);border:1px solid var(--linha)}
+.btn--contorno:hover:not(:disabled){border-color:var(--terracota);color:var(--terracota)}
+.btn--perigo{background:transparent;color:#B3402A;border:1px solid #ECC8BC}
+.btn--perigo:hover:not(:disabled){background:#FBEDE8}
+.btn--mini{padding:.4rem .85rem;font-size:.76rem}
+
+/* ---------- Contentor ---------- */
+.molde{max-width:1180px;margin:0 auto;padding:1.2rem 1rem 4rem}
+
+/* ---------- Ecrã de entrada ---------- */
+.entrada{max-width:520px;margin:5vh auto 0}
+.cartao{background:var(--branco);border:1px solid var(--linha);border-radius:var(--raio);box-shadow:var(--sombra);padding:1.8rem 1.6rem}
+.entrada h1{font-size:1.9rem;margin-bottom:.35rem}
+.entrada .sub{color:var(--tinta-suave);font-size:.9rem;margin-bottom:1.3rem}
+.campo{margin-bottom:1rem}
+.campo label{display:block;font-size:.74rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--tinta-suave);margin-bottom:.35rem}
+.campo input[type=text],.campo input[type=password],.campo input[type=number],.campo select,.campo textarea{
+  width:100%;padding:.65rem .8rem;border:1px solid var(--linha);border-radius:10px;background:var(--marfim);color:var(--tinta)}
+.campo input:focus,.campo select:focus,.campo textarea:focus{outline:2px solid var(--coral);border-color:var(--coral)}
+.campo .dica{font-size:.76rem;color:var(--tinta-tenue);margin-top:.3rem}
+.linha-check{display:flex;align-items:center;gap:.5rem;font-size:.85rem;color:var(--tinta-suave);margin:.6rem 0 1rem}
+.entrada details{margin-top:1.2rem;border-top:1px dashed var(--linha);padding-top:1rem}
+.entrada summary{cursor:pointer;font-weight:700;color:var(--terracota);font-size:.88rem}
+.entrada details ol{margin:.7rem 0 0 1.2rem;font-size:.85rem;color:var(--tinta-suave);display:grid;gap:.45rem}
+.entrada details code{background:var(--marfim-quente);border:1px solid var(--linha);border-radius:6px;padding:.05rem .35rem;font-size:.8rem}
+.aviso-erro{background:#FBEDE8;border:1px solid #ECC8BC;color:#8C3B24;border-radius:10px;padding:.6rem .8rem;font-size:.84rem;margin-bottom:1rem}
+.nota-seg{margin-top:1rem;font-size:.76rem;color:var(--tinta-tenue)}
+
+/* ---------- Faixa demo / estado ---------- */
+.faixa-demo{background:var(--creme);border:1px solid var(--dourado-claro);color:#6b5721;border-radius:10px;
+  padding:.55rem .9rem;font-size:.82rem;margin-bottom:1rem;display:flex;gap:.6rem;align-items:center;flex-wrap:wrap}
+.faixa-ok{background:#F0F4EC;border:1px solid #CBD8BF;color:var(--sage-esc);border-radius:10px;
+  padding:.55rem .9rem;font-size:.84rem;margin-bottom:1rem;display:none;gap:.5rem;align-items:center;flex-wrap:wrap}
+.faixa-ok.visivel{display:flex}
+.faixa-ok a{font-weight:700}
+
+/* ---------- Separadores ---------- */
+.abas{display:flex;gap:.4rem;border-bottom:1px solid var(--linha);margin-bottom:1.2rem;flex-wrap:wrap}
+.aba{background:none;border:none;border-bottom:2.5px solid transparent;padding:.6rem .9rem;font-weight:700;font-size:.9rem;color:var(--tinta-suave)}
+.aba.ativa{color:var(--terracota);border-bottom-color:var(--terracota)}
+.barra-fer{display:flex;align-items:center;gap:.6rem;flex-wrap:wrap;margin-bottom:1.1rem}
+.chips{display:flex;gap:.35rem;flex-wrap:wrap}
+.chip{border:1px solid var(--linha);background:var(--branco);border-radius:999px;padding:.35rem .85rem;font-size:.78rem;font-weight:700;color:var(--tinta-suave)}
+.chip.ativo{background:var(--terracota);border-color:var(--terracota);color:#fff}
+.barra-fer .btn{margin-left:auto}
+
+/* ---------- Grelha de produtos ---------- */
+.grelha-prod{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:1rem}
+.cartao-prod{background:var(--branco);border:1px solid var(--linha);border-radius:var(--raio);overflow:hidden;display:flex;flex-direction:column}
+.cartao-prod__media{position:relative;aspect-ratio:1/1;background:var(--marfim-quente)}
+.cartao-prod__media img{width:100%;height:100%;object-fit:cover}
+.badge{position:absolute;top:.5rem;left:.5rem;background:rgba(255,251,243,.92);border:1px solid var(--linha);
+  border-radius:999px;font-size:.62rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase;padding:.18rem .55rem;color:var(--tinta-suave)}
+.cartao-prod__corpo{padding:.7rem .8rem .8rem;display:flex;flex-direction:column;gap:.15rem;flex:1}
+.cartao-prod__nome{font-family:var(--serif);font-size:1.02rem;font-weight:600}
+.cartao-prod__preco{font-size:.85rem;color:var(--terracota);font-weight:800}
+.cartao-prod__slug{font-size:.68rem;color:var(--tinta-tenue)}
+.cartao-prod__acoes{display:flex;gap:.4rem;margin-top:.55rem}
+.vazio{padding:3rem 1rem;text-align:center;color:var(--tinta-tenue);font-size:.9rem;grid-column:1/-1}
+
+/* ---------- Grelha da galeria ---------- */
+.grelha-gal{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:.7rem}
+.foto-gal{position:relative;border-radius:12px;overflow:hidden;border:1px solid var(--linha);aspect-ratio:1/1;background:var(--marfim-quente)}
+.foto-gal img{width:100%;height:100%;object-fit:cover}
+.foto-gal__rodape{position:absolute;inset:auto 0 0 0;display:flex;align-items:center;gap:.3rem;
+  padding:.35rem .45rem;background:linear-gradient(transparent,rgba(30,20,14,.62))}
+.foto-gal__nome{color:#fff;font-size:.64rem;font-weight:700;text-shadow:0 1px 3px rgba(0,0,0,.5);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.foto-gal__apagar{margin-left:auto;background:rgba(255,255,255,.92);border:none;border-radius:8px;width:26px;height:26px;
+  font-size:.85rem;line-height:1;color:#B3402A;flex:none}
+.foto-gal__apagar:disabled{color:var(--tinta-tenue)}
+.foto-gal .badge{top:.45rem;left:.45rem}
+
+/* ---------- Histórico ---------- */
+.hist{display:grid;gap:.55rem;max-width:760px}
+.hist__item{background:var(--branco);border:1px solid var(--linha);border-radius:12px;padding:.65rem .9rem;
+  display:flex;gap:.8rem;align-items:baseline;flex-wrap:wrap}
+.hist__msg{font-weight:600}
+.hist__meta{margin-left:auto;font-size:.74rem;color:var(--tinta-tenue);white-space:nowrap}
+
+/* ---------- Modais ---------- */
+dialog{border:none;border-radius:var(--raio);box-shadow:0 24px 70px rgba(30,20,14,.25);padding:0;
+  width:min(620px,calc(100vw - 2rem));max-height:calc(100dvh - 3rem);background:var(--branco);color:var(--tinta)}
+dialog::backdrop{background:rgba(43,32,26,.45);backdrop-filter:blur(3px)}
+.modal__cab{display:flex;align-items:center;gap:.7rem;padding:1rem 1.3rem;border-bottom:1px solid var(--linha)}
+.modal__cab h2{font-size:1.35rem}
+.modal__x{margin-left:auto;background:none;border:none;font-size:1.4rem;color:var(--tinta-tenue);line-height:1}
+.modal__corpo{padding:1.1rem 1.3rem;overflow-y:auto;max-height:calc(100dvh - 12rem)}
+.modal__pe{display:flex;gap:.6rem;justify-content:flex-end;padding: .9rem 1.3rem;border-top:1px solid var(--linha);flex-wrap:wrap}
+.duo{display:grid;grid-template-columns:1fr 1fr;gap: .9rem}
+@media(max-width:560px){.duo{grid-template-columns:1fr}}
+
+/* zona de foto */
+.zona-foto{border:1.5px dashed var(--dourado-claro);border-radius:12px;background:var(--marfim-quente);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.5rem;padding:1rem;min-height:170px;text-align:center;position:relative}
+.zona-foto.arrasto{border-color:var(--terracota);background:var(--coral-veu)}
+.zona-foto img{max-height:210px;border-radius:10px;object-fit:contain}
+.zona-foto p{font-size:.8rem;color:var(--tinta-tenue)}
+.zona-foto .botoes{display:flex;gap:.5rem;flex-wrap:wrap;justify-content:center}
+.radios{display:flex;gap:.4rem;flex-wrap:wrap}
+.radios label{border:1px solid var(--linha);border-radius:999px;padding:.4rem .9rem;font-size:.8rem;font-weight:700;color:var(--tinta-suave);cursor:pointer;background:var(--branco)}
+.radios input{display:none}
+.radios label:has(input:checked){background:var(--coral-suave);border-color:var(--coral);color:var(--terracota-esc)}
+.previa-lista{display:grid;grid-template-columns:repeat(auto-fill,minmax(110px,1fr));gap:.6rem;margin-top:.9rem}
+.previa-item{position:relative;border-radius:10px;overflow:hidden;border:1px solid var(--linha);aspect-ratio:1/1}
+.previa-item img{width:100%;height:100%;object-fit:cover}
+.previa-item button{position:absolute;top:.3rem;right:.3rem;background:rgba(255,255,255,.94);border:none;border-radius:7px;width:24px;height:24px;color:#B3402A}
+
+/* seletor de fotos existentes */
+.picker-grelha{display:grid;grid-template-columns:repeat(auto-fill,minmax(110px,1fr));gap:.55rem}
+.picker-grelha button{border:2px solid transparent;border-radius:10px;overflow:hidden;padding:0;background:var(--marfim-quente);aspect-ratio:1/1}
+.picker-grelha button.sel{border-color:var(--terracota)}
+.picker-grelha img{width:100%;height:100%;object-fit:cover}
+
+/* ---------- Ocupado / toast ---------- */
+.veu{position:fixed;inset:0;z-index:90;background:rgba(255,251,243,.86);backdrop-filter:blur(4px);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1rem}
+.veu__flor{font-size:2.2rem;animation:girar 1.6s linear infinite}
+@keyframes girar{to{transform:rotate(360deg)}}
+.veu__passo{font-family:var(--serif);font-size:1.25rem;color:var(--terracota-esc)}
+.veu__sub{font-size:.8rem;color:var(--tinta-tenue)}
+#toast{position:fixed;left:50%;bottom:1.4rem;transform:translateX(-50%) translateY(20px);z-index:95;
+  background:var(--tinta);color:var(--marfim);border-radius:999px;padding:.6rem 1.3rem;font-size:.85rem;font-weight:600;
+  opacity:0;pointer-events:none;transition:all .25s ease;max-width:calc(100vw - 2rem);text-align:center}
+#toast.visivel{opacity:1;transform:translateX(-50%) translateY(0)}
+#toast.erro{background:#8C3B24}
+
+/* confirmação */
+.confirm-txt{font-size:.95rem}
+.confirm-txt b{color:var(--terracota-esc)}
+.confirm-nota{font-size:.8rem;color:var(--tinta-tenue);margin-top:.5rem}
+
+@media(max-width:640px){
+  .barra-fer .btn{margin-left:0;width:100%;justify-content:center;order:-1}
+  .topo__user{display:none}
+}
+</style>
+</head>
+<body>
+
+<header class="topo">
+  <div class="topo__in">
+    <img class="topo__logo" src="assets/logo-coral.png" alt="Timorgiana Florist" onerror="this.style.display='none'">
+    <div class="topo__tit"><b>Timorgiana Florist</b><span>Administração</span></div>
+    <div class="topo__dir">
+      <span class="topo__user" id="topo-user" hidden></span>
+      <a class="btn btn--contorno btn--mini" id="btn-ver-site" href="index.html" target="_blank" rel="noopener">Ver o site ↗</a>
+      <button class="btn btn--suave btn--mini" id="btn-sair" hidden>Sair</button>
+    </div>
+  </div>
+</header>
+
+<main class="molde">
+
+  <!-- ============================ ENTRADA ============================ -->
+  <section class="entrada" id="ecra-entrada" hidden>
+    <div class="cartao">
+      <h1>Painel de administração</h1>
+      <p class="sub">Publique fotografias e produtos diretamente no site — sem programas, a partir de qualquer aparelho.</p>
+      <div class="aviso-erro" id="entrada-erro" hidden></div>
+      <div class="campo">
+        <label for="inp-token">Chave de acesso (token do GitHub)</label>
+        <input type="password" id="inp-token" autocomplete="off" spellcheck="false" placeholder="github_pat_…">
+        <p class="dica">A chave fica guardada apenas neste aparelho — nunca é enviada para outro lado além do GitHub.</p>
+      </div>
+      <label class="linha-check"><input type="checkbox" id="chk-lembrar" checked> Manter sessão iniciada neste aparelho</label>
+      <button class="btn btn--prim" id="btn-entrar" style="width:100%">Entrar</button>
+      <button class="btn btn--contorno" id="btn-demo" style="width:100%;margin-top:.6rem">Experimentar em modo de demonstração</button>
+
+      <details>
+        <summary>Como criar a chave de acesso (uma única vez)</summary>
+        <ol>
+          <li>Entre no <b>github.com</b> com a conta <code>simaon753-dot</code>.</li>
+          <li>Vá a <b>Settings → Developer settings → Personal access tokens → Fine-grained tokens</b> e carregue em <b>Generate new token</b>.</li>
+          <li><b>Token name:</b> <code>Painel Timorgiana</code> · <b>Expiration:</b> Custom → 1 ano.</li>
+          <li>Em <b>Repository access</b> escolha <b>Only select repositories</b> → <code>timorgiana-florist</code>.</li>
+          <li>Em <b>Permissions → Repository permissions</b>, ponha <b>Contents</b> em <b>Read and write</b>. (Mais nada.)</li>
+          <li><b>Generate token</b> → copie o código <code>github_pat_…</code> e cole-o aqui em cima.</li>
+        </ol>
+        <p class="nota-seg">⚠️ Guarde a chave num sítio seguro (gestor de senhas). Se perder o aparelho, apague a chave em GitHub → Settings → Developer settings → Fine-grained tokens → <i>Revoke</i>. Instruções completas no ficheiro <b>ADMIN.md</b>.</p>
+      </details>
+    </div>
+  </section>
+
+  <!-- ============================ PAINEL ============================ -->
+  <section id="ecra-painel" hidden>
+    <div class="faixa-demo" id="faixa-demo" hidden>🧪 <b>Modo de demonstração</b> — pode experimentar tudo à vontade: nada é publicado no site verdadeiro.</div>
+    <div class="faixa-ok" id="faixa-ok"></div>
+
+    <div class="abas" role="tablist">
+      <button class="aba ativa" data-aba="loja">🌸 Loja</button>
+      <button class="aba" data-aba="galeria">🖼️ Galeria</button>
+      <button class="aba" data-aba="historico">📜 Publicações</button>
+    </div>
+
+    <!-- LOJA -->
+    <div id="tab-loja">
+      <div class="barra-fer">
+        <div class="chips" id="chips-loja"></div>
+        <button class="btn btn--prim" id="btn-novo-prod">＋ Novo produto</button>
+      </div>
+      <div class="grelha-prod" id="grelha-prod"></div>
+    </div>
+
+    <!-- GALERIA -->
+    <div id="tab-galeria" hidden>
+      <div class="barra-fer">
+        <div class="chips" id="chips-gal"></div>
+        <button class="btn btn--prim" id="btn-add-fotos">＋ Adicionar fotografias</button>
+      </div>
+      <div class="grelha-gal" id="grelha-gal"></div>
+    </div>
+
+    <!-- HISTÓRICO -->
+    <div id="tab-historico" hidden>
+      <div class="hist" id="lista-hist"></div>
+    </div>
+  </section>
+</main>
+
+<!-- ============================ MODAL PRODUTO ============================ -->
+<dialog id="modal-prod">
+  <div class="modal__cab"><h2 id="mp-titulo">Novo produto</h2><button class="modal__x" data-fechar>&times;</button></div>
+  <div class="modal__corpo">
+    <div class="campo" id="mp-bloco-cat">
+      <label>Categoria</label>
+      <div class="radios" id="mp-cats"></div>
+    </div>
+
+    <div class="campo">
+      <label>Fotografia</label>
+      <div class="zona-foto" id="mp-zona">
+        <img id="mp-previa" hidden alt="">
+        <p id="mp-zona-txt">Arraste uma foto para aqui, ou</p>
+        <div class="botoes">
+          <button type="button" class="btn btn--suave btn--mini" id="mp-btn-ficheiro">📷 Escolher foto</button>
+          <button type="button" class="btn btn--contorno btn--mini" id="mp-btn-existente">Usar foto já no site</button>
+        </div>
+        <p class="dica" id="mp-foto-info"></p>
+      </div>
+    </div>
+
+    <div class="duo">
+      <div class="campo"><label>Nome (Português)</label><input type="text" id="mp-nome-pt" autocomplete="off"></div>
+      <div class="campo"><label>Naran (Tétum)</label><input type="text" id="mp-nome-tet" autocomplete="off"></div>
+    </div>
+    <div class="duo">
+      <div class="campo"><label>Name (English)</label><input type="text" id="mp-nome-en" autocomplete="off"></div>
+      <div class="campo">
+        <label>Referência (automática)</label>
+        <input type="text" id="mp-slug" autocomplete="off" spellcheck="false">
+        <p class="dica">Só letras minúsculas, números e hífens.</p>
+      </div>
+    </div>
+
+    <div class="campo">
+      <label>Tipo de venda</label>
+      <div class="radios" id="mp-tipos">
+        <label><input type="radio" name="mp-tipo" value="normal">Preço fixo</label>
+        <label><input type="radio" name="mp-tipo" value="unidade">Preço por haste</label>
+        <label><input type="radio" name="mp-tipo" value="quote">Sob consulta</label>
+      </div>
+    </div>
+    <div class="duo">
+      <div class="campo" id="mp-bloco-preco">
+        <label>Preço ($)</label>
+        <input type="number" id="mp-preco" min="0" step="0.05" inputmode="decimal" placeholder="ex.: 25">
+      </div>
+      <div class="campo" id="mp-bloco-galeria">
+        <label>Portefólio</label>
+        <label class="linha-check" style="margin:0"><input type="checkbox" id="mp-chk-galeria" checked> Mostrar também na galeria</label>
+      </div>
+    </div>
+    <div class="aviso-erro" id="mp-erro" hidden></div>
+  </div>
+  <div class="modal__pe">
+    <button class="btn btn--contorno" data-fechar>Cancelar</button>
+    <button class="btn btn--prim" id="mp-guardar">Publicar no site</button>
+  </div>
+</dialog>
+
+<!-- ============================ MODAL ESCOLHER FOTO EXISTENTE ============================ -->
+<dialog id="modal-picker">
+  <div class="modal__cab"><h2>Escolher fotografia do site</h2><button class="modal__x" data-fechar>&times;</button></div>
+  <div class="modal__corpo"><div class="picker-grelha" id="picker-grelha"></div></div>
+  <div class="modal__pe">
+    <button class="btn btn--contorno" data-fechar>Cancelar</button>
+    <button class="btn btn--prim" id="picker-ok" disabled>Usar esta foto</button>
+  </div>
+</dialog>
+
+<!-- ============================ MODAL FOTOS GALERIA ============================ -->
+<dialog id="modal-gal">
+  <div class="modal__cab"><h2>Adicionar fotografias à galeria</h2><button class="modal__x" data-fechar>&times;</button></div>
+  <div class="modal__corpo">
+    <div class="campo">
+      <label>Categoria</label>
+      <div class="radios" id="mg-cats"></div>
+    </div>
+    <div class="zona-foto" id="mg-zona">
+      <p>Arraste fotos para aqui, ou</p>
+      <div class="botoes"><button type="button" class="btn btn--suave btn--mini" id="mg-btn-ficheiro">📷 Escolher fotos</button></div>
+      <p class="dica">Pode escolher várias de uma vez. São otimizadas automaticamente (≈1200 px + miniatura leve).</p>
+    </div>
+    <div class="previa-lista" id="mg-previas"></div>
+    <div class="aviso-erro" id="mg-erro" hidden></div>
+  </div>
+  <div class="modal__pe">
+    <button class="btn btn--contorno" data-fechar>Cancelar</button>
+    <button class="btn btn--prim" id="mg-publicar" disabled>Publicar no site</button>
+  </div>
+</dialog>
+
+<!-- ============================ MODAL CONFIRMAR ============================ -->
+<dialog id="modal-confirm">
+  <div class="modal__cab"><h2 id="mc-titulo">Confirmar</h2><button class="modal__x" data-fechar>&times;</button></div>
+  <div class="modal__corpo"><p class="confirm-txt" id="mc-texto"></p><p class="confirm-nota" id="mc-nota" hidden></p></div>
+  <div class="modal__pe">
+    <button class="btn btn--contorno" data-fechar>Cancelar</button>
+    <button class="btn btn--perigo" id="mc-ok">Confirmar</button>
+  </div>
+</dialog>
+
+<div class="veu" id="veu" hidden>
+  <div class="veu__flor">🌸</div>
+  <div class="veu__passo" id="veu-passo">A publicar…</div>
+  <div class="veu__sub">Não feche esta página.</div>
+</div>
+<div id="toast" role="status"></div>
+
+<input type="file" id="ficheiro-prod" accept="image/*" hidden>
+<input type="file" id="ficheiro-gal" accept="image/*" multiple hidden>
+
+<script>
+(function(){
+"use strict";
+
+/* =========================================================================
+   0. CONFIGURAÇÃO
+   ========================================================================= */
+var CONFIG = {
+  owner:  "simaon753-dot",
+  repo:   "timorgiana-florist",
+  branch: "main",
+  site:   "https://simaon753-dot.github.io/timorgiana-florist/"
+};
+var CHAVE_TOKEN = "tg_admin_token";
+
+/* Categorias da loja (ordem oficial) e prefixos dos nomes de ficheiro */
+var CATS = ["bouquet","vaso","hastes","casamentos","funebre","outro"];
+var CAT_ROTULO = { bouquet:"Bouquets", vaso:"Vasos", hastes:"Hastes", casamentos:"Casamentos", funebre:"Fúnebre", outro:"Outro" };
+var CAT_PREFIXO = { bouquet:"bouquet", vaso:"vaso", casamentos:"cas", funebre:"fun", outro:"outro" };
+var CATS_GALERIA = ["casamentos","bouquet","vaso","funebre","outro"]; /* a galeria não tem hastes */
+var TIPO_POR_CAT = { bouquet:"normal", vaso:"normal", hastes:"unidade", casamentos:"quote", funebre:"quote", outro:"quote" };
+var NOME_BASE = {
+  bouquet:    { pt:"Ramo",                 tet:"Ramu",                  en:"Bouquet" },
+  vaso:       { pt:"Arranjo em vaso",      tet:"Aranju iha vazu",       en:"Vase arrangement" },
+  casamentos: { pt:"Casamento",            tet:"Kazamentu",             en:"Wedding" },
+  funebre:    { pt:"Homenagem fúnebre",    tet:"Omenajen fúnebre",      en:"Funeral tribute" },
+  outro:      { pt:"Criação personalizada",tet:"Kriasaun personalizadu",en:"Bespoke creation" }
+};
+
+var CABECALHO_PRODUCTS =
+'/* =========================================================================\n' +
+'   PRODUCTS.JS — Catálogo da loja (gerado; edite aqui ou no painel admin.html).\n' +
+"   tipo: 'normal' (preço fixo) · 'unidade' (preço por haste) · 'quote' (sob consulta)\n" +
+'   Preços em USD ($).\n' +
+'   ========================================================================= */\n';
+var CABECALHO_GALERIA =
+'/* GALERIA-DADOS.JS — portefólio (gerado; edite aqui ou no painel admin.html). Categorias: casamentos·bouquet·vaso·funebre·outro. */\n';
+
+/* =========================================================================
+   1. ESTADO
+   ========================================================================= */
+var Estado = {
+  demo: new URLSearchParams(location.search).get("demo") === "1",
+  gh: null,             /* cliente GitHub (real ou demo) */
+  user: "",
+  moeda: "$",
+  produtos: [],
+  galeria: [],
+  pastas: {},           /* cache: pasta -> [nomes de ficheiro] */
+  fotosLocais: {},      /* caminho -> objectURL (fotos acabadas de publicar) */
+  filtroLoja: "todos",
+  filtroGal: "todos",
+  ocupado: false
+};
+
+/* =========================================================================
+   2. UTILITÁRIOS
+   ========================================================================= */
+function $(id){ return document.getElementById(id); }
+function el(tag, cls, html){ var n=document.createElement(tag); if(cls)n.className=cls; if(html!=null)n.innerHTML=html; return n; }
+function escHtml(s){ return String(s).replace(/[&<>"']/g, function(c){ return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]; }); }
+
+function textoParaB64(txt){
+  var bytes = new TextEncoder().encode(txt), bin = "";
+  for (var i=0;i<bytes.length;i+=0x8000) bin += String.fromCharCode.apply(null, bytes.subarray(i,i+0x8000));
+  return btoa(bin);
+}
+function b64ParaTexto(b64){
+  var bin = atob(String(b64).replace(/\s/g,"")), bytes = new Uint8Array(bin.length);
+  for (var i=0;i<bin.length;i++) bytes[i] = bin.charCodeAt(i);
+  return new TextDecoder("utf-8").decode(bytes);
+}
+function blobParaB64(blob){
+  return new Promise(function(res,rej){
+    var r = new FileReader();
+    r.onload = function(){ res(String(r.result).split(",")[1]); };
+    r.onerror = function(){ rej(new Error("Falha a ler a imagem.")); };
+    r.readAsDataURL(blob);
+  });
+}
+function slugify(s){
+  return String(s).normalize("NFD").replace(/[\u0300-\u036f]/g,"")
+    .toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-+|-+$/g,"") || "foto";
+}
+function precoFmt(n){ return Estado.moeda + (n % 1 ? n.toFixed(2) : String(n)); }
+function dataFmt(iso){
+  try { return new Date(iso).toLocaleString("pt-PT",{day:"2-digit",month:"short",year:"numeric",hour:"2-digit",minute:"2-digit"}); }
+  catch(e){ return iso; }
+}
+function baseFicheiro(caminho){ return String(caminho).split("/").pop().replace(/\.[a-z0-9]+$/i,""); }
+function caminhoThumb(base, ext){ return "assets/galeria/thumbs/" + base + "." + (ext||"webp"); }
+
+function toast(msg, erro){
+  var t = $("toast");
+  t.textContent = msg;
+  t.className = "visivel" + (erro ? " erro" : "");
+  clearTimeout(toast._t);
+  toast._t = setTimeout(function(){ t.className = ""; }, erro ? 6000 : 4000);
+}
+function veu(passo){
+  var v = $("veu");
+  if (passo === false){ v.hidden = true; Estado.ocupado = false; return; }
+  $("veu-passo").textContent = passo;
+  v.hidden = false; Estado.ocupado = true;
+}
+window.addEventListener("beforeunload", function(e){
+  if (Estado.ocupado){ e.preventDefault(); e.returnValue = ""; }
+});
+
+/* confirmação bonita (Promise<boolean>) */
+function confirmar(titulo, textoHtml, nota){
+  return new Promise(function(res){
+    $("mc-titulo").textContent = titulo;
+    $("mc-texto").innerHTML = textoHtml;
+    var n = $("mc-nota"); n.hidden = !nota; if (nota) n.textContent = nota;
+    var m = $("modal-confirm"), ok = $("mc-ok");
+    function limpar(v){ ok.removeEventListener("click", simH); m.removeEventListener("close", naoH); m.close(); res(v); }
+    function simH(){ limpar(true); }
+    function naoH(){ ok.removeEventListener("click", simH); res(false); }
+    ok.addEventListener("click", simH);
+    m.addEventListener("close", naoH, { once:true });
+    m.showModal();
+  });
+}
+
+/* =========================================================================
+   3. LER / ESCREVER OS FICHEIROS DE DADOS (products.js · galeria-dados.js)
+   ========================================================================= */
+function extrairArray(texto, nomeVar){
+  var re = new RegExp("App\\." + nomeVar + "\\s*=\\s*(\\[[\\s\\S]*?\\]);");
+  var m = texto.match(re);
+  if (!m) throw new Error("Não encontrei App." + nomeVar + " — o ficheiro tem um formato inesperado.");
+  /* o conteúdo é um literal JS (chaves sem aspas); avaliar de forma isolada */
+  return new Function('"use strict"; return (' + m[1] + ");")();
+}
+function lerProdutos(texto){
+  var arr = extrairArray(texto, "PRODUTOS");
+  arr.forEach(function(p){
+    if (!p || !p.slug || !p.cat || !p.nome) throw new Error("Produto inválido em products.js");
+  });
+  var m = texto.match(/App\.MOEDA\s*=\s*"([^"]*)"/);
+  Estado.moeda = (m && m[1]) || "$";
+  return arr;
+}
+function lerGaleria(texto){
+  var arr = extrairArray(texto, "GALERIA");
+  arr.forEach(function(g){ if (!g || !g.src || !g.cat) throw new Error("Item inválido em galeria-dados.js"); });
+  return arr;
+}
+function numFmt(n){ return String(n); }
+function gerarProductsJs(){
+  var linhas = Estado.produtos.map(function(p){
+    var s = JSON.stringify;
+    var out = "  { slug:" + s(p.slug) + ", cat:" + s(p.cat) + ", tipo:" + s(p.tipo);
+    if (typeof p.preco === "number") out += ", preco:" + numFmt(p.preco);
+    out += ", nome:{pt:" + s(p.nome.pt) + ",tet:" + s(p.nome.tet) + ",en:" + s(p.nome.en) + "}";
+    out += ", img:" + s(p.img);
+    if (p.thumb) out += ", thumb:" + s(p.thumb);
+    return out + " },";
+  });
+  return CABECALHO_PRODUCTS +
+    "window.App = window.App || {};\n" +
+    'App.MOEDA = ' + JSON.stringify(Estado.moeda) + ';\n' +
+    "App.PRODUTOS = [\n" + linhas.join("\n") + "\n];\n";
+}
+function gerarGaleriaJs(){
+  var linhas = Estado.galeria.map(function(g){
+    return '  { src: ' + JSON.stringify(g.src) + ', cat: ' + JSON.stringify(g.cat) + ' },';
+  });
+  return CABECALHO_GALERIA +
+    "window.App = window.App || {};\n" +
+    "App.GALERIA = [\n" + linhas.join("\n") + "\n];\n";
+}
+/* inserir no fim do bloco da mesma categoria (mantém a ordem do site) */
+function inserirPorCategoria(lista, item){
+  var ultimo = -1;
+  for (var i=0;i<lista.length;i++) if (lista[i].cat === item.cat) ultimo = i;
+  if (ultimo === -1) lista.push(item);
+  else lista.splice(ultimo+1, 0, item);
+}
+
+/* =========================================================================
+   4. CLIENTE GITHUB (real) — commits atómicos via Git Data API
+   ========================================================================= */
+function ghReal(token){
+  var R = CONFIG.owner + "/" + CONFIG.repo;
+  function api(caminho, opts){
+    opts = opts || {};
+    opts.cache = "no-store";
+    opts.headers = Object.assign({
+      "Authorization": "Bearer " + token,
+      "Accept": "application/vnd.github+json",
+      "X-GitHub-Api-Version": "2022-11-28"
+    }, opts.headers || {});
+    if (opts.body && typeof opts.body !== "string") opts.body = JSON.stringify(opts.body);
+    return fetch("https://api.github.com" + caminho, opts).then(function(r){
+      if (r.ok) return r.status === 204 ? null : r.json();
+      return r.json().catch(function(){ return {}; }).then(function(j){
+        var e = new Error(j.message || ("Erro " + r.status));
+        e.status = r.status;
+        throw e;
+      });
+    });
+  }
+  return {
+    demo: false,
+    validar: function(){
+      return api("/repos/" + R).then(function(repo){
+        if (!repo.permissions || !repo.permissions.push)
+          throw new Error("Esta chave não tem permissão de escrita no repositório " + R + ". Verifique a permissão «Contents: Read and write».");
+        return api("/user").then(function(u){ return { user: u.login }; },
+                                  function(){ return { user: "" }; });
+      });
+    },
+    lerFicheiro: function(caminho){
+      return api("/repos/" + R + "/contents/" + encodeURI(caminho) + "?ref=" + CONFIG.branch)
+        .then(function(j){ return { texto: b64ParaTexto(j.content), sha: j.sha }; });
+    },
+    listarPasta: function(caminho){
+      return api("/repos/" + R + "/contents/" + encodeURI(caminho) + "?ref=" + CONFIG.branch)
+        .then(function(j){ return Array.isArray(j) ? j.map(function(x){ return x.name; }) : []; },
+              function(e){ if (e.status === 404) return []; throw e; });
+    },
+    /* ops: [{path, texto} | {path, base64} | {path, del:true}] → 1 commit */
+    commit: function(mensagem, ops){
+      var paiSha, arvoreBase;
+      return api("/repos/" + R + "/git/ref/heads/" + CONFIG.branch)
+        .then(function(ref){
+          paiSha = ref.object.sha;
+          return api("/repos/" + R + "/git/commits/" + paiSha);
+        })
+        .then(function(c){
+          arvoreBase = c.tree.sha;
+          /* blobs para os binários, em série (evita limites de rate) */
+          var itens = [];
+          var fila = Promise.resolve();
+          ops.forEach(function(op){
+            fila = fila.then(function(){
+              if (op.del)   { itens.push({ path:op.path, mode:"100644", type:"blob", sha:null }); return; }
+              if (op.texto != null) { itens.push({ path:op.path, mode:"100644", type:"blob", content:op.texto }); return; }
+              return api("/repos/" + R + "/git/blobs", { method:"POST", body:{ content:op.base64, encoding:"base64" } })
+                .then(function(b){ itens.push({ path:op.path, mode:"100644", type:"blob", sha:b.sha }); });
+            });
+          });
+          return fila.then(function(){
+            return api("/repos/" + R + "/git/trees", { method:"POST", body:{ base_tree:arvoreBase, tree:itens } });
+          });
+        })
+        .then(function(t){
+          return api("/repos/" + R + "/git/commits", { method:"POST", body:{ message:mensagem, tree:t.sha, parents:[paiSha] } });
+        })
+        .then(function(novo){
+          return api("/repos/" + R + "/git/refs/heads/" + CONFIG.branch, { method:"PATCH", body:{ sha:novo.sha } })
+            .then(function(){ return { sha:novo.sha, url:"https://github.com/" + R + "/commit/" + novo.sha }; },
+                  function(e){
+                    if (e.status === 409 || e.status === 422) { e.conflito = true; }
+                    throw e;
+                  });
+        });
+    },
+    commits: function(){
+      return api("/repos/" + R + "/commits?sha=" + CONFIG.branch + "&per_page=12").then(function(lista){
+        return lista.map(function(c){
+          return { msg:(c.commit.message||"").split("\n")[0], data:c.commit.author && c.commit.author.date,
+                   autor:(c.commit.author && c.commit.author.name) || "", url:c.html_url };
+        });
+      });
+    }
+  };
+}
+
+/* =========================================================================
+   5. CLIENTE DEMO — simula o GitHub em memória (nada sai deste aparelho)
+   ========================================================================= */
+function ghDemo(){
+  var fs = {};      /* caminho -> {texto} ou {bin:true} */
+  var hist = [];
+  function seed(){
+    return Promise.all([
+      fetch("js/products.js", {cache:"no-store"}).then(function(r){ return r.text(); }),
+      fetch("js/galeria-dados.js", {cache:"no-store"}).then(function(r){ return r.text(); })
+    ]).then(function(res){
+      fs["js/products.js"] = { texto: res[0] };
+      fs["js/galeria-dados.js"] = { texto: res[1] };
+      /* registar as fotos existentes como ficheiros presentes */
+      try {
+        extrairArray(res[0], "PRODUTOS").forEach(function(p){
+          fs[p.img] = { bin:true };
+          if (p.thumb) fs[p.thumb] = { bin:true };
+        });
+        extrairArray(res[1], "GALERIA").forEach(function(g){
+          fs[g.src] = { bin:true };
+          fs[caminhoThumb(baseFicheiro(g.src))] = { bin:true };
+        });
+      } catch(e){}
+      hist.push({ msg:"(demo) Estado inicial carregado do site", data:new Date().toISOString(), autor:"demo", url:"#" });
+    });
+  }
+  var pronto = seed();
+  return {
+    demo: true,
+    validar: function(){ return pronto.then(function(){ return { user:"demonstração" }; }); },
+    lerFicheiro: function(caminho){
+      return pronto.then(function(){
+        if (!fs[caminho] || fs[caminho].texto == null) throw new Error("(demo) Ficheiro não encontrado: " + caminho);
+        return { texto: fs[caminho].texto, sha: "demo" };
+      });
+    },
+    listarPasta: function(caminho){
+      return pronto.then(function(){
+        var pref = caminho.replace(/\/+$/,"") + "/";
+        return Object.keys(fs).filter(function(k){ return k.indexOf(pref) === 0 && k.slice(pref.length).indexOf("/") === -1; })
+                              .map(function(k){ return k.slice(pref.length); });
+      });
+    },
+    commit: function(mensagem, ops){
+      return pronto.then(function(){
+        return new Promise(function(res){ setTimeout(res, 700); }); /* simular rede */
+      }).then(function(){
+        ops.forEach(function(op){
+          if (op.del) delete fs[op.path];
+          else if (op.texto != null) fs[op.path] = { texto: op.texto };
+          else fs[op.path] = { bin:true };
+        });
+        hist.unshift({ msg:mensagem, data:new Date().toISOString(), autor:"demonstração", url:"#" });
+        return { sha:"demo-" + hist.length, url:"#" };
+      });
+    },
+    commits: function(){ return pronto.then(function(){ return hist.slice(0, 12); }); }
+  };
+}
+
+/* =========================================================================
+   6. FOTOGRAFIAS — redimensionar no browser (1200 px + miniatura 480×480)
+   ========================================================================= */
+function carregarImagem(ficheiro){
+  if ("createImageBitmap" in window) {
+    return createImageBitmap(ficheiro, { imageOrientation: "from-image" }).catch(function(){
+      return carregarImagemViaImg(ficheiro);
+    });
+  }
+  return carregarImagemViaImg(ficheiro);
+}
+function carregarImagemViaImg(ficheiro){
+  return new Promise(function(res, rej){
+    var url = URL.createObjectURL(ficheiro);
+    var im = new Image();
+    im.onload = function(){ res(im); };
+    im.onerror = function(){
+      URL.revokeObjectURL(url);
+      rej(new Error("Não consegui abrir esta imagem. Use JPEG ou PNG (no iPhone: Definições → Câmara → Formatos → «Mais compatível»)."));
+    };
+    im.src = url;
+  });
+}
+function desenhar(im, w, h, sx, sy, sw, sh){
+  var c = document.createElement("canvas");
+  c.width = w; c.height = h;
+  var ctx = c.getContext("2d");
+  ctx.imageSmoothingEnabled = true;
+  ctx.imageSmoothingQuality = "high";
+  ctx.drawImage(im, sx, sy, sw, sh, 0, 0, w, h);
+  return c;
+}
+function paraBlob(canvas, tipo, q){
+  return new Promise(function(res){ canvas.toBlob(res, tipo, q); });
+}
+function processarFoto(ficheiro){
+  return carregarImagem(ficheiro).then(function(im){
+    var W = im.width, H = im.height;
+    if (!W || !H) throw new Error("Imagem inválida.");
+    /* foto principal: máx. 1200 px no lado maior, JPEG */
+    var esc = Math.min(1, 1200 / Math.max(W, H));
+    var fw = Math.max(1, Math.round(W * esc)), fh = Math.max(1, Math.round(H * esc));
+    var cFull = desenhar(im, fw, fh, 0, 0, W, H);
+    /* miniatura: recorte quadrado central, 480×480 */
+    var lado = Math.min(W, H);
+    var cTh = desenhar(im, 480, 480, (W - lado) / 2, (H - lado) / 2, lado, lado);
+    return paraBlob(cFull, "image/jpeg", 0.85).then(function(fullBlob){
+      if (!fullBlob) throw new Error("Falha a converter a imagem.");
+      return paraBlob(cTh, "image/webp", 0.8).then(function(tb){
+        var thumbExt = "webp";
+        if (!tb || tb.type !== "image/webp") {
+          thumbExt = "jpg";
+          return paraBlob(cTh, "image/jpeg", 0.8).then(function(tj){
+            return { fullBlob: fullBlob, thumbBlob: tj, thumbExt: thumbExt };
+          });
+        }
+        return { fullBlob: fullBlob, thumbBlob: tb, thumbExt: thumbExt };
+      });
+    });
+  });
+}
+
+/* =========================================================================
+   7. NUMERAÇÃO AUTOMÁTICA (bouquet-21, cas-04, …)
+   ========================================================================= */
+function listarPastaComCache(pasta){
+  if (Estado.pastas[pasta]) return Promise.resolve(Estado.pastas[pasta]);
+  return Estado.gh.listarPasta(pasta).then(function(nomes){
+    Estado.pastas[pasta] = nomes;
+    return nomes;
+  });
+}
+function proximoNumero(cat){
+  var prefixo = CAT_PREFIXO[cat];
+  if (!prefixo) return Promise.resolve(null);
+  var re = new RegExp("^" + prefixo + "-(\\d+)");
+  var maior = 0;
+  function ver(nome){
+    var m = String(nome).match(re);
+    if (m) maior = Math.max(maior, parseInt(m[1], 10));
+  }
+  Estado.produtos.forEach(function(p){ ver(p.slug); ver(baseFicheiro(p.img)); });
+  Estado.galeria.forEach(function(g){ ver(baseFicheiro(g.src)); });
+  return listarPastaComCache("assets/galeria/" + cat).then(function(nomes){
+    nomes.forEach(ver);
+    return maior + 1;
+  });
+}
+function pad2(n){ return n < 10 ? "0" + n : String(n); }
+function slugLivre(base){
+  var usados = {};
+  Estado.produtos.forEach(function(p){ usados[p.slug] = 1; });
+  if (!usados[base]) return base;
+  var i = 2;
+  while (usados[base + "-" + i]) i++;
+  return base + "-" + i;
+}
+
+/* =========================================================================
+   8. IMAGENS NA GRELHA (com recurso a originais e a fotos recém-publicadas)
+   ========================================================================= */
+var SVG_FALTA = "data:image/svg+xml," + encodeURIComponent(
+  '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" fill="#FDF6EC"/><text x="50" y="56" font-size="30" text-anchor="middle">🌸</text></svg>');
+function imgSrc(caminho){
+  return Estado.fotosLocais[caminho] || caminho;
+}
+function ligarFallback(img, alternativa){
+  img.addEventListener("error", function h(){
+    img.removeEventListener("error", h);
+    if (alternativa && img.src.indexOf(alternativa) === -1 && !Estado.fotosLocais[alternativa]) img.src = alternativa;
+    else if (alternativa && Estado.fotosLocais[alternativa]) img.src = Estado.fotosLocais[alternativa];
+    else img.src = SVG_FALTA;
+    img.addEventListener("error", function(){ img.src = SVG_FALTA; }, { once:true });
+  });
+}
+
+/* =========================================================================
+   9. PUBLICAR (fluxo comum)
+   ========================================================================= */
+function publicar(mensagem, ops, aplicarLocal){
+  if (Estado.ocupado) return Promise.resolve();
+  if (!navigator.onLine) { toast("Sem ligação à internet.", true); return Promise.resolve(); }
+  veu("A enviar para o GitHub…");
+  return Estado.gh.commit(mensagem, ops).then(function(r){
+    aplicarLocal && aplicarLocal();
+    veu(false);
+    var f = $("faixa-ok");
+    f.innerHTML = "✅ <b>Publicado!</b> O site atualiza em ~1 minuto." +
+      (r.url && r.url !== "#" ? ' <a href="' + r.url + '" target="_blank" rel="noopener">Ver alteração</a> ·' : "") +
+      ' <a href="' + (Estado.gh.demo ? "index.html" : CONFIG.site) + '" target="_blank" rel="noopener">Abrir o site</a>';
+    f.classList.add("visivel");
+    toast(Estado.gh.demo ? "Publicado (demonstração)." : "Publicado! O site atualiza em ~1 minuto.");
+    renderTudo();
+  }).catch(function(e){
+    veu(false);
+    if (e.conflito) {
+      toast("Alguém publicou entretanto. A recarregar os dados — repita a operação.", true);
+      return recarregarDados();
+    }
+    if (e.status === 401) { toast("Chave inválida ou expirada. Entre de novo.", true); sair(); return; }
+    toast("Erro ao publicar: " + e.message, true);
+    console.error(e);
+  });
+}
+function recarregarDados(){
+  return Promise.all([
+    Estado.gh.lerFicheiro("js/products.js"),
+    Estado.gh.lerFicheiro("js/galeria-dados.js")
+  ]).then(function(res){
+    Estado.produtos = lerProdutos(res[0].texto);
+    Estado.galeria = lerGaleria(res[1].texto);
+    Estado.pastas = {};
+    renderTudo();
+  });
+}
+
+/* =========================================================================
+   10. SESSÃO
+   ========================================================================= */
+function guardarToken(token, lembrar){
+  try {
+    (lembrar ? localStorage : sessionStorage).setItem(CHAVE_TOKEN, token);
+    (lembrar ? sessionStorage : localStorage).removeItem(CHAVE_TOKEN);
+  } catch(e){}
+}
+function tokenGuardado(){
+  try { return sessionStorage.getItem(CHAVE_TOKEN) || localStorage.getItem(CHAVE_TOKEN) || ""; } catch(e){ return ""; }
+}
+function sair(){
+  try { localStorage.removeItem(CHAVE_TOKEN); sessionStorage.removeItem(CHAVE_TOKEN); } catch(e){}
+  location.href = location.pathname; /* remove ?demo=1 e recomeça */
+}
+function entrar(gh, aoFalhar){
+  veu("A ligar ao GitHub…");
+  gh.validar().then(function(info){
+    Estado.gh = gh;
+    Estado.user = info.user;
+    return recarregarDados();
+  }).then(function(){
+    veu(false);
+    $("ecra-entrada").hidden = true;
+    $("ecra-painel").hidden = false;
+    $("btn-sair").hidden = false;
+    $("faixa-demo").hidden = !gh.demo;
+    var u = $("topo-user");
+    u.hidden = false;
+    u.innerHTML = gh.demo ? "🧪 demonstração" : "Sessão: <b>" + escHtml(Estado.user || CONFIG.owner) + "</b>";
+    if (!gh.demo) $("btn-ver-site").href = CONFIG.site;
+    carregarHistorico();
+  }).catch(function(e){
+    veu(false);
+    Estado.gh = null;
+    console.error(e);
+    (aoFalhar || function(msg){ toast(msg, true); })(e.message || "Não consegui ligar ao GitHub.");
+  });
+}
+
+/* =========================================================================
+   11. RENDER — LOJA
+   ========================================================================= */
+function renderChips(idContentor, cats, ativo, aoEscolher){
+  var c = $(idContentor);
+  c.innerHTML = "";
+  ["todos"].concat(cats).forEach(function(cat){
+    var b = el("button", "chip" + (cat === ativo ? " ativo" : ""),
+      cat === "todos" ? "Todos" : escHtml(CAT_ROTULO[cat] || cat));
+    b.addEventListener("click", function(){ aoEscolher(cat); });
+    c.appendChild(b);
+  });
+}
+function renderLoja(){
+  renderChips("chips-loja", CATS, Estado.filtroLoja, function(cat){ Estado.filtroLoja = cat; renderLoja(); });
+  var g = $("grelha-prod");
+  g.innerHTML = "";
+  var lista = Estado.produtos.filter(function(p){ return Estado.filtroLoja === "todos" || p.cat === Estado.filtroLoja; });
+  if (!lista.length) { g.appendChild(el("div","vazio","Sem produtos nesta categoria. Carregue em «＋ Novo produto».")); return; }
+  lista.forEach(function(p){
+    var card = el("article", "cartao-prod");
+    var media = el("div", "cartao-prod__media");
+    var img = el("img");
+    img.alt = p.nome.pt;
+    img.loading = "lazy";
+    img.src = imgSrc(p.thumb || p.img);
+    ligarFallback(img, p.img);
+    media.appendChild(img);
+    media.appendChild(el("span","badge", p.tipo === "quote" ? "Sob consulta" : (p.tipo === "unidade" ? "Por haste" : escHtml(CAT_ROTULO[p.cat]||p.cat))));
+    card.appendChild(media);
+    var corpo = el("div","cartao-prod__corpo");
+    corpo.appendChild(el("div","cartao-prod__nome", escHtml(p.nome.pt)));
+    corpo.appendChild(el("div","cartao-prod__preco", p.tipo === "quote" ? "Sob consulta" : precoFmt(p.preco) + (p.tipo === "unidade" ? " / haste" : "")));
+    corpo.appendChild(el("div","cartao-prod__slug", escHtml(p.slug)));
+    var acoes = el("div","cartao-prod__acoes");
+    var bEd = el("button","btn btn--suave btn--mini","Editar");
+    bEd.addEventListener("click", function(){ abrirModalProduto(p); });
+    var bAp = el("button","btn btn--perigo btn--mini","Apagar");
+    bAp.addEventListener("click", function(){ apagarProduto(p); });
+    acoes.appendChild(bEd); acoes.appendChild(bAp);
+    corpo.appendChild(acoes);
+    card.appendChild(corpo);
+    g.appendChild(card);
+  });
+}
+
+/* =========================================================================
+   12. RENDER — GALERIA
+   ========================================================================= */
+function produtoQueUsa(src){
+  for (var i=0;i<Estado.produtos.length;i++)
+    if (Estado.produtos[i].img === src) return Estado.produtos[i];
+  return null;
+}
+function renderGaleria(){
+  renderChips("chips-gal", CATS_GALERIA, Estado.filtroGal, function(cat){ Estado.filtroGal = cat; renderGaleria(); });
+  var g = $("grelha-gal");
+  g.innerHTML = "";
+  var lista = Estado.galeria.filter(function(x){ return Estado.filtroGal === "todos" || x.cat === Estado.filtroGal; });
+  if (!lista.length) { g.appendChild(el("div","vazio","Sem fotografias nesta categoria. Carregue em «＋ Adicionar fotografias».")); return; }
+  lista.forEach(function(item){
+    var f = el("div","foto-gal");
+    var img = el("img");
+    img.alt = item.cat; img.loading = "lazy";
+    var th = caminhoThumb(baseFicheiro(item.src));
+    img.src = Estado.fotosLocais[item.src] || Estado.fotosLocais[th] || th;
+    ligarFallback(img, item.src);
+    f.appendChild(img);
+    var usado = produtoQueUsa(item.src);
+    if (usado) f.appendChild(el("span","badge","🛍 " + escHtml(usado.slug)));
+    var rod = el("div","foto-gal__rodape");
+    rod.appendChild(el("span","foto-gal__nome", escHtml(item.src.split("/").pop())));
+    var bt = el("button","foto-gal__apagar","✕");
+    bt.title = usado ? "Esta foto é usada pelo produto «" + usado.nome.pt + "» — apague primeiro o produto." : "Apagar da galeria";
+    bt.disabled = !!usado;
+    bt.addEventListener("click", function(){ apagarFotoGaleria(item); });
+    rod.appendChild(bt);
+    f.appendChild(rod);
+    g.appendChild(f);
+  });
+}
+
+/* =========================================================================
+   13. RENDER — HISTÓRICO
+   ========================================================================= */
+function carregarHistorico(){
+  var c = $("lista-hist");
+  c.innerHTML = '<div class="vazio">A carregar…</div>';
+  Estado.gh.commits().then(function(lista){
+    c.innerHTML = "";
+    if (!lista.length) { c.appendChild(el("div","vazio","Ainda sem publicações.")); return; }
+    lista.forEach(function(x){
+      var it = el("div","hist__item");
+      it.appendChild(el("span","hist__msg", escHtml(x.msg)));
+      var meta = el("span","hist__meta", escHtml(dataFmt(x.data)) + (x.autor ? " · " + escHtml(x.autor) : ""));
+      it.appendChild(meta);
+      if (x.url && x.url !== "#") {
+        var a = el("a","",'ver ↗'); a.href = x.url; a.target="_blank"; a.rel="noopener"; a.style.fontSize=".78rem";
+        it.appendChild(a);
+      }
+      c.appendChild(it);
+    });
+  }).catch(function(){ c.innerHTML = '<div class="vazio">Não consegui carregar o histórico.</div>'; });
+}
+function renderTudo(){ renderLoja(); renderGaleria(); }
+
+/* =========================================================================
+   14. MODAL PRODUTO (novo + editar)
+   ========================================================================= */
+var MP = { editar:null, foto:null, fotoExistente:null, nomesTocados:{} };
+
+function radiosCat(idContentor, cats, valor, aoMudar){
+  var c = $(idContentor);
+  c.innerHTML = "";
+  cats.forEach(function(cat){
+    var l = el("label");
+    var i = document.createElement("input");
+    i.type = "radio"; i.name = idContentor; i.value = cat;
+    if (cat === valor) i.checked = true;
+    i.addEventListener("change", function(){ aoMudar(cat); });
+    l.appendChild(i);
+    l.appendChild(document.createTextNode(CAT_ROTULO[cat] || cat));
+    c.appendChild(l);
+  });
+}
+function mpTipoSel(){
+  var r = document.querySelector('input[name="mp-tipo"]:checked');
+  return r ? r.value : "normal";
+}
+function mpAtualizarTipo(){
+  $("mp-bloco-preco").style.visibility = (mpTipoSel() === "quote") ? "hidden" : "visible";
+}
+function mpCatSel(){
+  var r = document.querySelector('#mp-cats input:checked');
+  return r ? r.value : "bouquet";
+}
+function mpPrefixarNomes(cat, n){
+  var base = NOME_BASE[cat];
+  if (!base) return;
+  var suf = n != null ? " · " + pad2(n) : "";
+  if (!MP.nomesTocados.pt)  $("mp-nome-pt").value  = base.pt  + suf;
+  if (!MP.nomesTocados.tet) $("mp-nome-tet").value = base.tet + suf;
+  if (!MP.nomesTocados.en)  $("mp-nome-en").value  = base.en  + suf;
+}
+function mpAoMudarCat(cat){
+  if (MP.editar) return;
+  var tipo = TIPO_POR_CAT[cat] || "normal";
+  document.querySelector('input[name="mp-tipo"][value="' + tipo + '"]').checked = true;
+  mpAtualizarTipo();
+  $("mp-bloco-galeria").style.display = (CATS_GALERIA.indexOf(cat) !== -1) ? "" : "none";
+  if (cat === "hastes") {
+    if (!MP.nomesTocados.pt) $("mp-nome-pt").value = "";
+    if (!MP.nomesTocados.tet) $("mp-nome-tet").value = "";
+    if (!MP.nomesTocados.en) $("mp-nome-en").value = "";
+    $("mp-slug").value = "";
+    return;
+  }
+  proximoNumero(cat).then(function(n){
+    if (mpCatSel() !== cat || MP.editar) return;
+    $("mp-slug").value = CAT_PREFIXO[cat] + "-" + pad2(n);
+    mpPrefixarNomes(cat, n);
+  }).catch(function(){ /* sem rede: deixa em branco */ });
+}
+function mpMostrarFoto(url, info){
+  var pv = $("mp-previa");
+  pv.src = url; pv.hidden = false;
+  $("mp-zona-txt").hidden = true;
+  $("mp-foto-info").textContent = info || "";
+}
+function mpDefinirFicheiro(ficheiro){
+  if (!ficheiro) return;
+  MP.fotoExistente = null;
+  veu("A preparar a fotografia…");
+  processarFoto(ficheiro).then(function(r){
+    veu(false);
+    MP.foto = r;
+    mpMostrarFoto(URL.createObjectURL(r.fullBlob),
+      "Otimizada: " + Math.round(r.fullBlob.size/1024) + " KB + miniatura " + Math.round((r.thumbBlob?r.thumbBlob.size:0)/1024) + " KB");
+  }).catch(function(e){
+    veu(false);
+    toast(e.message, true);
+  });
+}
+function abrirModalProduto(editar){
+  MP.editar = editar || null;
+  MP.foto = null; MP.fotoExistente = null; MP.nomesTocados = {};
+  $("mp-erro").hidden = true;
+  $("mp-previa").hidden = true; $("mp-previa").removeAttribute("src");
+  $("mp-zona-txt").hidden = false;
+  $("mp-foto-info").textContent = "";
+  $("mp-titulo").textContent = editar ? "Editar produto" : "Novo produto";
+  $("mp-guardar").textContent = editar ? "Guardar alterações" : "Publicar no site";
+  $("mp-btn-existente").style.display = editar ? "none" : "";
+  $("mp-bloco-galeria").style.display = editar ? "none" : "";
+  $("mp-slug").disabled = !!editar;
+
+  if (editar) {
+    radiosCat("mp-cats", CATS, editar.cat, function(){});
+    document.querySelectorAll("#mp-cats input").forEach(function(i){ i.disabled = true; });
+    $("mp-nome-pt").value = editar.nome.pt; $("mp-nome-tet").value = editar.nome.tet; $("mp-nome-en").value = editar.nome.en;
+    $("mp-slug").value = editar.slug;
+    document.querySelector('input[name="mp-tipo"][value="' + editar.tipo + '"]').checked = true;
+    $("mp-preco").value = typeof editar.preco === "number" ? editar.preco : "";
+    mpMostrarFoto(imgSrc(editar.thumb || editar.img), "Fotografia atual — pode substituí-la.");
+  } else {
+    radiosCat("mp-cats", CATS, "bouquet", mpAoMudarCat);
+    $("mp-nome-pt").value = ""; $("mp-nome-tet").value = ""; $("mp-nome-en").value = "";
+    $("mp-slug").value = ""; $("mp-preco").value = "";
+    $("mp-chk-galeria").checked = true;
+    mpAoMudarCat("bouquet");
+  }
+  mpAtualizarTipo();
+  $("modal-prod").showModal();
+}
+function mpValidar(){
+  var erros = [];
+  var nomePt = $("mp-nome-pt").value.trim();
+  var slug = $("mp-slug").value.trim();
+  var tipo = mpTipoSel();
+  var preco = parseFloat($("mp-preco").value);
+  if (!MP.editar && !MP.foto && !MP.fotoExistente) erros.push("Escolha uma fotografia.");
+  if (!nomePt) erros.push("Escreva o nome em português.");
+  if (!/^[a-z0-9]+(-[a-z0-9]+)*$/.test(slug)) erros.push("A referência só pode ter letras minúsculas, números e hífens.");
+  if (!MP.editar && Estado.produtos.some(function(p){ return p.slug === slug; })) erros.push("Já existe um produto com a referência «" + slug + "».");
+  if (tipo !== "quote" && (!isFinite(preco) || preco <= 0)) erros.push("Indique o preço.");
+  return erros;
+}
+function mpGuardar(){
+  var erros = mpValidar();
+  var caixa = $("mp-erro");
+  if (erros.length) { caixa.innerHTML = erros.map(escHtml).join("<br>"); caixa.hidden = false; return; }
+  caixa.hidden = true;
+
+  var tipo = mpTipoSel();
+  var preco = parseFloat($("mp-preco").value);
+  var nome = { pt: $("mp-nome-pt").value.trim(), tet: $("mp-nome-tet").value.trim() || $("mp-nome-pt").value.trim(),
+               en: $("mp-nome-en").value.trim() || $("mp-nome-pt").value.trim() };
+
+  /* -------- EDITAR -------- */
+  if (MP.editar) {
+    var p = MP.editar;
+    var ops = [];
+    var antes = JSON.stringify([p.nome, p.tipo, p.preco]);
+    var pNovo = { slug:p.slug, cat:p.cat, tipo:tipo, nome:nome, img:p.img, thumb:p.thumb };
+    if (tipo !== "quote") pNovo.preco = preco;
+
+    var prometido = Promise.resolve();
+    if (MP.foto) { /* substituir a fotografia mantendo a referência */
+      var base = baseFicheiro(p.img);
+      var thumbNovo = caminhoThumb(base, MP.foto.thumbExt);
+      prometido = Promise.all([blobParaB64(MP.foto.fullBlob), blobParaB64(MP.foto.thumbBlob)]).then(function(b){
+        ops.push({ path: p.img, base64: b[0] });
+        ops.push({ path: thumbNovo, base64: b[1] });
+        if (p.thumb && p.thumb !== thumbNovo) ops.push({ path: p.thumb, del:true });
+        pNovo.thumb = thumbNovo;
+      });
+    }
+    prometido.then(function(){
+      var idx = Estado.produtos.indexOf(p);
+      var copia = Estado.produtos.slice();
+      copia[idx] = pNovo;
+      var antigos = Estado.produtos;
+      Estado.produtos = copia;
+      var texto = gerarProductsJs();
+      Estado.produtos = antigos;
+      ops.push({ path:"js/products.js", texto: texto });
+      var mudouFoto = !!MP.foto;
+      publicar("Admin: produto atualizado — " + p.slug + (mudouFoto ? " (nova foto)" : ""), ops, function(){
+        if (MP.foto) {
+          Estado.fotosLocais[pNovo.img] = URL.createObjectURL(MP.foto.fullBlob);
+          Estado.fotosLocais[pNovo.thumb] = URL.createObjectURL(MP.foto.thumbBlob);
+        }
+        Estado.produtos[idx] = pNovo;
+      });
+      $("modal-prod").close();
+    });
+    return;
+  }
+
+  /* -------- NOVO -------- */
+  var cat = mpCatSel();
+  var slug = slugLivre($("mp-slug").value.trim());
+  var novo = { slug:slug, cat:cat, tipo:tipo, nome:nome };
+  if (tipo !== "quote") novo.preco = preco;
+
+  if (MP.fotoExistente) {
+    novo.img = MP.fotoExistente;
+    var baseEx = baseFicheiro(MP.fotoExistente);
+    listarPastaComCache("assets/galeria/thumbs").then(function(nomes){
+      if (nomes.indexOf(baseEx + ".webp") !== -1) novo.thumb = caminhoThumb(baseEx);
+      else if (nomes.indexOf(baseEx + ".jpg") !== -1) novo.thumb = caminhoThumb(baseEx, "jpg");
+      var copia = Estado.produtos.slice();
+      inserirPorCategoria(copia, novo);
+      var antigos = Estado.produtos;
+      Estado.produtos = copia;
+      var texto = gerarProductsJs();
+      Estado.produtos = antigos;
+      publicar("Admin: novo produto «" + nome.pt + "» (" + slug + ")", [{ path:"js/products.js", texto:texto }], function(){
+        inserirPorCategoria(Estado.produtos, novo);
+      });
+      $("modal-prod").close();
+    });
+    return;
+  }
+
+  /* foto nova: ficheiros + products.js (+ galeria) num só commit */
+  novo.img = "assets/galeria/" + cat + "/" + slug + ".jpg";
+  novo.thumb = caminhoThumb(slug, MP.foto.thumbExt);
+  var querGaleria = $("mp-chk-galeria").checked && CATS_GALERIA.indexOf(cat) !== -1;
+
+  Promise.all([blobParaB64(MP.foto.fullBlob), blobParaB64(MP.foto.thumbBlob)]).then(function(b){
+    var ops = [
+      { path: novo.img, base64: b[0] },
+      { path: novo.thumb, base64: b[1] }
+    ];
+    var copiaP = Estado.produtos.slice();
+    inserirPorCategoria(copiaP, novo);
+    var antigosP = Estado.produtos;
+    Estado.produtos = copiaP;
+    ops.push({ path:"js/products.js", texto: gerarProductsJs() });
+    Estado.produtos = antigosP;
+
+    var itemGal = { src: novo.img, cat: cat };
+    if (querGaleria) {
+      var copiaG = Estado.galeria.slice();
+      inserirPorCategoria(copiaG, itemGal);
+      var antigosG = Estado.galeria;
+      Estado.galeria = copiaG;
+      ops.push({ path:"js/galeria-dados.js", texto: gerarGaleriaJs() });
+      Estado.galeria = antigosG;
+    }
+    publicar("Admin: novo produto «" + nome.pt + "» (" + slug + ")", ops, function(){
+      Estado.fotosLocais[novo.img] = URL.createObjectURL(MP.foto.fullBlob);
+      Estado.fotosLocais[novo.thumb] = URL.createObjectURL(MP.foto.thumbBlob);
+      inserirPorCategoria(Estado.produtos, novo);
+      if (querGaleria) inserirPorCategoria(Estado.galeria, itemGal);
+      if (Estado.pastas["assets/galeria/" + cat]) Estado.pastas["assets/galeria/" + cat].push(slug + ".jpg");
+      if (Estado.pastas["assets/galeria/thumbs"]) Estado.pastas["assets/galeria/thumbs"].push(slug + "." + MP.foto.thumbExt);
+    });
+    $("modal-prod").close();
+  }).catch(function(e){ toast(e.message, true); });
+}
+
+function apagarProduto(p){
+  var naGaleria = Estado.galeria.some(function(g){ return g.src === p.img; });
+  confirmar("Apagar produto",
+    "Apagar o produto <b>«" + escHtml(p.nome.pt) + "»</b> (" + escHtml(p.slug) + ") da loja?",
+    naGaleria ? "A fotografia continua na galeria do site." : "A fotografia também será removida do repositório.")
+  .then(function(sim){
+    if (!sim) return;
+    var ops = [];
+    var idx = Estado.produtos.indexOf(p);
+    var copia = Estado.produtos.slice(); copia.splice(idx,1);
+    var antigos = Estado.produtos;
+    Estado.produtos = copia;
+    ops.push({ path:"js/products.js", texto: gerarProductsJs() });
+    Estado.produtos = antigos;
+    if (!naGaleria) {
+      ops.push({ path: p.img, del:true });
+      if (p.thumb) ops.push({ path: p.thumb, del:true });
+    }
+    publicar("Admin: produto removido — " + p.slug, ops, function(){
+      Estado.produtos.splice(Estado.produtos.indexOf(p), 1);
+    });
+  });
+}
+
+/* =========================================================================
+   15. SELETOR DE FOTOS EXISTENTES
+   ========================================================================= */
+var pickerSel = null;
+function abrirPicker(){
+  var g = $("picker-grelha");
+  g.innerHTML = "";
+  pickerSel = null;
+  $("picker-ok").disabled = true;
+  var usadas = {};
+  Estado.produtos.forEach(function(p){ usadas[p.img] = 1; });
+  var livres = Estado.galeria.filter(function(x){ return !usadas[x.src]; });
+  if (!livres.length) { g.innerHTML = '<div class="vazio">Todas as fotos da galeria já têm produto. Carregue uma foto nova.</div>'; }
+  livres.forEach(function(item){
+    var b = el("button");
+    b.type = "button";
+    var img = el("img");
+    img.loading = "lazy";
+    var th = caminhoThumb(baseFicheiro(item.src));
+    img.src = Estado.fotosLocais[item.src] || Estado.fotosLocais[th] || th;
+    ligarFallback(img, item.src);
+    b.appendChild(img);
+    b.addEventListener("click", function(){
+      g.querySelectorAll("button").forEach(function(x){ x.classList.remove("sel"); });
+      b.classList.add("sel");
+      pickerSel = item;
+      $("picker-ok").disabled = false;
+    });
+    g.appendChild(b);
+  });
+  $("modal-picker").showModal();
+}
+
+/* =========================================================================
+   16. MODAL GALERIA (várias fotos)
+   ========================================================================= */
+var MG = { itens: [] }; /* {ficheiro, processado, url} */
+function mgCatSel(){
+  var r = document.querySelector('#mg-cats input:checked');
+  return r ? r.value : "bouquet";
+}
+function abrirModalGaleria(){
+  MG.itens = [];
+  $("mg-previas").innerHTML = "";
+  $("mg-erro").hidden = true;
+  $("mg-publicar").disabled = true;
+  radiosCat("mg-cats", CATS_GALERIA, Estado.filtroGal !== "todos" ? Estado.filtroGal : "bouquet", function(){});
+  $("modal-gal").showModal();
+}
+function mgAdicionarFicheiros(lista){
+  var ficheiros = Array.prototype.slice.call(lista || []);
+  if (!ficheiros.length) return;
+  veu("A preparar " + ficheiros.length + " fotografia(s)…");
+  var fila = Promise.resolve();
+  ficheiros.forEach(function(f){
+    fila = fila.then(function(){
+      return processarFoto(f).then(function(r){
+        MG.itens.push({ processado: r, url: URL.createObjectURL(r.fullBlob) });
+      }).catch(function(e){ toast("«" + f.name + "»: " + e.message, true); });
+    });
+  });
+  fila.then(function(){
+    veu(false);
+    mgRenderPrevias();
+  });
+}
+function mgRenderPrevias(){
+  var c = $("mg-previas");
+  c.innerHTML = "";
+  MG.itens.forEach(function(item, i){
+    var d = el("div","previa-item");
+    var img = el("img"); img.src = item.url;
+    d.appendChild(img);
+    var b = el("button","","✕");
+    b.type = "button";
+    b.addEventListener("click", function(){ MG.itens.splice(i,1); mgRenderPrevias(); });
+    d.appendChild(b);
+    c.appendChild(d);
+  });
+  $("mg-publicar").disabled = !MG.itens.length;
+}
+function mgPublicar(){
+  if (!MG.itens.length) return;
+  var cat = mgCatSel();
+  proximoNumero(cat).then(function(n){
+    var ops = [];
+    var novosItens = [];
+    var fila = Promise.resolve();
+    MG.itens.forEach(function(item, i){
+      fila = fila.then(function(){
+        var base = CAT_PREFIXO[cat] + "-" + pad2(n + i);
+        var src = "assets/galeria/" + cat + "/" + base + ".jpg";
+        return Promise.all([blobParaB64(item.processado.fullBlob), blobParaB64(item.processado.thumbBlob)]).then(function(b){
+          ops.push({ path: src, base64: b[0] });
+          ops.push({ path: caminhoThumb(base, item.processado.thumbExt), base64: b[1] });
+          novosItens.push({ item: { src: src, cat: cat }, urlFull: item.url,
+                            thumbPath: caminhoThumb(base, item.processado.thumbExt) });
+        });
+      });
+    });
+    fila.then(function(){
+      var copia = Estado.galeria.slice();
+      novosItens.forEach(function(x){ inserirPorCategoria(copia, x.item); });
+      var antigos = Estado.galeria;
+      Estado.galeria = copia;
+      ops.push({ path:"js/galeria-dados.js", texto: gerarGaleriaJs() });
+      Estado.galeria = antigos;
+      publicar("Admin: " + novosItens.length + " foto(s) nova(s) na galeria (" + cat + ")", ops, function(){
+        novosItens.forEach(function(x){
+          Estado.fotosLocais[x.item.src] = x.urlFull;
+          Estado.fotosLocais[x.thumbPath] = x.urlFull;
+          inserirPorCategoria(Estado.galeria, x.item);
+          var pasta = "assets/galeria/" + cat;
+          if (Estado.pastas[pasta]) Estado.pastas[pasta].push(x.item.src.split("/").pop());
+        });
+      });
+      $("modal-gal").close();
+    }).catch(function(e){ toast(e.message, true); });
+  }).catch(function(e){ toast("Não consegui calcular o número seguinte: " + e.message, true); });
+}
+function apagarFotoGaleria(item){
+  confirmar("Apagar fotografia",
+    "Apagar <b>" + escHtml(item.src.split("/").pop()) + "</b> da galeria do site?",
+    "O ficheiro também é removido do repositório.")
+  .then(function(sim){
+    if (!sim) return;
+    var idx = Estado.galeria.indexOf(item);
+    var copia = Estado.galeria.slice(); copia.splice(idx,1);
+    var antigos = Estado.galeria;
+    Estado.galeria = copia;
+    var ops = [{ path:"js/galeria-dados.js", texto: gerarGaleriaJs() }];
+    Estado.galeria = antigos;
+    ops.push({ path: item.src, del:true });
+    var base = baseFicheiro(item.src);
+    var thumbUsado = Estado.produtos.some(function(p){ return p.thumb && baseFicheiro(p.thumb) === base; });
+    if (!thumbUsado) {
+      var nomes = Estado.pastas["assets/galeria/thumbs"] || [];
+      ["webp","jpg"].forEach(function(ext){
+        if (nomes.indexOf(base + "." + ext) !== -1) ops.push({ path: caminhoThumb(base, ext), del:true });
+      });
+      if (!nomes.length) ops.push({ path: caminhoThumb(base), del:true }); /* melhor esforço */
+    }
+    publicar("Admin: foto removida da galeria — " + item.src.split("/").pop(), ops, function(){
+      Estado.galeria.splice(Estado.galeria.indexOf(item), 1);
+    });
+  });
+}
+
+/* =========================================================================
+   17. LIGAÇÕES DE INTERFACE
+   ========================================================================= */
+function ligar(){
+  /* entrada */
+  $("btn-entrar").addEventListener("click", function(){
+    var t = $("inp-token").value.trim();
+    if (!t) { $("entrada-erro").textContent = "Cole a chave de acesso."; $("entrada-erro").hidden = false; return; }
+    $("entrada-erro").hidden = true;
+    entrar(ghReal(t), function(msg){
+      $("entrada-erro").textContent = msg;
+      $("entrada-erro").hidden = false;
+    });
+    guardarToken(t, $("chk-lembrar").checked);
+  });
+  $("inp-token").addEventListener("keydown", function(e){ if (e.key === "Enter") $("btn-entrar").click(); });
+  $("btn-demo").addEventListener("click", function(){
+    var u = new URL(location.href); u.searchParams.set("demo","1");
+    history.replaceState(null, "", u);
+    Estado.demo = true;
+    entrar(ghDemo(), function(msg){
+      $("entrada-erro").textContent = "O modo de demonstração precisa que a página seja aberta a partir do site (não de um ficheiro local). " + msg;
+      $("entrada-erro").hidden = false;
+    });
+  });
+  $("btn-sair").addEventListener("click", function(){
+    confirmar("Terminar sessão", "Esquecer a chave de acesso guardada neste aparelho?").then(function(sim){ if (sim) sair(); });
+  });
+
+  /* abas */
+  document.querySelectorAll(".aba").forEach(function(b){
+    b.addEventListener("click", function(){
+      document.querySelectorAll(".aba").forEach(function(x){ x.classList.remove("ativa"); });
+      b.classList.add("ativa");
+      var aba = b.getAttribute("data-aba");
+      $("tab-loja").hidden = aba !== "loja";
+      $("tab-galeria").hidden = aba !== "galeria";
+      $("tab-historico").hidden = aba !== "historico";
+      if (aba === "historico") carregarHistorico();
+    });
+  });
+
+  /* fechar modais */
+  document.querySelectorAll("[data-fechar]").forEach(function(b){
+    b.addEventListener("click", function(){ b.closest("dialog").close(); });
+  });
+
+  /* produto */
+  $("btn-novo-prod").addEventListener("click", function(){ abrirModalProduto(null); });
+  $("mp-guardar").addEventListener("click", mpGuardar);
+  $("mp-btn-ficheiro").addEventListener("click", function(){ $("ficheiro-prod").click(); });
+  $("ficheiro-prod").addEventListener("change", function(){ mpDefinirFicheiro(this.files[0]); this.value = ""; });
+  $("mp-btn-existente").addEventListener("click", abrirPicker);
+  ["pt","tet","en"].forEach(function(l){
+    $("mp-nome-" + l).addEventListener("input", function(){ MP.nomesTocados[l] = true; });
+  });
+  $("mp-nome-pt").addEventListener("input", function(){
+    if (!MP.editar && mpCatSel() === "hastes") $("mp-slug").value = slugify(this.value);
+  });
+  document.querySelectorAll('input[name="mp-tipo"]').forEach(function(r){ r.addEventListener("change", mpAtualizarTipo); });
+  var zp = $("mp-zona");
+  zp.addEventListener("dragover", function(e){ e.preventDefault(); zp.classList.add("arrasto"); });
+  zp.addEventListener("dragleave", function(){ zp.classList.remove("arrasto"); });
+  zp.addEventListener("drop", function(e){
+    e.preventDefault(); zp.classList.remove("arrasto");
+    if (e.dataTransfer.files && e.dataTransfer.files[0]) mpDefinirFicheiro(e.dataTransfer.files[0]);
+  });
+
+  /* picker */
+  $("picker-ok").addEventListener("click", function(){
+    if (!pickerSel) return;
+    MP.fotoExistente = pickerSel.src;
+    MP.foto = null;
+    var cat = pickerSel.cat;
+    /* alinhar a categoria do produto com a da foto */
+    var radio = document.querySelector('#mp-cats input[value="' + cat + '"]');
+    if (radio && !radio.disabled) { radio.checked = true; mpAoMudarCat(cat); }
+    var th = caminhoThumb(baseFicheiro(pickerSel.src));
+    mpMostrarFoto(Estado.fotosLocais[pickerSel.src] || Estado.fotosLocais[th] || th, "Foto já publicada no site — não volta a ser enviada.");
+    var pv = $("mp-previa");
+    ligarFallback(pv, pickerSel.src);
+    $("modal-picker").close();
+  });
+
+  /* galeria */
+  $("btn-add-fotos").addEventListener("click", abrirModalGaleria);
+  $("mg-btn-ficheiro").addEventListener("click", function(){ $("ficheiro-gal").click(); });
+  $("ficheiro-gal").addEventListener("change", function(){ mgAdicionarFicheiros(this.files); this.value = ""; });
+  $("mg-publicar").addEventListener("click", mgPublicar);
+  var zg = $("mg-zona");
+  zg.addEventListener("dragover", function(e){ e.preventDefault(); zg.classList.add("arrasto"); });
+  zg.addEventListener("dragleave", function(){ zg.classList.remove("arrasto"); });
+  zg.addEventListener("drop", function(e){
+    e.preventDefault(); zg.classList.remove("arrasto");
+    mgAdicionarFicheiros(e.dataTransfer.files);
+  });
+}
+
+/* =========================================================================
+   18. ARRANQUE
+   ========================================================================= */
+ligar();
+if (Estado.demo) {
+  entrar(ghDemo(), function(msg){
+    $("ecra-entrada").hidden = false;
+    $("entrada-erro").textContent = msg; $("entrada-erro").hidden = false;
+  });
+} else {
+  var t = tokenGuardado();
+  if (t) {
+    entrar(ghReal(t), function(){
+      $("ecra-entrada").hidden = false;
+      $("entrada-erro").textContent = "A chave guardada já não funciona (expirou ou foi revogada). Cole uma chave nova.";
+      $("entrada-erro").hidden = false;
+    });
+  } else {
+    $("ecra-entrada").hidden = false;
+  }
+}
+
+/* ganchos de teste (apenas em demonstração) */
+if (Estado.demo) {
+  window.__adminTeste = {
+    Estado: Estado,
+    abrirModalProduto: abrirModalProduto,
+    definirFotoProduto: mpDefinirFicheiro,
+    adicionarFotosGaleria: mgAdicionarFicheiros,
+    gerarProductsJs: gerarProductsJs,
+    gerarGaleriaJs: gerarGaleriaJs,
+    lerFicheiroDemo: function(p){ return Estado.gh.lerFicheiro(p); }
+  };
+}
+})();
+</script>
+</body>
+</html>

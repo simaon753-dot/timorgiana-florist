@@ -5,6 +5,11 @@ Guia simples para manter o site sozinha. Não é preciso ser técnico — basta 
 > 📊 **Painel de gestão (receitas, vendas, stock):** ver o guia [PAINEL.md](PAINEL.md).
 > Cada encomenda é registada numa Folha Google automaticamente.
 
+> 🌸 **NOVO — Painel de administração de conteúdos:** para adicionar **produtos e fotografias
+> sem tocar em ficheiros** (e sem GitHub Desktop), use o painel **[admin.html](admin.html)**
+> — guia completo em [ADMIN.md](ADMIN.md). As fotos são otimizadas sozinhas, e cada «Publicar»
+> vai direto para o GitHub; o site atualiza ~1 minuto depois. Funciona no telemóvel.
+
 ---
 
 ## 🔑 A regra de ouro
