@@ -1494,3 +1494,167 @@ body.recibo-aberto{ overflow:hidden; }
   border-radius:var(--raio-sm); padding:.7rem .9rem; font-size:.86rem; font-weight:600; margin-bottom:.4rem; }
 .cesto-form__nota{ font-size:.76rem; color:var(--tinta-tenue); margin:.7rem 0 0; text-align:center; }
 .cesto-form__nota a{ color:var(--terracota); text-decoration:underline; text-underline-offset:2px; }
+
+/* ==========================================================================
+   19. VIDRO (GLASSMORPHISM) — re-veste TODO o site
+   --------------------------------------------------------------------------
+   Camada final que converte o visual editorial para "liquid glass": um fundo
+   colorido animado + painéis foscos translúcidos. NÃO altera a estrutura nem
+   o JavaScript — só as superfícies (fundos, bordas, cantos, desfoque). Baseado
+   em landing-glass.html, mantendo a paleta, os tipos e o logótipo da marca.
+   Para VOLTAR ao visual anterior, basta apagar esta secção (§19), a função
+   App.construirFundo (componentes.js) e a linha que a chama (main.js).
+   ========================================================================== */
+
+/* — Tokens de vidro + cantos mais arredondados (afetam o site inteiro) — */
+:root{
+  --raio:      16px;
+  --raio-sm:   10px;
+  --raio-lg:   26px;
+  --glass:         rgba(255, 251, 243, 0.55);
+  --glass-forte:   rgba(255, 251, 243, 0.80);
+  --glass-veu:     rgba(255, 251, 243, 0.45);
+  --glass-escuro:  rgba(48, 39, 33, 0.55);
+  --glass-borda:   rgba(255, 255, 255, 0.65);
+  --glass-borda-2: rgba(201, 168, 106, 0.35);
+  --blur:       blur(16px) saturate(160%);
+  --blur-forte: blur(24px) saturate(180%);
+  --sombra:    0 20px 50px rgba(150, 95, 60, .14);
+  --sombra-lg: 0 34px 80px rgba(150, 95, 60, .20);
+  --anel:      inset 0 1px 0 rgba(255,255,255,.7);
+}
+
+/* — Fundo colorido animado (a "cena" que o vidro desfoca) — */
+body{ background: transparent; }
+.bg-cena{
+  position:fixed; inset:0; z-index:-2; overflow:hidden; pointer-events:none;
+  background:
+    radial-gradient(1200px 700px at 12% -5%, var(--coral-suave), transparent 60%),
+    radial-gradient(1000px 800px at 100% 0%, #FDEBDC, transparent 55%),
+    linear-gradient(180deg, var(--marfim) 0%, var(--marfim-quente) 55%, var(--coral-veu) 100%);
+}
+.bg-cena::after{ content:""; position:absolute; inset:0; opacity:.5;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220' viewBox='0 0 220 220'%3E%3Cg fill='none' stroke='%23C9A86A' stroke-width='1' opacity='0.35'%3E%3Cpath d='M44 66 q15 -24 30 0 q-15 24 -30 0z'/%3E%3Cpath d='M165 143 q17 -26 34 0 q-17 26 -34 0z'/%3E%3Cpath d='M132 44 a11 11 0 1 0 0.1 0z'/%3E%3Cpath d='M33 165 a9 9 0 1 0 0.1 0z'/%3E%3C/g%3E%3C/svg%3E");
+}
+.orb{ position:absolute; border-radius:50%; filter:blur(60px); will-change:transform; }
+.orb--1{ width:480px; height:480px; top:-120px; left:-80px;  background:var(--coral); opacity:.40; }
+.orb--2{ width:420px; height:420px; top:35%;    right:-120px; background:var(--dourado-claro); opacity:.50; }
+.orb--3{ width:380px; height:380px; bottom:-120px; left:18%; background:var(--sage); opacity:.26; }
+.orb--4{ width:300px; height:300px; top:8%; left:55%; background:var(--terracota); opacity:.14; }
+@media (prefers-reduced-motion: no-preference){
+  .orb--1{ animation:orbFlutua 18s ease-in-out infinite; }
+  .orb--2{ animation:orbFlutua 22s ease-in-out infinite reverse; }
+  .orb--3{ animation:orbFlutua 26s ease-in-out infinite; }
+}
+@keyframes orbFlutua{ 0%,100%{ transform:translate(0,0) scale(1); } 50%{ transform:translate(30px,-28px) scale(1.08); } }
+
+/* — CABEÇALHO: barra flutuante em vidro (pílula fosca) — */
+.cabecalho{ padding:14px 0; background:transparent; box-shadow:none; }
+.cabecalho__interior{
+  background:var(--glass-forte);
+  -webkit-backdrop-filter:var(--blur-forte); backdrop-filter:var(--blur-forte);
+  border:1px solid var(--glass-borda);
+  box-shadow:var(--sombra), var(--anel);
+  border-radius:var(--raio-lg);
+  padding:.7rem 1.4rem;
+}
+.cabecalho--solido{ background:transparent; box-shadow:none; backdrop-filter:none; }
+/* texto sempre escuro sobre a pílula clara (mesmo por cima do hero) */
+.cabecalho--topo .nav__link{ color:var(--tinta-suave); }
+.cabecalho--topo .nav__link.ativo{ color:var(--terracota); }
+.cabecalho--topo .nav__link::after{ background:var(--terracota); }
+.cabecalho--topo .menu-toggle span{ background:var(--tinta); }
+.cabecalho--topo .cabecalho__cesto{ color:var(--tinta); }
+.cabecalho--topo .idiomas{ border-color:var(--glass-borda-2); background:rgba(255,255,255,.5); }
+.cabecalho--topo .idiomas__btn{ color:var(--tinta-suave); }
+.cabecalho--topo .idiomas__btn.ativo{ background:var(--terracota); color:#fff; }
+/* logótipo: mostrar sempre a versão coral (a creme desapareceria no vidro claro) */
+.logo__marca--creme{ display:none; }
+.logo__marca--coral{ display:block; }
+.cabecalho--topo .logo__marca--coral{ display:block; }
+
+/* — BOTÕES: pílula com degradé/vidro — */
+.btn{ border-radius:999px; letter-spacing:.14em; text-indent:0; padding:.95rem 1.9rem; }
+.btn--pequeno{ padding:.68rem 1.4rem; }
+.btn--grande{ padding:1.15rem 2.6rem; }
+.btn--primario{
+  background:linear-gradient(135deg, var(--terracota), var(--coral));
+  border-color:transparent; color:#fff; box-shadow:0 12px 26px rgba(196,99,58,.30);
+}
+.btn--primario:hover{
+  background:linear-gradient(135deg, var(--terracota-esc), var(--coral));
+  border-color:transparent; color:#fff; box-shadow:0 18px 38px rgba(196,99,58,.42); transform:translateY(-2px);
+}
+.btn--contorno{
+  background:var(--glass-forte); -webkit-backdrop-filter:var(--blur); backdrop-filter:var(--blur);
+  border-color:var(--glass-borda-2); color:var(--terracota-esc);
+}
+.btn--contorno:hover{ background:#fff; border-color:var(--glass-borda-2); color:var(--terracota-esc); }
+
+/* — PAINÉIS FOSCOS: cartões, painéis, molduras, banners — */
+.cartao, .painel{
+  background:var(--glass-forte);
+  -webkit-backdrop-filter:var(--blur); backdrop-filter:var(--blur);
+  border:1px solid var(--glass-borda);
+  box-shadow:var(--sombra), var(--anel);
+  border-radius:var(--raio-lg);
+}
+.cartao:hover{ box-shadow:var(--sombra-lg), var(--anel); border-color:var(--glass-borda); transform:translateY(-6px); }
+.pers-banner{ border:1px solid var(--glass-borda); box-shadow:var(--sombra), var(--anel);
+  background:linear-gradient(150deg, rgba(253,227,210,.72), rgba(251,239,230,.72));
+  -webkit-backdrop-filter:var(--blur); backdrop-filter:var(--blur); }
+
+/* — SECÇÕES: véu translúcido para a cena aparecer por trás — */
+.seccao--veu{ background:var(--glass-veu); }
+
+/* — FORMULÁRIOS: campos em vidro — */
+.campo input, .campo select, .campo textarea,
+.cesto-form input, .cesto-form textarea,
+.pers-input, .pers-textarea,
+.colecao-ordenar select{
+  background:rgba(255,255,255,.72); border:1px solid var(--glass-borda-2); border-radius:var(--raio-sm);
+}
+
+/* — Chips, filtros e seletor de idioma em vidro/pílula — */
+.pers-chip, .filtro{ background:rgba(255,255,255,.6); border-color:var(--glass-borda-2); }
+.idiomas{ background:rgba(255,255,255,.5); border-color:var(--glass-borda-2); border-radius:999px; }
+.idiomas__btn{ border-radius:999px; }
+
+/* — GAVETA DO CESTO + menu móvel: painéis foscos — */
+.gaveta{
+  background:var(--glass-forte);
+  -webkit-backdrop-filter:var(--blur-forte); backdrop-filter:var(--blur-forte);
+  border-left:1px solid var(--glass-borda);
+}
+.gaveta__rodape{ background:rgba(255,251,243,.5); }
+@media (max-width:880px){
+  .nav{
+    background:var(--glass-forte);
+    -webkit-backdrop-filter:var(--blur-forte); backdrop-filter:var(--blur-forte);
+    border-left:1px solid var(--glass-borda);
+  }
+}
+
+/* — RECIBO: moldura do modal em vidro (o DOCUMENTO fica branco p/ PDF/impressão) — */
+.recibo{
+  background:var(--glass-forte);
+  -webkit-backdrop-filter:var(--blur-forte); backdrop-filter:var(--blur-forte);
+  border:1px solid var(--glass-borda); box-shadow:var(--sombra-lg), var(--anel); border-radius:var(--raio-lg);
+}
+.recibo__acoes{ background:rgba(255,251,243,.5); }
+
+/* — RODAPÉ: painel escuro flutuante em vidro (mantém o texto claro e o logótipo creme) — */
+.rodape{
+  background:var(--glass-escuro);
+  -webkit-backdrop-filter:var(--blur-forte); backdrop-filter:var(--blur-forte);
+  border:1px solid rgba(255,255,255,.14);
+  border-radius:var(--raio-lg);
+  margin:3rem 14px 14px;
+  box-shadow:var(--sombra);
+}
+
+/* — Suporte a navegadores sem backdrop-filter: reforça a opacidade dos painéis — */
+@supports not ((-webkit-backdrop-filter:blur(1px)) or (backdrop-filter:blur(1px))){
+  .cabecalho__interior, .cartao, .painel, .gaveta, .recibo{ background:var(--marfim); }
+  .rodape{ background:linear-gradient(165deg,#3A302A,#2A221D); }
+}

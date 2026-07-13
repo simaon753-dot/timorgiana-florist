@@ -16,6 +16,7 @@
 
   pronto(function () {
     /* 1 — Componentes partilhados ------------------------------------- */
+    if (App.construirFundo) App.construirFundo();
     App.construirCabecalho();
     App.construirRodape();
     if (App.construirGaveta) App.construirGaveta();

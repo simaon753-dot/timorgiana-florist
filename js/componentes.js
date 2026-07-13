@@ -227,6 +227,24 @@ App.construirGaveta = function () {
 };
 
 /* -------------------------------------------------------------------------
+   FUNDO ANIMADO "LIQUID GLASS" (cena colorida + orbs) — em todas as páginas
+   É a superfície colorida que os painéis foscos (vidro) desfocam por trás.
+   Fica em z-index:-2, atrás de todo o conteúdo. Estilo em css/estilos.css §19.
+   ------------------------------------------------------------------------- */
+App.construirFundo = function () {
+  if (document.querySelector(".bg-cena")) return;
+  var cena = document.createElement("div");
+  cena.className = "bg-cena";
+  cena.setAttribute("aria-hidden", "true");
+  cena.innerHTML =
+    '<span class="orb orb--1"></span>' +
+    '<span class="orb orb--2"></span>' +
+    '<span class="orb orb--3"></span>' +
+    '<span class="orb orb--4"></span>';
+  document.body.insertBefore(cena, document.body.firstChild);
+};
+
+/* -------------------------------------------------------------------------
    BOTÃO FLUTUANTE DE WHATSAPP (em todas as páginas)
    ------------------------------------------------------------------------- */
 App.construirWhatsApp = function () {

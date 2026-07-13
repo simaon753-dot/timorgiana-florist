@@ -1,0 +1,672 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Timorgiana Florist — Arte floral em Díli · Glassmorphism</title>
+<meta name="description" content="Timorgiana Florist — arte floral premium em Díli, Timor-Leste. Ramos, casamentos e cerimónias com flores naturais frescas. Encomende pelo WhatsApp.">
+<link rel="icon" href="assets/favicon-64.png" type="image/png">
+
+<!-- Tipografia da marca: Cormorant Garamond · Mulish · Pinyon Script -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Mulish:wght@300;400;500;600;700&family=Pinyon+Script&display=swap" rel="stylesheet">
+
+<style>
+/* ============================================================
+   TIMORGIANA FLORIST — LIQUID GLASS LANDING
+   Marca real: coral #F9AC80 · creme #FFF4D1 · dourado #C9A86A
+   ============================================================ */
+:root{
+  /* — Paleta da marca — */
+  --coral:        #F9AC80;
+  --coral-claro:  #FCC9A8;
+  --coral-suave:  #FDE3D2;
+  --coral-veu:    #FBEFE6;
+  --terracota:    #C4633A;
+  --terracota-esc:#A24E2C;
+  --creme:        #FFF4D1;
+  --marfim:       #FFFBF3;
+  --marfim-quente:#FDF6EC;
+  --dourado:      #C9A86A;
+  --dourado-claro:#E3CFA1;
+  --sage:         #8A9A7B;
+  --sage-esc:     #5F6E50;
+  --tinta:        #3A302A;
+  --tinta-suave:  #6E6058;
+  --tinta-tenue:  #9A8C82;
+  --linha:        #EEE2D4;
+  --branco:       #ffffff;
+
+  /* — Vidro (liquid glass) — */
+  --glass:        rgba(255, 251, 243, 0.58);
+  --glass-forte:  rgba(255, 251, 243, 0.78);
+  --glass-escuro: rgba(58, 48, 42, 0.28);
+  --glass-borda:  rgba(255, 255, 255, 0.65);
+  --glass-borda-2:rgba(201, 168, 106, 0.35);
+  --blur:         blur(18px) saturate(165%);
+  --blur-forte:   blur(26px) saturate(180%);
+
+  /* — Tipos — */
+  --serif:  "Cormorant Garamond", Georgia, "Times New Roman", serif;
+  --sans:   "Mulish", -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --script: "Pinyon Script", "Cormorant Garamond", cursive;
+
+  --container: 1180px;
+  --raio:   18px;
+  --raio-sm:12px;
+  --raio-lg:28px;
+
+  --sombra:    0 20px 50px rgba(150, 95, 60, .14);
+  --sombra-lg: 0 36px 90px rgba(150, 95, 60, .20);
+  --anel:      inset 0 1px 0 rgba(255,255,255,.7);
+  --transicao: .35s cubic-bezier(.22,.61,.36,1);
+}
+
+*{ box-sizing:border-box; margin:0; padding:0; }
+html{ scroll-behavior:smooth; }
+body{
+  font-family:var(--sans);
+  color:var(--tinta);
+  line-height:1.65;
+  font-size:16px;
+  background:var(--marfim);
+  -webkit-font-smoothing:antialiased;
+  overflow-x:clip;
+}
+
+/* ---------- Fundo colorido (para o vidro ter o que desfocar) ---------- */
+.bg-cena{ position:fixed; inset:0; z-index:-2; overflow:hidden;
+  background:
+    radial-gradient(1200px 700px at 12% -5%, var(--coral-suave), transparent 60%),
+    radial-gradient(1000px 800px at 100% 0%, #FDEBDC, transparent 55%),
+    linear-gradient(180deg, var(--marfim) 0%, var(--marfim-quente) 55%, var(--coral-veu) 100%);
+}
+.orb{ position:absolute; border-radius:50%; filter:blur(60px); opacity:.55; will-change:transform; }
+.orb--1{ width:480px; height:480px; top:-120px; left:-80px;  background:var(--coral); opacity:.42; }
+.orb--2{ width:420px; height:420px; top:35%;   right:-120px; background:var(--dourado-claro); opacity:.5; }
+.orb--3{ width:380px; height:380px; bottom:-120px; left:18%; background:var(--sage); opacity:.28; }
+.orb--4{ width:300px; height:300px; top:8%; left:55%; background:var(--terracota); opacity:.16; }
+@media (prefers-reduced-motion: no-preference){
+  .orb--1{ animation:flutua 18s ease-in-out infinite; }
+  .orb--2{ animation:flutua 22s ease-in-out infinite reverse; }
+  .orb--3{ animation:flutua 26s ease-in-out infinite; }
+}
+@keyframes flutua{
+  0%,100%{ transform:translate(0,0) scale(1); }
+  50%{ transform:translate(30px,-28px) scale(1.08); }
+}
+/* Padrão de pétalas ténue por cima */
+.bg-cena::after{ content:""; position:absolute; inset:0; opacity:.5;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220' viewBox='0 0 220 220'%3E%3Cg fill='none' stroke='%23C9A86A' stroke-width='1' opacity='0.35'%3E%3Cpath d='M44 66 q15 -24 30 0 q-15 24 -30 0z'/%3E%3Cpath d='M165 143 q17 -26 34 0 q-17 26 -34 0z'/%3E%3Cpath d='M132 44 a11 11 0 1 0 0.1 0z'/%3E%3Cpath d='M33 165 a9 9 0 1 0 0.1 0z'/%3E%3C/g%3E%3C/svg%3E");
+}
+
+/* ---------- Utilitários ---------- */
+.container{ width:min(100% - 2.5rem, var(--container)); margin-inline:auto; }
+.serif{ font-family:var(--serif); }
+.script{ font-family:var(--script); color:var(--terracota); font-weight:400; }
+.eyebrow{
+  font-size:.72rem; letter-spacing:.32em; text-transform:uppercase;
+  color:var(--terracota); font-weight:600;
+}
+.vidro{
+  background:var(--glass);
+  -webkit-backdrop-filter:var(--blur); backdrop-filter:var(--blur);
+  border:1px solid var(--glass-borda);
+  box-shadow:var(--sombra), var(--anel);
+  border-radius:var(--raio);
+}
+
+/* ---------- Botões ---------- */
+.btn{
+  display:inline-flex; align-items:center; gap:.55rem;
+  font-family:var(--sans); font-weight:600; font-size:.95rem;
+  padding:.85rem 1.5rem; border-radius:999px; cursor:pointer;
+  border:1px solid transparent; text-decoration:none;
+  transition:transform var(--transicao), box-shadow var(--transicao), background var(--transicao), color var(--transicao);
+  min-height:48px;
+}
+.btn:focus-visible{ outline:3px solid var(--terracota); outline-offset:3px; }
+.btn--primario{
+  background:linear-gradient(135deg, var(--terracota), var(--coral));
+  color:#fff; box-shadow:0 12px 26px rgba(196,99,58,.32);
+}
+.btn--primario:hover{ box-shadow:0 18px 38px rgba(196,99,58,.42); transform:translateY(-2px); }
+.btn--vidro{
+  background:var(--glass-forte);
+  -webkit-backdrop-filter:var(--blur); backdrop-filter:var(--blur);
+  border:1px solid var(--glass-borda-2); color:var(--terracota-esc);
+}
+.btn--vidro:hover{ background:#fff; transform:translateY(-2px); box-shadow:var(--sombra); }
+.btn--wa{ background:#25D366; color:#fff; box-shadow:0 12px 26px rgba(37,211,102,.30); }
+.btn--wa:hover{ background:#20b858; transform:translateY(-2px); box-shadow:0 18px 34px rgba(37,211,102,.4); }
+.btn svg{ width:20px; height:20px; flex:none; }
+.icon{ width:20px; height:20px; flex:none; }
+
+/* ---------- NAVBAR flutuante em vidro ---------- */
+.nav{ position:fixed; top:16px; left:16px; right:16px; z-index:50; }
+.nav__inner{
+  max-width:var(--container); margin-inline:auto;
+  display:flex; align-items:center; gap:1rem;
+  padding:.6rem .7rem .6rem 1.1rem;
+  background:var(--glass-forte);
+  -webkit-backdrop-filter:var(--blur-forte); backdrop-filter:var(--blur-forte);
+  border:1px solid var(--glass-borda);
+  box-shadow:var(--sombra), var(--anel);
+  border-radius:999px;
+}
+.nav__logo{ display:flex; align-items:center; gap:.6rem; text-decoration:none; }
+.nav__logo img{ height:38px; width:auto; display:block; }
+.nav__marca{ font-family:var(--serif); font-size:1.28rem; font-weight:600; color:var(--terracota-esc); letter-spacing:.01em; line-height:1; }
+.nav__marca small{ display:block; font-family:var(--sans); font-size:.56rem; letter-spacing:.28em; text-transform:uppercase; color:var(--tinta-tenue); font-weight:600; margin-top:2px; }
+.nav__links{ display:flex; gap:.35rem; margin-left:auto; }
+.nav__links a{
+  color:var(--tinta-suave); font-size:.9rem; font-weight:500; text-decoration:none;
+  padding:.5rem .85rem; border-radius:999px; transition:color var(--transicao), background var(--transicao);
+}
+.nav__links a:hover{ color:var(--terracota-esc); background:rgba(255,255,255,.6); }
+.nav__acoes{ display:flex; align-items:center; gap:.5rem; }
+
+/* Seletor de idioma */
+.lang{ display:flex; gap:2px; padding:3px; border-radius:999px; background:rgba(255,255,255,.55); border:1px solid var(--glass-borda-2); }
+.lang button{
+  border:none; background:transparent; cursor:pointer; font-family:var(--sans);
+  font-size:.72rem; font-weight:700; letter-spacing:.04em; color:var(--tinta-tenue);
+  padding:.35rem .55rem; border-radius:999px; min-height:32px; transition:all var(--transicao);
+}
+.lang button[aria-pressed="true"]{ background:var(--terracota); color:#fff; }
+.lang button:focus-visible{ outline:2px solid var(--terracota); outline-offset:2px; }
+
+.nav__burger{ display:none; background:transparent; border:none; cursor:pointer; padding:.5rem; color:var(--terracota-esc); }
+
+/* ---------- HERO ---------- */
+.hero{ position:relative; padding:9.5rem 0 5rem; overflow:hidden; }
+.hero__foto{
+  position:absolute; inset:0; z-index:-1;
+  background:url("assets/hero-arco.webp") center 35%/cover no-repeat;
+}
+.hero__foto::after{ content:""; position:absolute; inset:0;
+  background:linear-gradient(105deg, rgba(255,251,243,.92) 0%, rgba(255,251,243,.62) 42%, rgba(58,48,42,.18) 100%);
+}
+.hero__grid{ display:grid; grid-template-columns:1.05fr .95fr; gap:2.5rem; align-items:center; }
+.hero__card{ padding:2.6rem 2.6rem 2.4rem; border-radius:var(--raio-lg); }
+.hero__script{ font-family:var(--script); font-size:2.6rem; line-height:1; color:var(--terracota); }
+.hero h1{
+  font-family:var(--serif); font-weight:600; color:var(--tinta);
+  font-size:clamp(2.6rem, 5.5vw, 4.1rem); line-height:1.04; letter-spacing:-.01em;
+  margin:.35rem 0 1rem;
+}
+.hero h1 em{ font-style:italic; color:var(--terracota-esc); }
+.hero__lead{ font-size:1.12rem; color:var(--tinta-suave); max-width:34ch; margin-bottom:1.8rem; }
+.hero__ctas{ display:flex; flex-wrap:wrap; gap:.8rem; margin-bottom:1.8rem; }
+.hero__trust{ display:flex; gap:1.5rem; flex-wrap:wrap; }
+.hero__trust div{ display:flex; align-items:center; gap:.5rem; font-size:.85rem; color:var(--tinta-suave); }
+.hero__trust svg{ width:18px; height:18px; color:var(--dourado); }
+
+/* Cartão flutuante de destaque no hero */
+.hero__aside{ position:relative; }
+.hero__peca{ padding:1.4rem; border-radius:var(--raio-lg); transform:rotate(-2deg); }
+.hero__peca img{ width:100%; height:320px; object-fit:cover; border-radius:var(--raio-sm); display:block; }
+.hero__selo{
+  position:absolute; bottom:-22px; left:-18px; padding:.9rem 1.2rem; border-radius:var(--raio);
+  background:var(--glass-forte); -webkit-backdrop-filter:var(--blur); backdrop-filter:var(--blur);
+  border:1px solid var(--glass-borda); box-shadow:var(--sombra);
+}
+.hero__selo b{ font-family:var(--serif); font-size:1.5rem; color:var(--terracota-esc); display:block; line-height:1; }
+.hero__selo span{ font-size:.72rem; letter-spacing:.06em; color:var(--tinta-tenue); }
+
+/* ---------- Secções ---------- */
+section{ position:relative; }
+.sec{ padding:5.5rem 0; }
+.sec__cabeca{ text-align:center; max-width:44ch; margin:0 auto 3rem; }
+.sec__cabeca h2{
+  font-family:var(--serif); font-weight:600; color:var(--tinta);
+  font-size:clamp(2rem, 4vw, 2.9rem); line-height:1.1; margin:.5rem 0 .8rem;
+}
+.sec__cabeca p{ color:var(--tinta-suave); font-size:1.05rem; }
+.hr-ouro{ width:60px; height:1px; background:var(--dourado); margin:.6rem auto 0; border:0; position:relative; }
+.hr-ouro::before{ content:"❧"; position:absolute; top:-13px; left:50%; transform:translateX(-50%); color:var(--dourado); font-size:1rem; background:transparent; }
+
+/* Features */
+.features{ display:grid; grid-template-columns:repeat(3,1fr); gap:1.4rem; }
+.feat{ padding:2rem 1.8rem; border-radius:var(--raio-lg); transition:transform var(--transicao), box-shadow var(--transicao); }
+.feat:hover{ transform:translateY(-6px); box-shadow:var(--sombra-lg), var(--anel); }
+.feat__icone{
+  width:56px; height:56px; border-radius:16px; display:grid; place-items:center; margin-bottom:1.2rem;
+  background:linear-gradient(135deg, var(--coral-suave), var(--coral-claro));
+  border:1px solid var(--glass-borda); color:var(--terracota-esc);
+}
+.feat__icone svg{ width:28px; height:28px; }
+.feat h3{ font-family:var(--serif); font-size:1.5rem; font-weight:600; color:var(--tinta); margin-bottom:.5rem; }
+.feat p{ color:var(--tinta-suave); font-size:.96rem; }
+
+/* Showcase de ramos */
+.showcase{ display:grid; grid-template-columns:repeat(4,1fr); gap:1.1rem; }
+.peca{ position:relative; border-radius:var(--raio); overflow:hidden; aspect-ratio:3/4; box-shadow:var(--sombra); }
+.peca img{ width:100%; height:100%; object-fit:cover; display:block; transition:transform .6s cubic-bezier(.22,.61,.36,1); }
+.peca:hover img{ transform:scale(1.07); }
+.peca__legenda{
+  position:absolute; left:10px; right:10px; bottom:10px; padding:.7rem .9rem; border-radius:12px;
+  background:var(--glass-escuro); -webkit-backdrop-filter:var(--blur); backdrop-filter:var(--blur);
+  border:1px solid rgba(255,255,255,.25); color:#fff;
+  transform:translateY(6px); opacity:0; transition:all var(--transicao);
+}
+.peca:hover .peca__legenda, .peca:focus-within .peca__legenda{ transform:translateY(0); opacity:1; }
+.peca__legenda b{ font-family:var(--serif); font-size:1.05rem; display:block; }
+.peca__legenda span{ font-size:.78rem; opacity:.85; }
+
+/* ---------- CTA / Encomendar (formulário → WhatsApp) ---------- */
+.encomendar{ padding:5.5rem 0; }
+.enc__grid{ display:grid; grid-template-columns:1fr 1fr; gap:2.5rem; align-items:stretch; }
+.enc__texto{ padding:2.6rem; border-radius:var(--raio-lg); display:flex; flex-direction:column; justify-content:center; }
+.enc__texto h2{ font-family:var(--serif); font-size:clamp(1.9rem,3.5vw,2.7rem); font-weight:600; line-height:1.1; margin:.4rem 0 .8rem; }
+.enc__texto p{ color:var(--tinta-suave); margin-bottom:1.4rem; }
+.enc__lista{ list-style:none; display:grid; gap:.7rem; }
+.enc__lista li{ display:flex; align-items:center; gap:.7rem; font-size:.95rem; color:var(--tinta); }
+.enc__lista svg{ width:20px; height:20px; color:var(--sage-esc); flex:none; }
+
+.form{ padding:2.4rem; border-radius:var(--raio-lg); }
+.form__linha{ display:grid; gap:.4rem; margin-bottom:1.1rem; }
+.form__linha--2{ grid-template-columns:1fr 1fr; gap:1rem; }
+label{ font-size:.82rem; font-weight:600; color:var(--tinta-suave); letter-spacing:.02em; }
+input, select, textarea{
+  font-family:var(--sans); font-size:.95rem; color:var(--tinta);
+  padding:.8rem .95rem; border-radius:12px; width:100%;
+  background:rgba(255,255,255,.72); border:1px solid var(--linha);
+  transition:border var(--transicao), box-shadow var(--transicao);
+}
+input:focus, select:focus, textarea:focus{
+  outline:none; border-color:var(--coral);
+  box-shadow:0 0 0 3px rgba(249,172,128,.32);
+}
+textarea{ resize:vertical; min-height:88px; }
+.form .btn{ width:100%; justify-content:center; margin-top:.3rem; }
+.form__nota{ font-size:.78rem; color:var(--tinta-tenue); text-align:center; margin-top:.8rem; }
+
+/* ---------- Rodapé ---------- */
+.rodape{ margin:4rem 16px 16px; }
+.rodape__inner{ padding:2.6rem 2.4rem; border-radius:var(--raio-lg); }
+.rodape__grid{ display:grid; grid-template-columns:1.5fr 1fr 1fr; gap:2rem; }
+.rodape__marca{ font-family:var(--serif); font-size:1.6rem; color:var(--terracota-esc); font-weight:600; }
+.rodape p{ color:var(--tinta-suave); font-size:.92rem; margin-top:.6rem; max-width:34ch; }
+.rodape h4{ font-size:.75rem; letter-spacing:.2em; text-transform:uppercase; color:var(--terracota); margin-bottom:.9rem; }
+.rodape ul{ list-style:none; display:grid; gap:.55rem; }
+.rodape a{ color:var(--tinta-suave); text-decoration:none; font-size:.92rem; transition:color var(--transicao); }
+.rodape a:hover{ color:var(--terracota-esc); }
+.rodape__fim{ margin-top:2rem; padding-top:1.4rem; border-top:1px solid var(--linha); display:flex; justify-content:space-between; flex-wrap:wrap; gap:.6rem; font-size:.82rem; color:var(--tinta-tenue); }
+
+/* ---------- Botão flutuante WhatsApp ---------- */
+.wa-flutua{
+  position:fixed; bottom:22px; right:22px; z-index:60;
+  display:inline-flex; align-items:center; gap:.6rem;
+  background:#25D366; color:#fff; text-decoration:none;
+  padding:.8rem 1.2rem; border-radius:999px; font-weight:700; font-size:.9rem;
+  box-shadow:0 14px 34px rgba(37,211,102,.42);
+  transition:transform var(--transicao), box-shadow var(--transicao);
+}
+.wa-flutua:hover{ transform:translateY(-3px); box-shadow:0 20px 44px rgba(37,211,102,.55); }
+.wa-flutua svg{ width:22px; height:22px; }
+
+/* ---------- Responsivo ---------- */
+@media (max-width:960px){
+  .hero__grid, .enc__grid, .rodape__grid{ grid-template-columns:1fr; }
+  .hero__aside{ display:none; }
+  .features{ grid-template-columns:1fr; }
+  .showcase{ grid-template-columns:repeat(2,1fr); }
+  .nav__links{ display:none; }
+  .nav__burger{ display:inline-flex; }
+}
+@media (max-width:520px){
+  .hero{ padding:8rem 0 3.5rem; }
+  .hero__card{ padding:1.8rem 1.5rem; }
+  .form__linha--2{ grid-template-columns:1fr; }
+  .wa-flutua span{ display:none; }
+  .rodape__fim{ flex-direction:column; }
+}
+@media (prefers-reduced-motion: reduce){
+  *{ animation:none !important; scroll-behavior:auto !important; transition-duration:.01ms !important; }
+}
+</style>
+</head>
+<body>
+
+<!-- Fundo colorido para o vidro desfocar -->
+<div class="bg-cena" aria-hidden="true">
+  <div class="orb orb--1"></div>
+  <div class="orb orb--2"></div>
+  <div class="orb orb--3"></div>
+  <div class="orb orb--4"></div>
+</div>
+
+<!-- ======================= NAVBAR ======================= -->
+<nav class="nav" aria-label="Principal">
+  <div class="nav__inner">
+    <a class="nav__logo" href="#topo">
+      <img src="assets/logo-coral.png" alt="Logótipo Timorgiana Florist">
+      <span class="nav__marca">Timorgiana<small data-i18n="marca_sub">Florist · Díli</small></span>
+    </a>
+    <div class="nav__links">
+      <a href="#servicos" data-i18n="nav_servicos">Serviços</a>
+      <a href="#portefolio" data-i18n="nav_galeria">Portefólio</a>
+      <a href="#encomendar" data-i18n="nav_encomendar">Encomendar</a>
+      <a href="#contactos" data-i18n="nav_contactos">Contactos</a>
+    </div>
+    <div class="nav__acoes">
+      <div class="lang" role="group" aria-label="Idioma">
+        <button data-lang="pt" aria-pressed="true">PT</button>
+        <button data-lang="tet" aria-pressed="false">TET</button>
+        <button data-lang="en" aria-pressed="false">EN</button>
+      </div>
+      <a class="btn btn--primario" href="#encomendar" data-i18n="btn_encomendar">Encomendar</a>
+    </div>
+  </div>
+</nav>
+
+<span id="topo"></span>
+
+<!-- ======================= HERO ======================= -->
+<header class="hero">
+  <div class="hero__foto" aria-hidden="true"></div>
+  <div class="container">
+    <div class="hero__grid">
+      <div class="hero__card vidro">
+        <span class="hero__script">Flores que falam</span>
+        <h1 data-i18n-html="hero_titulo">Arte floral <em>fresca</em><br>para os seus momentos</h1>
+        <p class="hero__lead" data-i18n="hero_lead">Ramos, arranjos e cenários florais compostos à mão em Díli, com flores naturais escolhidas a dedo para cada ocasião.</p>
+        <div class="hero__ctas">
+          <a class="btn btn--primario" href="#encomendar">
+            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20M2 12h20"/></svg>
+            <span data-i18n="btn_encomendar_ag">Encomendar agora</span>
+          </a>
+          <a class="btn btn--vidro" href="#portefolio" data-i18n="btn_ver_portefolio">Ver portefólio</a>
+        </div>
+        <div class="hero__trust">
+          <div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span data-i18n="trust_1">Flores frescas do dia</span></div>
+          <div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg><span data-i18n="trust_2">Entrega em toda a Díli</span></div>
+          <div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l2.4 7.4H22l-6 4.6 2.3 7.4-6.3-4.6L5.7 21l2.3-7.4-6-4.6h7.6z"/></svg><span data-i18n="trust_3">Feito à mão, com carinho</span></div>
+        </div>
+      </div>
+
+      <div class="hero__aside">
+        <div class="hero__peca vidro">
+          <img src="assets/galeria/bouquet/bouquet-03.jpg" alt="Ramo de flores naturais da Timorgiana Florist">
+        </div>
+        <div class="hero__selo">
+          <b>+200</b>
+          <span data-i18n="selo">ocasiões floridas</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- ======================= SERVIÇOS ======================= -->
+<section class="sec" id="servicos">
+  <div class="container">
+    <div class="sec__cabeca">
+      <span class="eyebrow" data-i18n="serv_eyebrow">O que fazemos</span>
+      <h2 data-i18n="serv_titulo">Flores para cada momento</h2>
+      <hr class="hr-ouro">
+      <p data-i18n="serv_lead">Da declaração de amor à cerimónia mais solene — desenhamos a peça certa para o seu dia.</p>
+    </div>
+    <div class="features">
+      <article class="feat vidro" tabindex="0">
+        <div class="feat__icone"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2C9 6 9 9 12 12c3-3 3-6 0-10z"/><path d="M12 12c-4-2-7-1-8 3 4 2 7 1 8-3z"/><path d="M12 12c4-2 7-1 8 3-4 2-7 1-8-3z"/><path d="M12 12v10"/></svg></div>
+        <h3 data-i18n="serv1_t">Ramos & arranjos</h3>
+        <p data-i18n="serv1_d">Buquês de mão, cestos e arranjos de vaso para aniversários, agradecimentos e "só porque sim".</p>
+      </article>
+      <article class="feat vidro" tabindex="0">
+        <div class="feat__icone"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-4.6-9.3-9C1 8.6 3 5 6.5 5 9 5 12 8 12 8s3-3 5.5-3C21 5 23 8.6 21.3 12 19 16.4 12 21 12 21z"/></svg></div>
+        <h3 data-i18n="serv2_t">Casamentos & eventos</h3>
+        <p data-i18n="serv2_d">Arcos, centros de mesa e cenografia floral completa para casamentos, batizados e celebrações.</p>
+      </article>
+      <article class="feat vidro" tabindex="0">
+        <div class="feat__icone"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="7" width="13" height="10" rx="2"/><path d="M16 10h3l3 3v4h-6z"/><circle cx="7" cy="18" r="2"/><circle cx="18" cy="18" r="2"/></svg></div>
+        <h3 data-i18n="serv3_t">Entrega em Díli</h3>
+        <p data-i18n="serv3_d">Levamos a sua encomenda com cuidado a casa, ao escritório ou ao local do evento, em toda a cidade.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ======================= PORTEFÓLIO ======================= -->
+<section class="sec" id="portefolio">
+  <div class="container">
+    <div class="sec__cabeca">
+      <span class="eyebrow" data-i18n="port_eyebrow">Portefólio</span>
+      <h2 data-i18n="port_titulo">Algumas das nossas peças</h2>
+      <hr class="hr-ouro">
+    </div>
+    <div class="showcase">
+      <figure class="peca" tabindex="0">
+        <img src="assets/galeria/bouquet/bouquet-07.jpg" alt="Ramo redondo em tons de coral e branco">
+        <figcaption class="peca__legenda"><b data-i18n="p1_t">Ramo coral</b><span data-i18n="p1_d">Rosas & gerberas</span></figcaption>
+      </figure>
+      <figure class="peca" tabindex="0">
+        <img src="assets/galeria/casamentos/cas-01.jpg" alt="Cenário floral de casamento">
+        <figcaption class="peca__legenda"><b data-i18n="p2_t">Casamento</b><span data-i18n="p2_d">Arco & mesa</span></figcaption>
+      </figure>
+      <figure class="peca" tabindex="0">
+        <img src="assets/galeria/bouquet/bouquet-12.jpg" alt="Buquê pastel para noiva">
+        <figcaption class="peca__legenda"><b data-i18n="p3_t">Buquê de noiva</b><span data-i18n="p3_d">Tons pastel</span></figcaption>
+      </figure>
+      <figure class="peca" tabindex="0">
+        <img src="assets/galeria/bouquet/bouquet-18.jpg" alt="Arranjo de flores variadas em vaso">
+        <figcaption class="peca__legenda"><b data-i18n="p4_t">Arranjo de vaso</b><span data-i18n="p4_d">Mistura natural</span></figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<!-- ======================= ENCOMENDAR ======================= -->
+<section class="encomendar" id="encomendar">
+  <div class="container">
+    <div class="enc__grid">
+      <div class="enc__texto vidro">
+        <span class="eyebrow" data-i18n="enc_eyebrow">Encomendar</span>
+        <h2 data-i18n="enc_titulo">Diga-nos a sua ocasião</h2>
+        <p data-i18n="enc_lead">Preencha os detalhes e enviamos a conversa direta para o nosso WhatsApp — respondemos rapidamente com uma proposta e o valor.</p>
+        <ul class="enc__lista">
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span data-i18n="enc_b1">Orçamento sem compromisso</span></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span data-i18n="enc_b2">Personalizamos cores e flores</span></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span data-i18n="enc_b3">Entrega combinada consigo</span></li>
+        </ul>
+      </div>
+
+      <form class="form vidro" id="form-encomenda" novalidate>
+        <div class="form__linha">
+          <label for="nome" data-i18n="f_nome">Nome</label>
+          <input id="nome" name="nome" type="text" autocomplete="name" required data-i18n-ph="f_nome_ph" placeholder="O seu nome">
+        </div>
+        <div class="form__linha form__linha--2">
+          <div class="form__linha">
+            <label for="ocasiao" data-i18n="f_ocasiao">Ocasião</label>
+            <select id="ocasiao" name="ocasiao">
+              <option value="Ramo / aniversário" data-i18n="f_op1">Ramo / aniversário</option>
+              <option value="Casamento" data-i18n="f_op2">Casamento</option>
+              <option value="Evento / empresa" data-i18n="f_op3">Evento / empresa</option>
+              <option value="Cerimónia fúnebre" data-i18n="f_op4">Cerimónia fúnebre</option>
+              <option value="Outro" data-i18n="f_op5">Outro</option>
+            </select>
+          </div>
+          <div class="form__linha">
+            <label for="data" data-i18n="f_data">Data</label>
+            <input id="data" name="data" type="date">
+          </div>
+        </div>
+        <div class="form__linha">
+          <label for="mensagem" data-i18n="f_msg">Detalhes</label>
+          <textarea id="mensagem" name="mensagem" data-i18n-ph="f_msg_ph" placeholder="Cores preferidas, orçamento, local de entrega…"></textarea>
+        </div>
+        <button class="btn btn--wa" type="submit">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.5 14.4c-.3-.15-1.8-.9-2.05-1s-.5-.15-.7.15-.8 1-1 1.2-.35.22-.65.07a8.2 8.2 0 0 1-2.4-1.5 9 9 0 0 1-1.67-2.07c-.17-.3 0-.46.13-.6s.3-.35.44-.53a2 2 0 0 0 .3-.5.55.55 0 0 0 0-.52c-.07-.15-.7-1.67-.95-2.29s-.5-.52-.7-.53h-.6a1.13 1.13 0 0 0-.82.38A3.45 3.45 0 0 0 5 11.2 6 6 0 0 0 6.3 14a13.7 13.7 0 0 0 5.25 4.65c.73.32 1.3.5 1.75.65a4.2 4.2 0 0 0 1.93.12 3.15 3.15 0 0 0 2.07-1.46 2.56 2.56 0 0 0 .18-1.46c-.07-.13-.27-.2-.57-.35zM12 2a10 10 0 0 0-8.6 15.06L2 22l5.06-1.33A10 10 0 1 0 12 2z"/></svg>
+          <span data-i18n="f_enviar">Enviar pelo WhatsApp</span>
+        </button>
+        <p class="form__nota" data-i18n="f_nota">Abre a conversa já preenchida. Não guardamos os seus dados.</p>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- ======================= RODAPÉ ======================= -->
+<footer class="rodape" id="contactos">
+  <div class="container" style="width:min(100% - 0rem, var(--container));">
+    <div class="rodape__inner vidro">
+      <div class="rodape__grid">
+        <div>
+          <div class="rodape__marca">Timorgiana Florist</div>
+          <p data-i18n="rod_sobre">Arte floral em Díli, Timor-Leste. Flores naturais frescas para ramos, casamentos e cerimónias.</p>
+        </div>
+        <div>
+          <h4 data-i18n="rod_contacto">Contacto</h4>
+          <ul>
+            <li><a href="https://wa.me/67073484565" data-i18n="rod_wa">WhatsApp: +670 7348 4565</a></li>
+            <li><a href="tel:+67073484565">+670 7348 4565</a></li>
+            <li><span data-i18n="rod_local">Díli, Timor-Leste</span></li>
+          </ul>
+        </div>
+        <div>
+          <h4 data-i18n="rod_horario">Horário</h4>
+          <ul>
+            <li><span data-i18n="rod_h1">Seg – Sáb · 8h – 18h</span></li>
+            <li><span data-i18n="rod_h2">Domingo · sob marcação</span></li>
+          </ul>
+        </div>
+      </div>
+      <div class="rodape__fim">
+        <span>© <span id="ano"></span> Timorgiana, Lda.</span>
+        <span data-i18n="rod_feito">Feito com flores em Díli 🌸</span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- Botão flutuante WhatsApp -->
+<a class="wa-flutua" href="https://wa.me/67073484565?text=Ol%C3%A1%20Timorgiana%20Florist!%20Gostaria%20de%20fazer%20uma%20encomenda." target="_blank" rel="noopener" aria-label="Falar no WhatsApp">
+  <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.5 14.4c-.3-.15-1.8-.9-2.05-1s-.5-.15-.7.15-.8 1-1 1.2-.35.22-.65.07a8.2 8.2 0 0 1-2.4-1.5 9 9 0 0 1-1.67-2.07c-.17-.3 0-.46.13-.6s.3-.35.44-.53a2 2 0 0 0 .3-.5.55.55 0 0 0 0-.52c-.07-.15-.7-1.67-.95-2.29s-.5-.52-.7-.53h-.6a1.13 1.13 0 0 0-.82.38A3.45 3.45 0 0 0 5 11.2 6 6 0 0 0 6.3 14a13.7 13.7 0 0 0 5.25 4.65c.73.32 1.3.5 1.75.65a4.2 4.2 0 0 0 1.93.12 3.15 3.15 0 0 0 2.07-1.46 2.56 2.56 0 0 0 .18-1.46c-.07-.13-.27-.2-.57-.35zM12 2a10 10 0 0 0-8.6 15.06L2 22l5.06-1.33A10 10 0 1 0 12 2z"/></svg>
+  <span data-i18n="wa_balao">Fale connosco</span>
+</a>
+
+<script>
+/* ============================================================
+   TRILINGUE (PT · TET · EN) — dicionário inline
+   ============================================================ */
+const T = {
+  marca_sub:{pt:"Florist · Díli",tet:"Florist · Díli",en:"Florist · Dili"},
+  nav_servicos:{pt:"Serviços",tet:"Servisu",en:"Services"},
+  nav_galeria:{pt:"Portefólio",tet:"Portefóliu",en:"Portfolio"},
+  nav_encomendar:{pt:"Encomendar",tet:"Enkomenda",en:"Order"},
+  nav_contactos:{pt:"Contactos",tet:"Kontaktu",en:"Contact"},
+  btn_encomendar:{pt:"Encomendar",tet:"Enkomenda",en:"Order now"},
+  btn_encomendar_ag:{pt:"Encomendar agora",tet:"Enkomenda agora",en:"Order now"},
+  btn_ver_portefolio:{pt:"Ver portefólio",tet:"Haree portefóliu",en:"View portfolio"},
+
+  hero_titulo:{pt:"Arte floral <em>fresca</em><br>para os seus momentos",tet:"Arte floral <em>fresku</em><br>ba ita-nia momentu",en:"Fresh floral art <em>for</em><br>your special moments"},
+  hero_lead:{pt:"Ramos, arranjos e cenários florais compostos à mão em Díli, com flores naturais escolhidas a dedo para cada ocasião.",tet:"Ramu, aranju no senáriu floral halo ho liman iha Díli, ho ai-funan naturál ba okaziaun ida-idak.",en:"Bouquets, arrangements and floral settings handcrafted in Dili, with natural blooms chosen for every occasion."},
+  trust_1:{pt:"Flores frescas do dia",tet:"Ai-funan fresku loron-loron",en:"Fresh flowers daily"},
+  trust_2:{pt:"Entrega em toda a Díli",tet:"Entrega iha Díli tomak",en:"Delivery across Dili"},
+  trust_3:{pt:"Feito à mão, com carinho",tet:"Halo ho liman no domin",en:"Handmade with care"},
+  selo:{pt:"ocasiões floridas",tet:"okaziaun ho ai-funan",en:"floral occasions"},
+
+  serv_eyebrow:{pt:"O que fazemos",tet:"Saida mak ami halo",en:"What we do"},
+  serv_titulo:{pt:"Flores para cada momento",tet:"Ai-funan ba momentu ida-idak",en:"Flowers for every moment"},
+  serv_lead:{pt:"Da declaração de amor à cerimónia mais solene — desenhamos a peça certa para o seu dia.",tet:"Husi deklarasaun domin to'o serimónia solene — ami dezaña peça loos ba ita-nia loron.",en:"From a declaration of love to the most solemn ceremony — we design the right piece for your day."},
+  serv1_t:{pt:"Ramos & arranjos",tet:"Ramu & aranju",en:"Bouquets & arrangements"},
+  serv1_d:{pt:"Buquês de mão, cestos e arranjos de vaso para aniversários, agradecimentos e \"só porque sim\".",tet:"Bukê liman, kaixa no aranju vazu ba aniversáriu, agradese no \"tanba de'it\".",en:"Hand bouquets, baskets and vase arrangements for birthdays, thank-yous and \"just because\"."},
+  serv2_t:{pt:"Casamentos & eventos",tet:"Kazamentu & eventu",en:"Weddings & events"},
+  serv2_d:{pt:"Arcos, centros de mesa e cenografia floral completa para casamentos, batizados e celebrações.",tet:"Arku, sentru meza no senografia floral kompletu ba kazamentu, batizmu no selebrasaun.",en:"Arches, centrepieces and full floral scenography for weddings, baptisms and celebrations."},
+  serv3_t:{pt:"Entrega em Díli",tet:"Entrega iha Díli",en:"Delivery in Dili"},
+  serv3_d:{pt:"Levamos a sua encomenda com cuidado a casa, ao escritório ou ao local do evento, em toda a cidade.",tet:"Ami lori ita-nia enkomenda ho kuidadu ba uma, eskritóriu ka fatin eventu, iha sidade tomak.",en:"We carefully deliver your order to home, office or event venue, anywhere in the city."},
+
+  port_eyebrow:{pt:"Portefólio",tet:"Portefóliu",en:"Portfolio"},
+  port_titulo:{pt:"Algumas das nossas peças",tet:"Peça balun husi ami",en:"A few of our pieces"},
+  p1_t:{pt:"Ramo coral",tet:"Ramu coral",en:"Coral bouquet"},
+  p1_d:{pt:"Rosas & gerberas",tet:"Roza & gerbera",en:"Roses & gerberas"},
+  p2_t:{pt:"Casamento",tet:"Kazamentu",en:"Wedding"},
+  p2_d:{pt:"Arco & mesa",tet:"Arku & meza",en:"Arch & table"},
+  p3_t:{pt:"Buquê de noiva",tet:"Bukê noiva",en:"Bridal bouquet"},
+  p3_d:{pt:"Tons pastel",tet:"Kor pastel",en:"Pastel tones"},
+  p4_t:{pt:"Arranjo de vaso",tet:"Aranju vazu",en:"Vase arrangement"},
+  p4_d:{pt:"Mistura natural",tet:"Mistura naturál",en:"Natural mix"},
+
+  enc_eyebrow:{pt:"Encomendar",tet:"Enkomenda",en:"Order"},
+  enc_titulo:{pt:"Diga-nos a sua ocasião",tet:"Fó-hatene ami ita-nia okaziaun",en:"Tell us your occasion"},
+  enc_lead:{pt:"Preencha os detalhes e enviamos a conversa direta para o nosso WhatsApp — respondemos rapidamente com uma proposta e o valor.",tet:"Prense detalhu no ami haruka konversa direta ba ami-nia WhatsApp — ami responde lalais ho proposta no folin.",en:"Fill in the details and we'll open a chat straight to our WhatsApp — we reply quickly with a proposal and price."},
+  enc_b1:{pt:"Orçamento sem compromisso",tet:"Orsamentu la ho kompromisu",en:"Free, no-obligation quote"},
+  enc_b2:{pt:"Personalizamos cores e flores",tet:"Ami personaliza kor no ai-funan",en:"We tailor colours and flowers"},
+  enc_b3:{pt:"Entrega combinada consigo",tet:"Entrega kombina ho ita",en:"Delivery arranged with you"},
+
+  f_nome:{pt:"Nome",tet:"Naran",en:"Name"},
+  f_nome_ph:{pt:"O seu nome",tet:"Ita-nia naran",en:"Your name"},
+  f_ocasiao:{pt:"Ocasião",tet:"Okaziaun",en:"Occasion"},
+  f_op1:{pt:"Ramo / aniversário",tet:"Ramu / aniversáriu",en:"Bouquet / birthday"},
+  f_op2:{pt:"Casamento",tet:"Kazamentu",en:"Wedding"},
+  f_op3:{pt:"Evento / empresa",tet:"Eventu / empreza",en:"Event / company"},
+  f_op4:{pt:"Cerimónia fúnebre",tet:"Serimónia fúnebre",en:"Funeral ceremony"},
+  f_op5:{pt:"Outro",tet:"Seluk",en:"Other"},
+  f_data:{pt:"Data",tet:"Data",en:"Date"},
+  f_msg:{pt:"Detalhes",tet:"Detalhu",en:"Details"},
+  f_msg_ph:{pt:"Cores preferidas, orçamento, local de entrega…",tet:"Kor gosta, orsamentu, fatin entrega…",en:"Preferred colours, budget, delivery place…"},
+  f_enviar:{pt:"Enviar pelo WhatsApp",tet:"Haruka liuhusi WhatsApp",en:"Send via WhatsApp"},
+  f_nota:{pt:"Abre a conversa já preenchida. Não guardamos os seus dados.",tet:"Loke konversa prense ona. Ami la rai ita-nia dadus.",en:"Opens a pre-filled chat. We don't store your data."},
+
+  rod_sobre:{pt:"Arte floral em Díli, Timor-Leste. Flores naturais frescas para ramos, casamentos e cerimónias.",tet:"Arte floral iha Díli, Timor-Leste. Ai-funan naturál fresku ba ramu, kazamentu no serimónia.",en:"Floral art in Dili, Timor-Leste. Fresh natural flowers for bouquets, weddings and ceremonies."},
+  rod_contacto:{pt:"Contacto",tet:"Kontaktu",en:"Contact"},
+  rod_wa:{pt:"WhatsApp: +670 7348 4565",tet:"WhatsApp: +670 7348 4565",en:"WhatsApp: +670 7348 4565"},
+  rod_local:{pt:"Díli, Timor-Leste",tet:"Díli, Timor-Leste",en:"Dili, Timor-Leste"},
+  rod_horario:{pt:"Horário",tet:"Oráriu",en:"Hours"},
+  rod_h1:{pt:"Seg – Sáb · 8h – 18h",tet:"Seg – Sáb · 8h – 18h",en:"Mon – Sat · 8am – 6pm"},
+  rod_h2:{pt:"Domingo · sob marcação",tet:"Domingu · ho marka",en:"Sunday · by appointment"},
+  rod_feito:{pt:"Feito com flores em Díli 🌸",tet:"Halo ho ai-funan iha Díli 🌸",en:"Made with flowers in Dili 🌸"},
+  wa_balao:{pt:"Fale connosco",tet:"Koalia ho ami",en:"Message us"},
+};
+
+/* Aplica o idioma */
+let idioma = localStorage.getItem("tg_idioma") || "pt";
+function aplicarIdioma(l){
+  idioma = l;
+  document.documentElement.lang = (l==="tet"?"pt":l); // Tétum não tem código simples; mantém pt para o browser
+  localStorage.setItem("tg_idioma", l);
+  document.querySelectorAll("[data-i18n]").forEach(el=>{
+    const k = el.getAttribute("data-i18n"); if(T[k]) el.textContent = T[k][l] || T[k].pt;
+  });
+  document.querySelectorAll("[data-i18n-html]").forEach(el=>{
+    const k = el.getAttribute("data-i18n-html"); if(T[k]) el.innerHTML = T[k][l] || T[k].pt;
+  });
+  document.querySelectorAll("[data-i18n-ph]").forEach(el=>{
+    const k = el.getAttribute("data-i18n-ph"); if(T[k]) el.setAttribute("placeholder", T[k][l] || T[k].pt);
+  });
+  document.querySelectorAll(".lang button").forEach(b=>{
+    b.setAttribute("aria-pressed", b.dataset.lang===l ? "true" : "false");
+  });
+}
+document.querySelectorAll(".lang button").forEach(b=>{
+  b.addEventListener("click", ()=>aplicarIdioma(b.dataset.lang));
+});
+
+/* Formulário → WhatsApp */
+const WA = "67073484565";
+document.getElementById("form-encomenda").addEventListener("submit", (e)=>{
+  e.preventDefault();
+  const nome = document.getElementById("nome").value.trim();
+  const ocasiao = document.getElementById("ocasiao").value;
+  const data = document.getElementById("data").value;
+  const msg = document.getElementById("mensagem").value.trim();
+  if(!nome){ document.getElementById("nome").focus(); return; }
+  const labels = {pt:{ola:"Olá Timorgiana Florist! Gostaria de encomendar.",n:"Nome",o:"Ocasião",d:"Data",m:"Detalhes"},
+                  tet:{ola:"Olá Timorgiana Florist! Hakarak enkomenda.",n:"Naran",o:"Okaziaun",d:"Data",m:"Detalhu"},
+                  en:{ola:"Hello Timorgiana Florist! I'd like to place an order.",n:"Name",o:"Occasion",d:"Date",m:"Details"}}[idioma];
+  let txt = labels.ola + "\n\n" + labels.n + ": " + nome + "\n" + labels.o + ": " + ocasiao;
+  if(data) txt += "\n" + labels.d + ": " + data;
+  if(msg)  txt += "\n" + labels.m + ": " + msg;
+  window.open("https://wa.me/" + WA + "?text=" + encodeURIComponent(txt), "_blank", "noopener");
+});
+
+/* Ano no rodapé */
+document.getElementById("ano").textContent = new Date().getFullYear();
+
+/* Arranque */
+aplicarIdioma(idioma);
+</script>
+</body>
+</html>
